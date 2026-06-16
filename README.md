@@ -14,6 +14,7 @@ Cashbrite is a UK financial education platform for school leavers, students and 
 
 ```text
 app/
+  api/contact/route.ts  Server-side contact form email endpoint
   contact/page.tsx       Contact page
   globals.css            Tailwind and global styles
   layout.tsx             Shared navigation and footer
@@ -24,7 +25,7 @@ app/
   students/page.tsx      Students page
 components/
   ButtonLink.tsx         Reusable link button
-  ContactForm.tsx        Front-end-only enquiry form
+  ContactForm.tsx        Contact and school enquiry form
   InfoCard.tsx           Reusable content card
   SectionHeader.tsx      Reusable section heading
 data/
@@ -90,14 +91,25 @@ Result bands are:
 
 ## Forms
 
-The contact and school enquiry forms are front-end only for this first version. Before launching publicly, connect them to a form service, email workflow, CRM or API route.
+The contact and school enquiry forms submit to `app/api/contact/route.ts`, which sends email from the server using Resend. The destination email and API key are stored in environment variables and are not exposed in client-side code.
+
+Required environment variables:
+
+```text
+RESEND_API_KEY=your_resend_api_key
+CONTACT_TO_EMAIL=your_receiving_email_address
+CONTACT_FROM_EMAIL=Cashbrite <onboarding@resend.dev>
+```
+
+For production, verify a sending domain in Resend and update `CONTACT_FROM_EMAIL` to an address on that domain, such as `Cashbrite <hello@yourdomain.co.uk>`. `CONTACT_TO_EMAIL` should be the inbox that receives Cashbrite enquiries.
 
 ## Deploying To Vercel
 
 1. Push the project to GitHub, GitLab or Bitbucket.
 2. Create a new project in Vercel.
 3. Import the repository.
-4. Use the default Next.js settings.
-5. Deploy.
+4. Add the Resend environment variables in Vercel Project Settings.
+5. Use the default Next.js settings.
+6. Deploy.
 
 Vercel will install dependencies and run the production build automatically.

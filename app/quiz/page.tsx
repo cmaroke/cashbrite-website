@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { categoryDescriptions, categoryLabels, quizQuestions } from "@/data/quizQuestions";
 import { userTypes, type RegistrationData, type UserType } from "@/lib/assessmentTypes";
@@ -204,7 +205,14 @@ export default function QuizPage() {
                   onChange={(event) => setRegistrationValue("reportConsent", event.target.checked)}
                   required
                 />
-                <span>I agree to receive my personalised Cashbrite Money Action Plan by email.</span>
+                <span>
+                  I agree to receive my personalised Cashbrite Money Action Plan by email and understand how Cashbrite
+                  uses my data as explained in the{" "}
+                  <Link href="/privacy-policy" className="font-black text-sea underline underline-offset-4">
+                    Privacy Policy
+                  </Link>
+                  .
+                </span>
               </label>
               <label className="flex gap-3 rounded-md border border-navy/12 bg-cream/55 p-4 text-base leading-7 text-navy/78">
                 <input
@@ -213,7 +221,14 @@ export default function QuizPage() {
                   checked={registration.marketingConsent}
                   onChange={(event) => setRegistrationValue("marketingConsent", event.target.checked)}
                 />
-                <span>I would like to receive occasional Cashbrite updates, resources and offers.</span>
+                <span>
+                  I would like to receive occasional Cashbrite updates, resources and offers. I can unsubscribe at any
+                  time. See the{" "}
+                  <Link href="/privacy-policy" className="font-black text-sea underline underline-offset-4">
+                    Privacy Policy
+                  </Link>
+                  .
+                </span>
               </label>
             </div>
 

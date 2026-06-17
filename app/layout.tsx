@@ -57,12 +57,21 @@ export default function RootLayout({
               <Logo compact />
               <p>Built for UK students preparing for life after school.</p>
             </div>
-            <div className="flex gap-5 font-semibold">
+            <div className="flex flex-wrap gap-x-5 gap-y-3 font-semibold">
               <Link href="/schools" className="focus-ring rounded-sm hover:text-navy">
                 For schools
               </Link>
               <Link href="/contact" className="focus-ring rounded-sm hover:text-navy">
                 Contact
+              </Link>
+              <Link href="/privacy-policy" className="focus-ring rounded-sm hover:text-navy">
+                Privacy Policy
+              </Link>
+              <Link href="/terms-and-conditions" className="focus-ring rounded-sm hover:text-navy">
+                Terms
+              </Link>
+              <Link href="/financial-disclaimer" className="focus-ring rounded-sm hover:text-navy">
+                Financial Disclaimer
               </Link>
             </div>
           </div>

@@ -22,15 +22,15 @@ export default function Home() {
             <p className="mb-4 inline-flex rounded-full border border-sea/15 bg-white px-4 py-2 text-sm font-black uppercase tracking-[0.14em] text-sea shadow-sm">
               UK financial education for young adults
             </p>
-            <h1 className="max-w-4xl text-5xl font-black leading-[0.98] tracking-normal text-navy sm:text-6xl lg:text-7xl">
-              Money confidence for life after school
+            <h1 className="max-w-4xl text-4xl font-black leading-[1.03] tracking-normal text-navy sm:text-6xl lg:text-7xl">
+              Before they leave school, make sure they&apos;re ready for money.
             </h1>
             <p className="mt-6 max-w-2xl text-xl leading-9 text-navy/75">
-              Cashbrite helps students understand budgeting, credit, student finance, scams and real-world money
-              decisions.
+              Cashbrite gives young people the confidence to make smarter money decisions through a free Money
+              Readiness Assessment and personalised action plan.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/quiz">Take the Money Readiness Questionnaire</ButtonLink>
+              <ButtonLink href="/quiz">Take the Free Money Assessment</ButtonLink>
               <ButtonLink href="/schools" variant="secondary">
                 For Schools
               </ButtonLink>
@@ -44,20 +44,55 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="relative min-h-[360px] overflow-hidden rounded-lg border border-white/70 bg-white shadow-soft sm:min-h-[500px]">
+          <div className="relative min-h-[520px] overflow-hidden rounded-lg border border-white/70 bg-white shadow-soft sm:min-h-[500px]">
             <Image
               src="/images/cashbrite-hero.png"
-              alt="Desk with budgeting notes, a phone and money planning items"
+              alt="Student planning at a desk with a laptop, phone and notebook"
               fill
               priority
               className="object-cover"
               sizes="(min-width: 1024px) 50vw, 100vw"
             />
-            <div className="absolute bottom-5 left-5 max-w-xs rounded-lg border border-white/70 bg-white/92 p-4 shadow-[0_18px_40px_rgba(7,29,43,0.16)] backdrop-blur">
-              <p className="text-sm font-black text-navy">Money Readiness Score</p>
-              <p className="mt-1 text-sm leading-6 text-navy/68">
-                A practical snapshot of strengths, risk areas and next steps for real life after school.
-              </p>
+            <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/75 bg-white/94 p-4 shadow-[0_22px_55px_rgba(7,29,43,0.18)] backdrop-blur sm:inset-x-auto sm:bottom-5 sm:left-5 sm:w-[22rem] sm:p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-sea">
+                    Cashbrite Money Readiness Score
+                  </p>
+                  <p className="mt-2 text-4xl font-black leading-none text-navy">
+                    72<span className="text-xl text-navy/50">/100</span>
+                  </p>
+                </div>
+                <div className="rounded-full bg-mint px-3 py-1 text-xs font-black text-navy">Building confidence</div>
+              </div>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.12em] text-navy/55">Strengths</p>
+                  <ul className="mt-2 grid gap-2 text-sm font-bold text-navy">
+                    <li className="flex items-center gap-2">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-mint text-xs">✓</span>
+                      Budgeting basics
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-mint text-xs">✓</span>
+                      Saving habits
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.12em] text-navy/55">Areas to improve</p>
+                  <ul className="mt-2 grid gap-2 text-sm font-bold text-navy/75">
+                    <li className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-sea" aria-hidden="true" />
+                      Credit scores
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-sea" aria-hidden="true" />
+                      Student finance
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -7,13 +7,15 @@ Cashbrite is a UK financial education platform for school leavers, students and 
 - Next.js
 - TypeScript
 - Tailwind CSS
-- No database
+- Neon Postgres for assessment result storage
+- Resend for email delivery
 - No payment processing
 
 ## File Structure
 
 ```text
 app/
+  api/assessments/route.ts Server-side assessment save/email endpoint
   api/contact/route.ts  Server-side contact form email endpoint
   contact/page.tsx       Contact page
   globals.css            Tailwind and global styles
@@ -30,7 +32,14 @@ components/
   SectionHeader.tsx      Reusable section heading
 data/
   quizQuestions.ts       Editable quiz questions and answer points
+db/
+  schema.sql             Neon/Postgres assessment table schema
 lib/
+  actionPlan.ts          Money Action Plan generation
+  assessmentDb.ts        Neon database helpers
+  assessmentEmail.ts     Assessment email helpers
+  assessmentTypes.ts     Shared assessment types
+  assessmentValidation.ts Server-side assessment validation
   quizScoring.ts         Quiz scoring and result band logic
 public/images/
   cashbrite-hero.png     Hero visual asset
@@ -89,6 +98,24 @@ Result bands are:
 - `71-85`: Nearly Money Ready
 - `86-100`: Money Ready
 
+## Assessment Registration And Data Storage
+
+The Money Readiness Assessment starts with a registration step. Users must provide first name, last name, age, email address, user type, and required consent to receive their personalised Cashbrite Money Action Plan by email. Optional marketing consent is stored separately.
+
+Assessment submissions are handled by `app/api/assessments/route.ts`. The route validates the registration and answers, uses the existing quiz scoring logic, generates the Money Action Plan, stores the result and emails the user when Resend is configured.
+
+### Database Choice
+
+This project uses Neon Postgres via `@neondatabase/serverless`. It is a simple fit for a startup deployed on Vercel because it is serverless, low-cost to start, works through a normal `DATABASE_URL`, and has official Next.js/Vercel-friendly setup guidance.
+
+Create a Neon project, copy the pooled connection string and add it as:
+
+```text
+DATABASE_URL=postgresql://...
+```
+
+The app creates the `assessment_results` table automatically on first assessment save. You can also run `db/schema.sql` manually in Neon.
+
 ## Forms
 
 The contact and school enquiry forms submit to `app/api/contact/route.ts`, which sends email from the server using Resend. The destination email and API key are stored in environment variables and are not exposed in client-side code.
@@ -96,20 +123,22 @@ The contact and school enquiry forms submit to `app/api/contact/route.ts`, which
 Required environment variables:
 
 ```text
+DATABASE_URL=your_neon_database_url
 RESEND_API_KEY=your_resend_api_key
-CONTACT_TO_EMAIL=your_receiving_email_address
+CONTACT_TO_EMAIL=cmaroke@me.com
 CONTACT_FROM_EMAIL=Cashbrite <onboarding@resend.dev>
 ```
 
-For production, verify a sending domain in Resend and update `CONTACT_FROM_EMAIL` to an address on that domain, such as `Cashbrite <hello@yourdomain.co.uk>`. `CONTACT_TO_EMAIL` should be the inbox that receives Cashbrite enquiries.
+For production, verify a sending domain in Resend and update `CONTACT_FROM_EMAIL` to an address on that domain, such as `Cashbrite <hello@yourdomain.co.uk>`. `CONTACT_TO_EMAIL` should remain `cmaroke@me.com` for internal contact/enquiry notifications.
 
 ## Deploying To Vercel
 
 1. Push the project to GitHub, GitLab or Bitbucket.
 2. Create a new project in Vercel.
 3. Import the repository.
-4. Add the Resend environment variables in Vercel Project Settings.
-5. Use the default Next.js settings.
-6. Deploy.
+4. Create a Neon Postgres database and add `DATABASE_URL` in Vercel Project Settings.
+5. Add the Resend environment variables in Vercel Project Settings.
+6. Use the default Next.js settings.
+7. Deploy.
 
 Vercel will install dependencies and run the production build automatically.

@@ -49,7 +49,7 @@ export default function SchoolsPage() {
             <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">School enquiry</p>
             <h2 className="mt-3 text-2xl font-black">Book a practical Cashbrite session</h2>
             <p className="mt-3 text-base leading-7 text-white/72">
-              Tell us about your year group, setting and goals. The form is front-end only for this MVP.
+              Tell us about your year group, setting and goals. Your enquiry is sent securely to Cashbrite.
             </p>
           </div>
           <ContactForm context="school" />

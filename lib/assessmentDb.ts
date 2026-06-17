@@ -33,6 +33,7 @@ export async function saveAssessment(params: {
       age,
       email,
       user_type,
+      referral_source,
       report_consent,
       marketing_consent,
       completed_at,
@@ -52,6 +53,7 @@ export async function saveAssessment(params: {
       ${params.registration.age},
       ${params.registration.email},
       ${params.registration.userType},
+      ${params.registration.referralSource || null},
       ${params.registration.reportConsent},
       ${params.registration.marketingConsent},
       NOW(),
@@ -81,6 +83,7 @@ export async function getAssessment(id: string): Promise<SavedAssessment | null>
       age: row.age,
       email: row.email,
       userType: row.user_type,
+      referralSource: row.referral_source ?? "",
       reportConsent: row.report_consent,
       marketingConsent: row.marketing_consent,
     },
@@ -113,6 +116,7 @@ async function ensureAssessmentTable() {
       age INTEGER NOT NULL,
       email TEXT NOT NULL,
       user_type TEXT NOT NULL,
+      referral_source TEXT,
       report_consent BOOLEAN NOT NULL,
       marketing_consent BOOLEAN NOT NULL DEFAULT FALSE,
       completed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -127,6 +131,7 @@ async function ensureAssessmentTable() {
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
+  await sql`ALTER TABLE assessment_results ADD COLUMN IF NOT EXISTS referral_source TEXT`;
   await sql`CREATE INDEX IF NOT EXISTS assessment_results_email_idx ON assessment_results (email)`;
   await sql`CREATE INDEX IF NOT EXISTS assessment_results_completed_at_idx ON assessment_results (completed_at DESC)`;
   schemaReady = true;

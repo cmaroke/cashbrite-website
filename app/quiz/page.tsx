@@ -4,7 +4,13 @@ import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { categoryDescriptions, categoryLabels, quizQuestions, type QuizAnswer } from "@/data/quizQuestions";
-import { userTypes, type RegistrationData, type UserType } from "@/lib/assessmentTypes";
+import {
+  referralSources,
+  userTypes,
+  type ReferralSource,
+  type RegistrationData,
+  type UserType,
+} from "@/lib/assessmentTypes";
 
 type RegistrationFormState = {
   firstName: string;
@@ -12,6 +18,7 @@ type RegistrationFormState = {
   age: string;
   email: string;
   userType: "" | UserType;
+  referralSource: "" | ReferralSource;
   reportConsent: boolean;
   marketingConsent: boolean;
 };
@@ -22,6 +29,7 @@ const initialRegistration: RegistrationFormState = {
   age: "",
   email: "",
   userType: "",
+  referralSource: "",
   reportConsent: false,
   marketingConsent: false,
 };
@@ -202,6 +210,23 @@ export default function QuizPage() {
                   ))}
                 </select>
               </label>
+              <label className="grid gap-2 text-sm font-bold text-navy sm:col-span-2">
+                How did you hear about Cashbrite? (Optional)
+                <select
+                  className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+                  value={registration.referralSource}
+                  onChange={(event) =>
+                    setRegistrationValue("referralSource", event.target.value as RegistrationFormState["referralSource"])
+                  }
+                >
+                  <option value="">Choose one, if applicable</option>
+                  {referralSources.map((source) => (
+                    <option key={source} value={source}>
+                      {source}
+                    </option>
+                  ))}
+                </select>
+              </label>
             </div>
 
             <div className="mt-6 grid gap-3">
@@ -350,6 +375,7 @@ function toRegistrationData(registration: RegistrationFormState): RegistrationDa
     age: Number(registration.age),
     email: registration.email.trim().toLowerCase(),
     userType: registration.userType as UserType,
+    referralSource: registration.referralSource,
     reportConsent: registration.reportConsent,
     marketingConsent: registration.marketingConsent,
   };

@@ -1,5 +1,11 @@
 import { quizQuestions } from "@/data/quizQuestions";
-import { userTypes, type RegistrationData, type UserType } from "@/lib/assessmentTypes";
+import {
+  referralSources,
+  userTypes,
+  type ReferralSource,
+  type RegistrationData,
+  type UserType,
+} from "@/lib/assessmentTypes";
 
 export type AssessmentRequestBody = {
   registration?: Partial<RegistrationData>;
@@ -18,12 +24,16 @@ export function validateAssessmentRequest(body: AssessmentRequestBody) {
   const email = String(registration.email ?? "").trim().toLowerCase();
   const age = Number(registration.age);
   const userType = String(registration.userType ?? "") as UserType;
+  const referralSource = String(registration.referralSource ?? "") as ReferralSource | "";
 
   if (!firstName) return "Please enter your first name.";
   if (!lastName) return "Please enter your last name.";
   if (!Number.isInteger(age) || age < 13 || age > 100) return "Please enter a valid age.";
   if (!emailPattern.test(email)) return "Please enter a valid email address.";
   if (!userTypes.includes(userType)) return "Please choose a user type.";
+  if (referralSource && !referralSources.includes(referralSource)) {
+    return "Please choose a valid referral source.";
+  }
   if (registration.reportConsent !== true) {
     return "Please confirm that you agree to receive your personalised Cashbrite Money Action Plan by email.";
   }
@@ -47,7 +57,13 @@ export function normaliseRegistration(registration: Partial<RegistrationData>): 
     age: Number(registration.age),
     email: String(registration.email ?? "").trim().toLowerCase(),
     userType: String(registration.userType ?? "") as UserType,
+    referralSource: normaliseReferralSource(registration.referralSource),
     reportConsent: registration.reportConsent === true,
     marketingConsent: registration.marketingConsent === true,
   };
+}
+
+function normaliseReferralSource(value: unknown) {
+  const referralSource = String(value ?? "") as ReferralSource | "";
+  return referralSource && referralSources.includes(referralSource) ? referralSource : "";
 }

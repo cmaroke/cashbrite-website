@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS assessment_results (
   age INTEGER NOT NULL,
   email TEXT NOT NULL,
   user_type TEXT NOT NULL,
+  referral_source TEXT,
   report_consent BOOLEAN NOT NULL,
   marketing_consent BOOLEAN NOT NULL DEFAULT FALSE,
   completed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

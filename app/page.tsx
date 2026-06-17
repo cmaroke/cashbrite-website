@@ -98,6 +98,58 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-white py-20 sm:py-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
+          <div className="flex justify-center lg:justify-start">
+            <div className="relative flex aspect-square w-full max-w-[18rem] items-center justify-center rounded-full border border-sea/15 bg-cream shadow-[0_24px_70px_rgba(7,29,43,0.08)] sm:max-w-[22rem]">
+              <div className="absolute inset-6 rounded-full border border-white bg-mint/45" aria-hidden="true" />
+              <div className="relative flex h-36 w-36 items-center justify-center rounded-full bg-white text-center text-sm font-black uppercase tracking-[0.14em] text-sea shadow-sm sm:h-44 sm:w-44">
+                Founder Photo
+              </div>
+            </div>
+          </div>
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Meet the Founder</p>
+            <h2 className="mt-3 max-w-3xl text-3xl font-black leading-tight text-navy sm:text-4xl lg:text-5xl">
+              Helping the next generation feel confident with money.
+            </h2>
+            <div className="mt-6 grid max-w-3xl gap-5 text-lg leading-8 text-navy/72">
+              <p>Hi, I&apos;m Chandni, the founder of Cashbrite.</p>
+              <p>
+                As a banking professional, I have seen first-hand how confidence and knowledge can transform the way
+                people make financial decisions.
+              </p>
+              <p>
+                But one thing became increasingly clear: many young people leave school without feeling prepared for the
+                everyday money decisions that come with adult life &mdash; from understanding a payslip and managing a
+                budget to navigating student finance, credit and scams.
+              </p>
+              <p>I created Cashbrite to bridge that gap.</p>
+              <p>
+                My mission is simple: to give young people the knowledge, confidence and practical skills they need to
+                take their first steps towards financial independence.
+              </p>
+            </div>
+            <div className="mt-8 rounded-lg border border-sea/15 bg-mint/45 p-5 shadow-[0_16px_45px_rgba(7,29,43,0.06)]">
+              <p className="text-xl font-black leading-8 text-navy">
+                &quot;Because money confidence shouldn&apos;t start after school &mdash; it should start before life
+                after school begins.&quot;
+              </p>
+            </div>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {["Banking Professional", "Parent Perspective", "Practical Financial Education"].map((badge) => (
+                <div
+                  key={badge}
+                  className="rounded-lg border border-navy/10 bg-cream px-4 py-3 text-sm font-black text-navy shadow-sm"
+                >
+                  {badge}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="border-y border-navy/10 bg-white py-8">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:px-6 md:grid-cols-3 lg:px-8">
           {trustItems.map((item) => (

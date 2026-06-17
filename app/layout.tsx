@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   title: "Cashbrite | Money confidence for life after school",
   description:
     "Cashbrite helps UK students understand budgeting, credit, student finance, scams and real-world money decisions.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 const navItems = [

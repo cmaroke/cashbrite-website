@@ -3,7 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { categoryDescriptions, categoryLabels, quizQuestions } from "@/data/quizQuestions";
+import { categoryDescriptions, categoryLabels, quizQuestions, type QuizAnswer } from "@/data/quizQuestions";
 import { userTypes, type RegistrationData, type UserType } from "@/lib/assessmentTypes";
 
 type RegistrationFormState = {
@@ -50,6 +50,14 @@ export default function QuizPage() {
         },
         {} as Record<string, typeof quizQuestions>,
       ),
+    [],
+  );
+
+  const shuffledAnswersByQuestion = useMemo(
+    () =>
+      Object.fromEntries(
+        quizQuestions.map((question) => [question.id, shuffleAnswers(question.answers)]),
+      ) as Record<string, QuizAnswer[]>,
     [],
   );
 
@@ -263,7 +271,7 @@ export default function QuizPage() {
                     <div key={question.id}>
                       <p className="text-lg font-bold leading-7 text-navy">{question.prompt}</p>
                       <div className="mt-3 grid gap-3">
-                        {question.answers.map((answer) => (
+                        {shuffledAnswersByQuestion[question.id].map((answer) => (
                           <label
                             key={answer.id}
                             className="flex cursor-pointer gap-3 rounded-md border border-navy/12 bg-cream/55 p-4 text-base leading-7 transition hover:-translate-y-0.5 hover:border-sea hover:bg-mint/25"
@@ -345,4 +353,15 @@ function toRegistrationData(registration: RegistrationFormState): RegistrationDa
     reportConsent: registration.reportConsent,
     marketingConsent: registration.marketingConsent,
   };
+}
+
+function shuffleAnswers(answers: QuizAnswer[]) {
+  const shuffled = [...answers];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+
+  return shuffled;
 }

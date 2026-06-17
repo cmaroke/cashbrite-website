@@ -1,16 +1,16 @@
-<svg width="720" height="180" viewBox="0 0 720 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="760" height="180" viewBox="0 0 760 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Cashbrite white logo</title>
-  <desc id="desc">Cashbrite white wordmark with a small mint four-point sparkle near the i.</desc>
+  <desc id="desc">Cashbrite white wordmark with a soft mint four-point sparkle to the left.</desc>
+  <path d="M88 42L103.6 74.4L136 90L103.6 105.6L88 138L72.4 105.6L40 90L72.4 74.4L88 42Z" fill="#B9EAD8"/>
   <text
-    x="42"
+    x="158"
     y="116"
     fill="#FFFFFF"
     font-family="Arial Rounded MT Bold, Avenir Next, Nunito, Inter, Arial, sans-serif"
-    font-size="76"
+    font-size="78"
     font-weight="800"
-    letter-spacing="-1"
+    letter-spacing="-1.8"
   >
     Cashbrite
   </text>
-  <path d="M438 34L444.6 52.4L463 59L444.6 65.6L438 84L431.4 65.6L413 59L431.4 52.4L438 34Z" fill="#B9EAD8"/>
 </svg>

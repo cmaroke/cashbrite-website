@@ -8,8 +8,8 @@ type LogoProps = {
 };
 
 export function Logo({ href = "/", light = false, compact = false }: LogoProps) {
-  const width = compact ? 158 : 220;
-  const height = compact ? 40 : 55;
+  const width = compact ? 190 : 264;
+  const height = compact ? 45 : 63;
   const logo = (
     <Image
       src={light ? "/brand/cashbrite-logo-white.svg" : "/brand/cashbrite-logo.svg"}
@@ -22,13 +22,13 @@ export function Logo({ href = "/", light = false, compact = false }: LogoProps) 
   );
 
   if (!href) {
-    return <span className="inline-flex max-w-[220px] items-center">{logo}</span>;
+    return <span className="inline-flex max-w-[264px] items-center">{logo}</span>;
   }
 
   return (
     <Link
       href={href}
-      className="focus-ring inline-flex max-w-[180px] items-center rounded-sm transition hover:opacity-85 sm:max-w-[220px]"
+      className="focus-ring inline-flex max-w-[188px] items-center rounded-sm transition hover:opacity-85 sm:max-w-[264px]"
       aria-label="Cashbrite home"
     >
       {logo}

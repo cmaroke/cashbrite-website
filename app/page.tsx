@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
 import { InfoCard } from "@/components/InfoCard";
-import { Logo } from "@/components/Logo";
 import { SectionHeader } from "@/components/SectionHeader";
 
 export default function Home() {
@@ -14,11 +13,8 @@ export default function Home() {
   return (
     <>
       <section className="overflow-hidden bg-cream">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:py-14">
           <div>
-            <div className="mb-6">
-              <Logo href="" />
-            </div>
             <p className="mb-4 inline-flex rounded-full border border-sea/15 bg-white px-4 py-2 text-sm font-black uppercase tracking-[0.14em] text-sea shadow-sm">
               UK financial education for young adults
             </p>

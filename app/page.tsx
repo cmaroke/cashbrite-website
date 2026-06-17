@@ -23,11 +23,11 @@ export default function Home() {
               UK financial education for young adults
             </p>
             <h1 className="max-w-4xl text-4xl font-black leading-[1.03] tracking-normal text-navy sm:text-6xl lg:text-7xl">
-              Before they leave school, make sure they&apos;re ready for money.
+              Money confidence for life after school.
             </h1>
             <p className="mt-6 max-w-2xl text-xl leading-9 text-navy/75">
-              Cashbrite gives young people the confidence to make smarter money decisions through a free Money
-              Readiness Assessment and personalised action plan.
+              From first payslips and student finance to budgeting, borrowing and everyday money decisions, Cashbrite
+              helps young people build the confidence they need for the next chapter.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/quiz">Take the Free Money Assessment</ButtonLink>

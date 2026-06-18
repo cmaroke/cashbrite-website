@@ -2,6 +2,31 @@ import { categoryDescriptions, categoryLabels, type QuizCategory } from "@/data/
 import type { RegistrationData } from "@/lib/assessmentTypes";
 import type { QuizScores, ResultBand } from "@/lib/quizScoring";
 
+export type CreditLearningGuide = {
+  basics: { explanation: string; example: string };
+  responsibleUse: {
+    explanation: string;
+    example: { spent: string; repaid: string; interest: string };
+    tip: string;
+  };
+  carryingBalance: {
+    explanation: string;
+    interestDefinition: string;
+    aprDefinition: string;
+    example: string;
+  };
+  comparison: {
+    options: Array<{ title: string; amount: string; term: string; monthly: string; total: string }>;
+    lesson: string;
+    rule: string;
+  };
+  creditHistory: {
+    explanation: string;
+    positiveFactors: string[];
+    negativeFactors: string[];
+  };
+};
+
 export type PremiumPriorityArea = {
   category: QuizCategory;
   title: string;
@@ -16,6 +41,7 @@ export type PremiumPriorityArea = {
     takeaway: string;
   };
   moneySmartTip: string;
+  creditLearningGuide?: CreditLearningGuide;
   actions: string[];
 };
 
@@ -204,12 +230,54 @@ const guidance: Record<QuizCategory, CategoryGuidance> = {
       takeaway: "Always compare the total amount repayable, not just the monthly payment.",
     },
     moneySmartTip: "Before considering borrowing, write down the amount received, APR, term, monthly repayment, total repayable and missed-payment consequences in one comparison table.",
+    creditLearningGuide: {
+      basics: {
+        explanation: "A credit card allows you to borrow money from a lender to buy something today and pay it back later.",
+        example: "You buy a phone for £1,000 using a credit card. The £1,000 is not your money — it is money you have borrowed and agreed to pay back.",
+      },
+      responsibleUse: {
+        explanation: "If you repay the full balance by the payment due date, you usually will not pay interest on purchases.",
+        example: { spent: "£1,000", repaid: "£1,000 before the due date", interest: "£0" },
+        tip: "Only spend what you know you can afford to repay.",
+      },
+      carryingBalance: {
+        explanation: "If you do not repay the full balance, interest may be added. Making only minimum repayments can keep the balance around for much longer.",
+        interestDefinition: "Interest is the cost you pay for borrowing money.",
+        aprDefinition: "APR means Annual Percentage Rate. It gives an indication of the yearly cost of borrowing, including interest and certain charges, expressed as a percentage.",
+        example: "You buy a £1,000 phone using a credit card with a 24% APR. If you only make minimum repayments each month, it could take years to clear the balance and you may pay hundreds of pounds in interest. Your £1,000 phone could end up costing significantly more.",
+      },
+      comparison: {
+        options: [
+          { title: "Option A", amount: "£5,000", term: "3 years", monthly: "£170", total: "£6,120" },
+          { title: "Option B", amount: "£5,000", term: "5 years", monthly: "£115", total: "£6,900" },
+        ],
+        lesson: "Option B looks cheaper because the monthly payment is lower, but because you are borrowing the money for longer, you pay £780 more overall.",
+        rule: "Always compare the total amount repayable, not just the monthly repayment.",
+      },
+      creditHistory: {
+        explanation: "Your credit history is a record of how you have managed borrowing and certain financial commitments. Organisations may use it as one part of deciding whether to offer credit.",
+        positiveFactors: [
+          "Paying credit cards on time",
+          "Repaying loans on time",
+          "Managing mobile phone contracts",
+          "Paying some utility bills as agreed",
+          "Staying within agreed overdraft limits",
+          "Being registered to vote where eligible",
+        ],
+        negativeFactors: [
+          "Missing payments",
+          "Going over agreed limits",
+          "Defaulting on debts",
+          "Making lots of credit applications in a short period",
+        ],
+      },
+    },
     actions: [
-      "Recreate the £5,000 comparison above and highlight the £780 difference between the two total repayment figures.",
-      "Write definitions for interest and APR in your own words, then explain why APR helps compare the yearly cost of borrowing.",
-      "Study a sample credit card statement and locate the balance, minimum payment, payment date, interest information and estimated repayment warning.",
-      "Create a credit-history checklist covering repayments, phone contracts, some utilities, overdrafts, missed payments, defaults, repeated applications and electoral roll registration where eligible.",
-      "Make a missed-payment response plan: contact the provider early, avoid ignoring messages and know where to find free, impartial debt guidance.",
+      "Look at the £1,000 phone example and explain why the credit limit is borrowed money rather than extra income.",
+      "Use a sample credit card statement to find the full balance, minimum payment, due date and any interest information.",
+      "Rewrite interest and APR in your own words, then explain why paying only the minimum can increase the time and cost of repayment.",
+      "Recreate the £5,000 comparison and highlight the £780 difference between the total repayment figures.",
+      "Make two credit-history lists: habits that show payments are managed as agreed, and warning signs that could make future borrowing harder.",
     ],
   },
   buyNowPayLater: {

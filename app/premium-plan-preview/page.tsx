@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Logo } from "@/components/Logo";
 import { PremiumPlanPrintControls } from "@/components/PremiumPlanPrintControls";
 import { getAssessment } from "@/lib/assessmentDb";
-import { generatePremiumActionPlan } from "@/lib/premiumActionPlan";
+import { generatePremiumActionPlan, type CreditLearningGuide } from "@/lib/premiumActionPlan";
 import { demoPremiumAssessment, type PremiumPlanAssessment } from "@/lib/premiumPlanDemo";
 
 export const dynamic = "force-dynamic";
@@ -202,12 +202,17 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
               </div>
               <span className="text-lg font-black text-sea">{area.score}%</span>
             </div>
-            <div className="mt-7 grid gap-5 md:grid-cols-3">
+            <div className={`mt-7 grid gap-5 ${area.creditLearningGuide ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
               <WorkbookInfo title="Why this matters" copy={area.whyItMatters} />
               <WorkbookInfo title="Common mistakes" copy={area.commonMistakes} />
-              <WorkbookInfo title="What you need to understand" copy={area.whatToLearn} />
+              {!area.creditLearningGuide ? (
+                <WorkbookInfo title="What you need to understand" copy={area.whatToLearn} />
+              ) : null}
             </div>
-            <div className="mt-7 grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
+            {area.creditLearningGuide ? (
+              <CreditBorrowingLesson guide={area.creditLearningGuide} />
+            ) : (
+              <div className="mt-7 grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
               <article className="overflow-hidden rounded-lg border border-sea/15 bg-white shadow-[0_14px_38px_rgba(7,29,43,0.06)]">
                 <div className="flex items-center gap-3 border-b border-sea/15 bg-mint/25 px-5 py-4">
                   <Image src="/brand/cashbrite-icon.svg" alt="" width={24} height={24} className="h-6 w-6" aria-hidden="true" />
@@ -242,7 +247,8 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
                 <p className="mt-6 text-sm font-black uppercase tracking-[0.1em] text-mint">Money Smart Tip</p>
                 <p className="mt-3 text-lg font-bold leading-8 text-white/80">{area.moneySmartTip}</p>
               </aside>
-            </div>
+              </div>
+            )}
             <div className="mt-7">
               <h3 className="text-xl font-black text-navy">Your five practical actions</h3>
               <ol className="mt-4 grid gap-3">
@@ -403,6 +409,149 @@ function ReportChapter({
       </div>
       <div className="mt-7">{children}</div>
     </section>
+  );
+}
+
+function CreditBorrowingLesson({ guide }: { guide: CreditLearningGuide }) {
+  return (
+    <div className="mt-7 grid gap-6">
+      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
+        <LessonHeading number="01" title="What is a credit card?" />
+        <p className="mt-4 text-base leading-7 text-navy/70">{guide.basics.explanation}</p>
+        <MoneySmartExample>{guide.basics.example}</MoneySmartExample>
+      </article>
+
+      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
+        <LessonHeading number="02" title="Using a credit card responsibly" />
+        <p className="mt-4 text-base leading-7 text-navy/70">{guide.responsibleUse.explanation}</p>
+        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          <CreditFigure label="You spend" value={guide.responsibleUse.example.spent} />
+          <CreditFigure label="You repay" value={guide.responsibleUse.example.repaid} />
+          <CreditFigure label="Interest charged" value={guide.responsibleUse.example.interest} />
+        </div>
+        <div className="mt-5 flex gap-4 rounded-md bg-navy p-5 text-white">
+          <Image src="/brand/cashbrite-icon.svg" alt="" width={28} height={28} className="h-7 w-7 shrink-0" aria-hidden="true" />
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.1em] text-mint">Money Smart Tip</p>
+            <p className="mt-2 font-black leading-7">{guide.responsibleUse.tip}</p>
+          </div>
+        </div>
+      </article>
+
+      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
+        <LessonHeading number="03" title="What happens when you do not repay the full balance?" />
+        <p className="mt-4 text-base leading-7 text-navy/70">{guide.carryingBalance.explanation}</p>
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          <DefinitionCard term="Interest" definition={guide.carryingBalance.interestDefinition} />
+          <DefinitionCard term="APR" definition={guide.carryingBalance.aprDefinition} />
+        </div>
+        <MoneySmartExample>{guide.carryingBalance.example}</MoneySmartExample>
+      </article>
+
+      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
+        <LessonHeading number="04" title="Comparing borrowing options" />
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          {guide.comparison.options.map((option) => (
+            <div key={option.title} className="rounded-lg border border-sea/15 bg-cream p-5">
+              <p className="text-sm font-black uppercase tracking-[0.1em] text-sea">{option.title}</p>
+              <p className="mt-3 text-2xl font-black text-navy">Borrow {option.amount}</p>
+              <dl className="mt-4 grid gap-3 text-sm">
+                <ComparisonRow label="Term" value={option.term} />
+                <ComparisonRow label="Monthly repayment" value={option.monthly} />
+                <ComparisonRow label="Total repaid" value={option.total} strong />
+              </dl>
+            </div>
+          ))}
+        </div>
+        <p className="mt-5 text-base font-bold leading-7 text-navy">{guide.comparison.lesson}</p>
+        <div className="mt-5 rounded-lg border-2 border-sea bg-mint/25 p-5 text-center">
+          <p className="text-xs font-black uppercase tracking-[0.12em] text-sea">Cashbrite Rule</p>
+          <p className="mt-2 text-xl font-black leading-8 text-navy">{guide.comparison.rule}</p>
+        </div>
+      </article>
+
+      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
+        <LessonHeading number="05" title="Making sense of credit history" />
+        <p className="mt-4 text-base leading-7 text-navy/70">{guide.creditHistory.explanation}</p>
+        <div className="mt-5 grid gap-5 md:grid-cols-2">
+          <CreditHistoryList title="May help show responsible management" items={guide.creditHistory.positiveFactors} tone="mint" />
+          <CreditHistoryList title="Can negatively affect your history" items={guide.creditHistory.negativeFactors} tone="cream" />
+        </div>
+      </article>
+
+      <p className="text-sm leading-6 text-navy/60">
+        These examples are for financial education and confidence-building. They do not recommend a particular credit product.
+      </p>
+    </div>
+  );
+}
+
+function LessonHeading({ number, title }: { number: string; title: string }) {
+  return (
+    <div className="flex items-center gap-4">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-mint text-sm font-black text-navy">{number}</span>
+      <h3 className="text-xl font-black leading-7 text-navy sm:text-2xl">{title}</h3>
+    </div>
+  );
+}
+
+function MoneySmartExample({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mt-5 border-l-4 border-sea bg-mint/25 p-5">
+      <p className="text-xs font-black uppercase tracking-[0.1em] text-sea">Money Smart Example</p>
+      <p className="mt-2 text-base font-bold leading-7 text-navy">{children}</p>
+    </div>
+  );
+}
+
+function CreditFigure({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-md bg-cream p-4">
+      <p className="text-xs font-black uppercase tracking-[0.08em] text-sea">{label}</p>
+      <p className="mt-2 font-black leading-6 text-navy">{value}</p>
+    </div>
+  );
+}
+
+function DefinitionCard({ term, definition }: { term: string; definition: string }) {
+  return (
+    <div className="rounded-md bg-cream p-5">
+      <p className="text-lg font-black text-navy">{term}</p>
+      <p className="mt-2 text-sm leading-6 text-navy/70">{definition}</p>
+    </div>
+  );
+}
+
+function ComparisonRow({ label, value, strong = false }: { label: string; value: string; strong?: boolean }) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-b border-navy/10 pb-3 last:border-0 last:pb-0">
+      <dt className="text-navy/65">{label}</dt>
+      <dd className={strong ? "font-black text-sea" : "font-bold text-navy"}>{value}</dd>
+    </div>
+  );
+}
+
+function CreditHistoryList({
+  title,
+  items,
+  tone,
+}: {
+  title: string;
+  items: string[];
+  tone: "mint" | "cream";
+}) {
+  return (
+    <div className={`rounded-lg p-5 ${tone === "mint" ? "bg-mint/25" : "bg-cream"}`}>
+      <h4 className="font-black leading-6 text-navy">{title}</h4>
+      <ul className="mt-4 grid gap-3">
+        {items.map((item) => (
+          <li key={item} className="flex gap-3 text-sm leading-6 text-navy/70">
+            <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-sea" aria-hidden="true" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

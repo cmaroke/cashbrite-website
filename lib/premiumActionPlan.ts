@@ -1,4 +1,4 @@
-import { categoryLabels, type QuizCategory } from "@/data/quizQuestions";
+import { categoryDescriptions, categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import type { RegistrationData } from "@/lib/assessmentTypes";
 import type { QuizScores, ResultBand } from "@/lib/quizScoring";
 
@@ -13,11 +13,20 @@ export type PremiumPriorityArea = {
 };
 
 export type PremiumActionPlan = {
+  moneyPersonality: { title: string; description: string };
   personalMoneyProfile: string;
+  categoryScores: Array<{ category: QuizCategory; title: string; score: number }>;
+  strengths: Array<{ category: QuizCategory; title: string; explanation: string; score: number }>;
+  opportunities: Array<{ category: QuizCategory; title: string; score: number }>;
   priorityAreas: PremiumPriorityArea[];
   roadmap: Array<{ week: string; focus: string; actions: string[] }>;
   parentConversationGuide: string[];
   checklist: Array<{ topic: string; prompt: string }>;
+  confidenceTracker: {
+    currentScore: number;
+    goalScore: number;
+    improvementAreas: string[];
+  };
   recommendedNextSteps: string[];
 };
 
@@ -34,6 +43,29 @@ const profileByBand: Record<ResultBand, string> = {
     "You already approach many money decisions thoughtfully. Your plan will sharpen the remaining gaps and help you prepare for bigger commitments with calm, informed confidence.",
   "Money Ready":
     "You are showing strong financial awareness and judgement. Your plan is designed to help you maintain those strengths, pressure-test your choices and stay ready as life changes.",
+};
+
+const personalityByBand: Record<ResultBand, { title: string; description: string }> = {
+  "Money Foundations Needed": {
+    title: "The Foundation Builder",
+    description: "You are ready to turn unfamiliar money topics into simple, repeatable foundations.",
+  },
+  "Getting Started": {
+    title: "The Curious Starter",
+    description: "You have useful instincts and are beginning to connect them with practical everyday habits.",
+  },
+  "Building Confidence": {
+    title: "The Practical Progressor",
+    description: "You understand many of the basics and learn best by applying them to real decisions.",
+  },
+  "Nearly Money Ready": {
+    title: "The Thoughtful Planner",
+    description: "You usually pause, compare and plan, with a few details left to strengthen before greater independence.",
+  },
+  "Money Ready": {
+    title: "The Confident Navigator",
+    description: "You show strong awareness and judgement while staying alert to changing circumstances and new risks.",
+  },
 };
 
 const nextStepsByBand: Record<ResultBand, string[]> = {
@@ -190,12 +222,16 @@ const guidance: Record<QuizCategory, CategoryGuidance> = {
 const checklistCategories: Array<{ category: QuizCategory; topic: string; prompt: string }> = [
   { category: "budgetingSpending", topic: "Budgeting", prompt: "I can make and review a realistic weekly or monthly budget." },
   { category: "savingHabits", topic: "Saving", prompt: "I have a savings goal and a regular way to work towards it." },
+  { category: "bankAccountsOverdrafts", topic: "Bank accounts", prompt: "I can compare account features, fees, alerts and overdraft terms." },
   { category: "studentFinance", topic: "Student finance", prompt: "I know where to check support, costs and repayment information." },
-  { category: "creditBorrowing", topic: "Credit", prompt: "I compare total cost and understand the impact of missed payments." },
+  { category: "payslipsTaxNi", topic: "Payslips", prompt: "I can identify gross pay, deductions and take-home pay." },
+  { category: "payslipsTaxNi", topic: "Tax and National Insurance", prompt: "I understand why tax and National Insurance may be deducted from pay." },
+  { category: "creditBorrowing", topic: "Credit scores", prompt: "I understand how borrowing and payment behaviour can affect my credit history." },
+  { category: "creditBorrowing", topic: "Credit cards", prompt: "I compare total cost and understand interest, limits and missed-payment consequences." },
   { category: "buyNowPayLater", topic: "Buy Now Pay Later", prompt: "I treat every instalment as borrowing and track its due date." },
   { category: "fraudScamsOnlineSafety", topic: "Scams", prompt: "I pause and verify unexpected payment or security requests." },
-  { category: "payslipsTaxNi", topic: "Payslips", prompt: "I can identify gross pay, deductions and take-home pay." },
-  { category: "movingOutRentBills", topic: "Renting and bills", prompt: "I can plan for deposits, rent, utilities and shared responsibilities." },
+  { category: "movingOutRentBills", topic: "Renting", prompt: "I know to budget for deposits and read tenancy terms before signing." },
+  { category: "movingOutRentBills", topic: "Bills", prompt: "I can plan for utilities, due dates and shared household responsibilities." },
 ];
 
 export function generatePremiumActionPlan(
@@ -209,23 +245,62 @@ export function generatePremiumActionPlan(
     score: scores.categoryScores[category].percentage,
     ...guidance[category],
   }));
+  const strengthCategories = getPremiumStrengthCategories(scores);
 
   return {
+    moneyPersonality: personalityByBand[scores.band],
     personalMoneyProfile: `${registration.firstName}, at age ${registration.age}, your ${scores.band} result shows where your money knowledge already supports you and where a little focused practice will make the biggest difference. ${profileByBand[scores.band]} This plan is tailored for you as a ${registration.userType.toLowerCase()}.`,
+    categoryScores: (Object.keys(scores.categoryScores) as QuizCategory[]).map((category) => ({
+      category,
+      title: categoryLabels[category],
+      score: scores.categoryScores[category].percentage,
+    })),
+    strengths: strengthCategories.map((category) => ({
+      category,
+      title: categoryLabels[category],
+      explanation: categoryDescriptions[category],
+      score: scores.categoryScores[category].percentage,
+    })),
+    opportunities: priorityAreas.map(({ category, title, score }) => ({ category, title, score })),
     priorityAreas,
-    roadmap: priorityAreas.map((area, index) => ({
-      week: `Week ${index + 1}`,
-      focus: area.title,
-      actions: area.actions.slice(0, index === 0 ? 3 : 2),
-    })).concat({
-      week: "Week 4",
-      focus: "Review, practise and prepare",
-      actions: [
-        "Repeat the checklist and note what now feels clearer.",
-        "Choose one real upcoming money decision and use what you have learned.",
-        "Set one habit to continue next month and share it with someone you trust.",
-      ],
-    }),
+    roadmap: [
+      {
+        week: "Week 1",
+        focus: "Build your foundations",
+        actions: [
+          priorityAreas[0].actions[0],
+          priorityAreas[0].actions[1],
+          "Choose one regular day for a ten-minute money check-in.",
+        ],
+      },
+      {
+        week: "Week 2",
+        focus: "Understand your money",
+        actions: [
+          priorityAreas[1].actions[0],
+          priorityAreas[1].actions[1],
+          "Explain one new money term in your own words to a trusted person.",
+        ],
+      },
+      {
+        week: "Week 3",
+        focus: "Become credit confident",
+        actions: [
+          "Compare the total cost, terms and consequences before using any form of borrowing.",
+          "Review how overdrafts, credit cards and Buy Now Pay Later create future payment commitments.",
+          priorityAreas[2].actions[0],
+        ],
+      },
+      {
+        week: "Week 4",
+        focus: "Prepare for adult life",
+        actions: [
+          priorityAreas[2].actions[1],
+          "Complete the Money Ready Checklist and mark the topics that still need support.",
+          "Choose one habit to continue for the next 90 days and share your goal with someone you trust.",
+        ],
+      },
+    ],
     parentConversationGuide: [
       `What money decision feels most likely to come up for you in the next year?`,
       `Which part of ${priorityAreas[0].title.toLowerCase()} feels least clear, and how could we explore it together?`,
@@ -234,6 +309,11 @@ export function generatePremiumActionPlan(
       "What is one money responsibility you could practise independently this month?",
     ],
     checklist: checklistCategories.map(({ topic, prompt }) => ({ topic, prompt })),
+    confidenceTracker: {
+      currentScore: scores.readinessScore,
+      goalScore: Math.min(100, scores.readinessScore + 15),
+      improvementAreas: priorityAreas.map((area) => area.title),
+    },
     recommendedNextSteps: nextStepsByBand[scores.band],
   };
 }
@@ -242,6 +322,13 @@ export function getPremiumPriorityCategories(scores: QuizScores) {
   return (Object.keys(scores.categoryScores) as QuizCategory[])
     .sort((a, b) => scores.categoryScores[a].percentage - scores.categoryScores[b].percentage)
     .slice(0, 3);
+}
+
+function getPremiumStrengthCategories(scores: QuizScores) {
+  const ranked = (Object.keys(scores.categoryScores) as QuizCategory[]).sort(
+    (a, b) => scores.categoryScores[b].percentage - scores.categoryScores[a].percentage,
+  );
+  return scores.strengths.length > 0 ? scores.strengths.slice(0, 3) : ranked.slice(0, 3);
 }
 
 export function getPremiumPreview(plan: PremiumActionPlan) {

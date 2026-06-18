@@ -23,3 +23,62 @@ body {
 .focus-ring {
   @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sea;
 }
+
+@media print {
+  @page {
+    margin: 12mm;
+    size: A4;
+  }
+
+  body {
+    background: white;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  body > header,
+  body > footer,
+  .no-print {
+    display: none !important;
+  }
+
+  .premium-plan-preview {
+    background: white !important;
+    padding: 0 !important;
+  }
+
+  .premium-workbook {
+    display: block !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .premium-sheet {
+    break-before: page;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+
+  .premium-sheet:first-child {
+    break-before: auto;
+  }
+
+  .premium-sheet article,
+  .premium-sheet li,
+  .premium-sheet blockquote,
+  .premium-sheet h2,
+  .premium-sheet h3 {
+    break-inside: avoid;
+  }
+
+  .premium-sheet p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .premium-cover,
+  .premium-founder-note {
+    min-height: 260mm;
+  }
+}

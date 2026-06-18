@@ -21,6 +21,7 @@ app/
   globals.css            Tailwind and global styles
   layout.tsx             Shared navigation and footer
   page.tsx               Home page
+  premium-plan-preview/  Locked premium workbook preview
   quiz/page.tsx          Money Readiness Questionnaire
   results/page.tsx       Quiz results page
   schools/page.tsx       Schools page
@@ -36,6 +37,7 @@ db/
   schema.sql             Neon/Postgres assessment table schema
 lib/
   actionPlan.ts          Money Action Plan generation
+  premiumActionPlan.ts   Premium Money Ready Plan generation
   assessmentDb.ts        Neon database helpers
   assessmentEmail.ts     Assessment email helpers
   assessmentTypes.ts     Shared assessment types
@@ -131,6 +133,26 @@ CONTACT_FROM_EMAIL=Cashbrite <onboarding@resend.dev>
 
 For production, verify a sending domain in Resend and update `CONTACT_FROM_EMAIL` to an address on that domain, such as `Cashbrite <hello@yourdomain.co.uk>`. `CONTACT_TO_EMAIL` should remain `cmaroke@me.com` for internal contact/enquiry notifications.
 
+## Premium Money Ready Plan Preview
+
+The full paid workbook is available through a private, no-index test route. It is not linked from the free results page.
+
+1. Add a long random `PREMIUM_PLAN_PREVIEW_KEY` to `.env.local` and to Vercel when a deployed preview is needed.
+2. Copy an assessment ID from the `id` value in a completed results-page URL.
+3. Open:
+
+```text
+/premium-plan-preview?id=ASSESSMENT_ID&key=PREMIUM_PLAN_PREVIEW_KEY
+```
+
+Example preview-only environment variable:
+
+```text
+PREMIUM_PLAN_PREVIEW_KEY=use-a-long-random-preview-key
+```
+
+The preview includes a print button, which can use the browser's Save as PDF option. The separate Download PDF button is intentionally a placeholder for future automated PDF generation.
+
 ## Deploying To Vercel
 
 1. Push the project to GitHub, GitLab or Bitbucket.
@@ -138,7 +160,8 @@ For production, verify a sending domain in Resend and update `CONTACT_FROM_EMAIL
 3. Import the repository.
 4. Create a Neon Postgres database and add `DATABASE_URL` in Vercel Project Settings.
 5. Add the Resend environment variables in Vercel Project Settings.
-6. Use the default Next.js settings.
-7. Deploy.
+6. Add `PREMIUM_PLAN_PREVIEW_KEY` if the private workbook preview is required on that deployment.
+7. Use the default Next.js settings.
+8. Deploy.
 
 Vercel will install dependencies and run the production build automatically.

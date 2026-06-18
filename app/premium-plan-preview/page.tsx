@@ -205,7 +205,43 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
             <div className="mt-7 grid gap-5 md:grid-cols-3">
               <WorkbookInfo title="Why this matters" copy={area.whyItMatters} />
               <WorkbookInfo title="Common mistakes" copy={area.commonMistakes} />
-              <WorkbookInfo title="What to learn" copy={area.whatToLearn} />
+              <WorkbookInfo title="What you need to understand" copy={area.whatToLearn} />
+            </div>
+            <div className="mt-7 grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
+              <article className="overflow-hidden rounded-lg border border-sea/15 bg-white shadow-[0_14px_38px_rgba(7,29,43,0.06)]">
+                <div className="flex items-center gap-3 border-b border-sea/15 bg-mint/25 px-5 py-4">
+                  <Image src="/brand/cashbrite-icon.svg" alt="" width={24} height={24} className="h-6 w-6" aria-hidden="true" />
+                  <p className="text-sm font-black uppercase tracking-[0.1em] text-sea">Money Smart Example</p>
+                </div>
+                <div className="p-5 sm:p-6">
+                  <h3 className="text-2xl font-black text-navy">{area.realLifeExample.title}</h3>
+                  <p className="mt-3 text-base leading-7 text-navy/70">{area.realLifeExample.summary}</p>
+                  <ul className="mt-5 grid gap-3">
+                    {area.realLifeExample.details.map((detail) => (
+                      <li key={detail} className="flex gap-3 rounded-md bg-cream px-4 py-3 text-sm font-bold leading-6 text-navy/75">
+                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-sea" aria-hidden="true" />
+                        {detail}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-5 border-l-4 border-sea pl-4">
+                    <p className="text-xs font-black uppercase tracking-[0.1em] text-sea">What this shows</p>
+                    <p className="mt-2 font-black leading-7 text-navy">{area.realLifeExample.takeaway}</p>
+                  </div>
+                </div>
+              </article>
+              <aside className="relative overflow-hidden rounded-lg bg-navy p-6 text-white">
+                <Image
+                  src="/brand/cashbrite-icon.svg"
+                  alt=""
+                  width={42}
+                  height={42}
+                  className="h-10 w-10"
+                  aria-hidden="true"
+                />
+                <p className="mt-6 text-sm font-black uppercase tracking-[0.1em] text-mint">Money Smart Tip</p>
+                <p className="mt-3 text-lg font-bold leading-8 text-white/80">{area.moneySmartTip}</p>
+              </aside>
             </div>
             <div className="mt-7">
               <h3 className="text-xl font-black text-navy">Your five practical actions</h3>

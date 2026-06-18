@@ -439,14 +439,36 @@ function CreditBorrowingLesson({ guide }: { guide: CreditLearningGuide }) {
       </article>
 
       <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="05" title="A simple example" />
-        <div className="mt-5 border-l-4 border-sea bg-mint/25 p-5">
-          <p className="text-xs font-black uppercase tracking-[0.1em] text-sea">Money Smart Example</p>
-          <div className="mt-3 grid gap-3">
-            {guide.example.map((line) => (
-              <p key={line} className="text-base font-bold leading-7 text-navy">{line}</p>
-            ))}
+        <LessonHeading number="05" title={guide.example.title} />
+        <p className="mt-4 text-base leading-7 text-navy/70">{guide.example.scenario}</p>
+        <div className="mt-5 overflow-hidden rounded-lg border border-sea/15">
+          <div className="bg-mint/25 px-5 py-3">
+            <p className="text-xs font-black uppercase tracking-[0.1em] text-sea">Your monthly statement</p>
           </div>
+          <dl className="grid sm:grid-cols-2">
+            {guide.example.statement.map((item) => (
+              <div key={item.label} className="flex items-center justify-between gap-4 border-b border-navy/10 px-5 py-4 sm:odd:border-r">
+                <dt className="text-sm font-bold text-navy/65">{item.label}</dt>
+                <dd className="font-black text-navy">{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          {guide.example.options.map((option, index) => (
+            <div key={option.title} className={`rounded-lg p-5 ${index === 0 ? "bg-mint/25" : "bg-cream"}`}>
+              <p className="text-sm font-black uppercase tracking-[0.08em] text-sea">{option.title}</p>
+              <p className="mt-3 font-black leading-7 text-navy">{option.payment}</p>
+              <ul className="mt-4 grid gap-3">
+                {option.outcomes.map((outcome) => (
+                  <li key={outcome} className="flex gap-3 text-sm leading-6 text-navy/70">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-sea" aria-hidden="true" />
+                    {outcome}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </article>
 

@@ -13,7 +13,12 @@ export type CreditLearningGuide = {
     explanation: string;
     consequences: string[];
   };
-  example: string[];
+  example: {
+    title: string;
+    scenario: string;
+    statement: Array<{ label: string; value: string }>;
+    options: Array<{ title: string; payment: string; outcomes: string[] }>;
+  };
   rule: string;
 };
 
@@ -210,15 +215,15 @@ const guidance: Record<QuizCategory, CategoryGuidance> = {
     commonMistakes: "Treating a credit limit as extra income, spending without a repayment plan, or making only the minimum payment without noticing how long the balance could remain.",
     whatToLearn: "A credit card lets you borrow money for purchases. Paying the full balance by the due date usually avoids purchase interest, while leaving a balance may allow interest to build.",
     realLifeExample: {
-      title: "A £100 credit card statement",
-      summary: "You spend £100 on a credit card and receive a statement at the end of the month.",
+      title: "Credit card example: trainers for £100",
+      summary: "You buy a pair of trainers for £100 using your credit card. At the end of the month, your statement arrives.",
       details: [
-        "Pay the full £100 by the due date: you usually pay no interest.",
-        "Pay only the minimum: the rest carries over and may start costing interest.",
+        "Full balance: £100. Pay it by 15th October and you usually avoid interest.",
+        "Minimum payment: £5. Pay only this and £95 remains unpaid.",
       ],
-      takeaway: "The full balance clears what was borrowed. The minimum payment leaves part of the debt unpaid.",
+      takeaway: "Paying the full balance clears what was borrowed. Paying only the minimum leaves most of the balance to carry over.",
     },
-    moneySmartTip: "A credit card is not extra money. Treat it like borrowed money and aim to pay the full balance each month.",
+    moneySmartTip: "A credit card is not extra money. If you use one, aim to repay the full balance when your statement arrives.",
     creditLearningGuide: {
       basics: {
         explanation: "A credit card lets you borrow money to spend now and repay later.",
@@ -244,13 +249,33 @@ const guidance: Record<QuizCategory, CategoryGuidance> = {
           "It can take longer to repay",
         ],
       },
-      example: [
-        "You spend £100 on a credit card.",
-        "At the end of the month, your statement arrives.",
-        "If you pay the full £100 by the due date, you usually pay no interest.",
-        "If you only pay the minimum, the rest carries over and may start costing you interest.",
-      ],
-      rule: "A credit card is not extra money. Treat it like borrowed money and aim to pay the full balance each month.",
+      example: {
+        title: "Credit card example: trainers for £100",
+        scenario: "You buy a pair of trainers for £100 using your credit card. At the end of the month, your statement arrives.",
+        statement: [
+          { label: "Amount spent", value: "£100" },
+          { label: "Minimum payment", value: "£5" },
+          { label: "Full balance", value: "£100" },
+          { label: "Payment due date", value: "15th October" },
+        ],
+        options: [
+          {
+            title: "Option 1: Pay the full balance",
+            payment: "You pay the full £100 by the due date.",
+            outcomes: ["Your balance is cleared", "You usually avoid paying interest", "You build a good money habit"],
+          },
+          {
+            title: "Option 2: Pay only the minimum payment",
+            payment: "You pay £5 and leave £95 unpaid.",
+            outcomes: [
+              "You still owe £95",
+              "Interest may be charged on the remaining balance",
+              "It could take much longer to clear what you owe",
+            ],
+          },
+        ],
+      },
+      rule: "A credit card is not extra money. If you use one, aim to repay the full balance when your statement arrives.",
     },
     actions: [
       "Explain in your own words why a credit card balance is borrowed money rather than extra income.",

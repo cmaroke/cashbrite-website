@@ -4,6 +4,7 @@ import type { ActionPlan, RegistrationData, SavedAssessment, StoredAssessmentRow
 import type { QuizScores } from "@/lib/quizScoring";
 
 let schemaReady = false;
+let premiumInterestSchemaReady = false;
 
 function getSql() {
   const databaseUrl = process.env.DATABASE_URL;
@@ -104,6 +105,24 @@ export async function getAssessment(id: string): Promise<SavedAssessment | null>
   };
 }
 
+export async function recordPremiumInterest(params: {
+  assessmentId: string;
+  interestType: "preview" | "unlock";
+}) {
+  const sql = getSql();
+  await ensurePremiumInterestTable();
+
+  const rows = await sql`
+    INSERT INTO premium_plan_interest (assessment_id, email, interest_type)
+    SELECT id, email, ${params.interestType}
+    FROM assessment_results
+    WHERE id = ${params.assessmentId}
+    RETURNING id
+  `;
+
+  return rows.length > 0;
+}
+
 async function ensureAssessmentTable() {
   if (schemaReady) return;
   const sql = getSql();
@@ -135,4 +154,25 @@ async function ensureAssessmentTable() {
   await sql`CREATE INDEX IF NOT EXISTS assessment_results_email_idx ON assessment_results (email)`;
   await sql`CREATE INDEX IF NOT EXISTS assessment_results_completed_at_idx ON assessment_results (completed_at DESC)`;
   schemaReady = true;
+}
+
+async function ensurePremiumInterestTable() {
+  if (premiumInterestSchemaReady) return;
+  await ensureAssessmentTable();
+  const sql = getSql();
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS premium_plan_interest (
+      id BIGSERIAL PRIMARY KEY,
+      assessment_id UUID NOT NULL REFERENCES assessment_results(id) ON DELETE CASCADE,
+      email TEXT NOT NULL,
+      interest_type TEXT NOT NULL CHECK (interest_type IN ('preview', 'unlock')),
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+  await sql`
+    CREATE INDEX IF NOT EXISTS premium_plan_interest_assessment_idx
+    ON premium_plan_interest (assessment_id, created_at DESC)
+  `;
+  premiumInterestSchemaReady = true;
 }

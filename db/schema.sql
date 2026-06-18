@@ -22,3 +22,14 @@ CREATE TABLE IF NOT EXISTS assessment_results (
 
 CREATE INDEX IF NOT EXISTS assessment_results_email_idx ON assessment_results (email);
 CREATE INDEX IF NOT EXISTS assessment_results_completed_at_idx ON assessment_results (completed_at DESC);
+
+CREATE TABLE IF NOT EXISTS premium_plan_interest (
+  id BIGSERIAL PRIMARY KEY,
+  assessment_id UUID NOT NULL REFERENCES assessment_results(id) ON DELETE CASCADE,
+  email TEXT NOT NULL,
+  interest_type TEXT NOT NULL CHECK (interest_type IN ('preview', 'unlock')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS premium_plan_interest_assessment_idx
+ON premium_plan_interest (assessment_id, created_at DESC);

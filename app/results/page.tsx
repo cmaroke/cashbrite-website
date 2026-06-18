@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { PreviewPlanLink } from "@/components/PremiumPlanCtas";
 import { categoryDescriptions, categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import { getAssessment } from "@/lib/assessmentDb";
 
@@ -168,6 +169,45 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
             >
               Student resources
             </Link>
+          </div>
+        </section>
+
+        <section className="relative mt-8 overflow-hidden rounded-lg border border-sea/25 bg-white p-6 shadow-[0_24px_70px_rgba(7,29,43,0.12)] sm:p-9">
+          <div className="absolute right-0 top-0 h-32 w-32 translate-x-10 -translate-y-10 rounded-full bg-mint/45" aria-hidden="true" />
+          <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <div className="flex flex-wrap items-center gap-3">
+                <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Cashbrite Money Ready Plan</p>
+                <span className="rounded-full bg-navy px-3 py-1 text-xs font-black uppercase tracking-[0.1em] text-mint">
+                  Premium
+                </span>
+              </div>
+              <h2 className="mt-3 max-w-3xl text-3xl font-black text-navy sm:text-4xl">
+                Unlock your full Cashbrite Money Ready Plan
+              </h2>
+              <p className="mt-4 max-w-3xl text-lg leading-8 text-navy/72">
+                Get a personalised 30-day roadmap based on your assessment results, including practical weekly
+                actions, parent conversation prompts, and a full Money Ready checklist.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2 text-sm font-bold text-navy/68">
+                {[
+                  "Tailored to your results",
+                  "Four weekly action plans",
+                  "Parent conversation guide",
+                ].map((item) => (
+                  <span key={item} className="rounded-full border border-navy/10 bg-cream px-3 py-2">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-lg bg-navy p-5 text-white lg:min-w-64">
+              <p className="text-sm font-bold text-white/65">Launch price</p>
+              <p className="mt-1 text-4xl font-black text-mint">£19</p>
+              <div className="mt-5">
+                <PreviewPlanLink assessmentId={assessment.id} />
+              </div>
+            </div>
           </div>
         </section>
       </div>

@@ -422,56 +422,49 @@ function CreditBorrowingLesson({ guide }: { guide: CreditLearningGuide }) {
       </article>
 
       <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="02" title="Using a credit card responsibly" />
-        <p className="mt-4 text-base leading-7 text-navy/70">{guide.responsibleUse.explanation}</p>
+        <LessonHeading number="02" title="Paying in full" />
+        <p className="mt-4 text-base leading-7 text-navy/70">{guide.payingInFull.explanation}</p>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          <CreditFigure label="You spend" value={guide.responsibleUse.example.spent} />
-          <CreditFigure label="You repay" value={guide.responsibleUse.example.repaid} />
-          <CreditFigure label="Interest charged" value={guide.responsibleUse.example.interest} />
-        </div>
-        <div className="mt-5 flex gap-4 rounded-md bg-navy p-5 text-white">
-          <Image src="/brand/cashbrite-icon.svg" alt="" width={28} height={28} className="h-7 w-7 shrink-0" aria-hidden="true" />
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.1em] text-mint">Money Smart Tip</p>
-            <p className="mt-2 font-black leading-7">{guide.responsibleUse.tip}</p>
-          </div>
+          <CreditFigure label="Amount spent" value={guide.payingInFull.example.spent} />
+          <CreditFigure label="Amount repaid by due date" value={guide.payingInFull.example.repaid} />
+          <CreditFigure label="Interest charged" value={guide.payingInFull.example.interest} />
         </div>
       </article>
 
       <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="03" title="What happens when you do not repay the full balance?" />
-        <p className="mt-4 text-base leading-7 text-navy/70">{guide.carryingBalance.explanation}</p>
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
-          <DefinitionCard term="Interest" definition={guide.carryingBalance.interestDefinition} />
-          <DefinitionCard term="APR" definition={guide.carryingBalance.aprDefinition} />
+        <LessonHeading number="03" title="Minimum payments" />
+        <p className="mt-4 text-base leading-7 text-navy/70">{guide.minimumPayments.explanation}</p>
+        <div className="mt-5 border-l-4 border-sea bg-mint/25 p-5">
+          <p className="text-xs font-black uppercase tracking-[0.1em] text-sea">Money Smart Example</p>
+          <ul className="mt-3 grid gap-2">
+            {guide.minimumPayments.example.map((line) => (
+              <li key={line} className="flex gap-3 text-base font-bold leading-7 text-navy">
+                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-sea" aria-hidden="true" />
+                {line}
+              </li>
+            ))}
+          </ul>
         </div>
-        <MoneySmartExample>{guide.carryingBalance.example}</MoneySmartExample>
       </article>
 
       <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="04" title="Comparing borrowing options" />
+        <LessonHeading number="04" title="Interest and APR" />
         <div className="mt-5 grid gap-4 md:grid-cols-2">
-          {guide.comparison.options.map((option) => (
-            <div key={option.title} className="rounded-lg border border-sea/15 bg-cream p-5">
-              <p className="text-sm font-black uppercase tracking-[0.1em] text-sea">{option.title}</p>
-              <p className="mt-3 text-2xl font-black text-navy">Borrow {option.amount}</p>
-              <dl className="mt-4 grid gap-3 text-sm">
-                <ComparisonRow label="Term" value={option.term} />
-                <ComparisonRow label="Monthly repayment" value={option.monthly} />
-                <ComparisonRow label="Total repaid" value={option.total} strong />
-              </dl>
-            </div>
-          ))}
+          <DefinitionCard term="Interest" definition={guide.interestAndApr.interestDefinition} />
+          <DefinitionCard term="APR" definition={guide.interestAndApr.aprDefinition} />
         </div>
-        <p className="mt-5 text-base font-bold leading-7 text-navy">{guide.comparison.lesson}</p>
+      </article>
+
+      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
+        <LessonHeading number="05" title="The Cashbrite Rule" />
         <div className="mt-5 rounded-lg border-2 border-sea bg-mint/25 p-5 text-center">
           <p className="text-xs font-black uppercase tracking-[0.12em] text-sea">Cashbrite Rule</p>
-          <p className="mt-2 text-xl font-black leading-8 text-navy">{guide.comparison.rule}</p>
+          <p className="mt-2 text-xl font-black leading-8 text-navy">{guide.rule}</p>
         </div>
       </article>
 
       <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="05" title="Making sense of credit history" />
+        <LessonHeading number="06" title="Making sense of credit history" />
         <p className="mt-4 text-base leading-7 text-navy/70">{guide.creditHistory.explanation}</p>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
           <CreditHistoryList title="May help show responsible management" items={guide.creditHistory.positiveFactors} tone="mint" />
@@ -518,15 +511,6 @@ function DefinitionCard({ term, definition }: { term: string; definition: string
     <div className="rounded-md bg-cream p-5">
       <p className="text-lg font-black text-navy">{term}</p>
       <p className="mt-2 text-sm leading-6 text-navy/70">{definition}</p>
-    </div>
-  );
-}
-
-function ComparisonRow({ label, value, strong = false }: { label: string; value: string; strong?: boolean }) {
-  return (
-    <div className="flex items-center justify-between gap-4 border-b border-navy/10 pb-3 last:border-0 last:pb-0">
-      <dt className="text-navy/65">{label}</dt>
-      <dd className={strong ? "font-black text-sea" : "font-bold text-navy"}>{value}</dd>
     </div>
   );
 }

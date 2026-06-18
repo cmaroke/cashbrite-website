@@ -4,22 +4,19 @@ import type { QuizScores, ResultBand } from "@/lib/quizScoring";
 
 export type CreditLearningGuide = {
   basics: { explanation: string; example: string };
-  responsibleUse: {
+  payingInFull: {
     explanation: string;
     example: { spent: string; repaid: string; interest: string };
-    tip: string;
   };
-  carryingBalance: {
+  minimumPayments: {
     explanation: string;
+    example: string[];
+  };
+  interestAndApr: {
     interestDefinition: string;
     aprDefinition: string;
-    example: string;
   };
-  comparison: {
-    options: Array<{ title: string; amount: string; term: string; monthly: string; total: string }>;
-    lesson: string;
-    rule: string;
-  };
+  rule: string;
   creditHistory: {
     explanation: string;
     positiveFactors: string[];
@@ -216,68 +213,65 @@ const guidance: Record<QuizCategory, CategoryGuidance> = {
     ],
   },
   creditBorrowing: {
-    whyItMatters: "Borrowing choices can affect monthly cash flow, future applications and the total price paid for something.",
-    commonMistakes: "Looking only at the monthly payment, treating a credit limit as spare money, or missing payments without asking for help.",
-    whatToLearn: "Interest is the cost of borrowing money. APR stands for Annual Percentage Rate. It shows the yearly cost of borrowing, including interest and certain fees, expressed as a percentage. Credit history can be affected by credit card and personal loan repayments, mobile phone contracts, some utility bills, overdraft use, missed payments, defaults, many credit applications in a short period and electoral roll registration where eligible.",
+    whyItMatters: "A credit card uses borrowed money. How the balance is repaid can affect the final cost and may influence credit history.",
+    commonMistakes: "Treating a credit limit as extra income, spending without a repayment plan, or making only the minimum payment without noticing how long the balance could remain.",
+    whatToLearn: "A credit card lets you borrow money for purchases. Paying the full balance by the due date usually avoids purchase interest, while leaving a balance may allow interest to build.",
     realLifeExample: {
-      title: "A lower monthly payment can cost more overall",
-      summary: "If you borrow £1,000 on a credit card with a 24% APR and only make small repayments, you could repay much more than £1,000 over time.",
+      title: "A £1,000 phone bought with borrowed money",
+      summary: "You buy a £1,000 phone using a credit card. The £1,000 belongs to the lender until it is repaid.",
       details: [
-        "Option A: Borrow £5,000 over 3 years. Monthly repayment: £170. Total repaid: £6,120.",
-        "Option B: Borrow £5,000 over 5 years. Monthly repayment: £115. Total repaid: £6,900.",
-        "Option B costs £780 more overall, even though its monthly repayment is lower.",
+        "Amount spent on the card: £1,000",
+        "Amount now owed to the lender: £1,000",
+        "If part of the balance remains after the due date, interest may be charged.",
       ],
-      takeaway: "Always compare the total amount repayable, not just the monthly payment.",
+      takeaway: "A credit card is not extra money. Every purchase creates an amount that must be repaid.",
     },
-    moneySmartTip: "Before considering borrowing, write down the amount received, APR, term, monthly repayment, total repayable and missed-payment consequences in one comparison table.",
+    moneySmartTip: "Before using a credit card, ask whether you could afford to repay the purchase if the bill arrived tomorrow.",
     creditLearningGuide: {
       basics: {
-        explanation: "A credit card allows you to borrow money from a lender to buy something today and pay it back later.",
-        example: "You buy a phone for £1,000 using a credit card. The £1,000 is not your money — it is money you have borrowed and agreed to pay back.",
+        explanation: "A credit card lets you borrow money to make purchases and repay the lender later.",
+        example: "You buy a £1,000 phone using a credit card. The £1,000 is not your money — it is money you have borrowed and agreed to repay.",
       },
-      responsibleUse: {
-        explanation: "If you repay the full balance by the payment due date, you usually will not pay interest on purchases.",
-        example: { spent: "£1,000", repaid: "£1,000 before the due date", interest: "£0" },
-        tip: "Only spend what you know you can afford to repay.",
+      payingInFull: {
+        explanation: "If you repay the full balance by the payment due date, you usually will not pay interest.",
+        example: { spent: "£1,000", repaid: "£1,000 by the due date", interest: "£0" },
       },
-      carryingBalance: {
-        explanation: "If you do not repay the full balance, interest may be added. Making only minimum repayments can keep the balance around for much longer.",
-        interestDefinition: "Interest is the cost you pay for borrowing money.",
-        aprDefinition: "APR means Annual Percentage Rate. It gives an indication of the yearly cost of borrowing, including interest and certain charges, expressed as a percentage.",
-        example: "You buy a £1,000 phone using a credit card with a 24% APR. If you only make minimum repayments each month, it could take years to clear the balance and you may pay hundreds of pounds in interest. Your £1,000 phone could end up costing significantly more.",
-      },
-      comparison: {
-        options: [
-          { title: "Option A", amount: "£5,000", term: "3 years", monthly: "£170", total: "£6,120" },
-          { title: "Option B", amount: "£5,000", term: "5 years", monthly: "£115", total: "£6,900" },
+      minimumPayments: {
+        explanation: "If you only make the minimum payment, some of the balance remains unpaid. Interest may be charged on what is left, so the purchase can cost more over time.",
+        example: [
+          "You spend £1,000 on a credit card.",
+          "You only pay back a small amount each month.",
+          "The remaining balance can continue attracting interest.",
+          "The phone could cost more than £1,000 and take much longer to clear.",
         ],
-        lesson: "Option B looks cheaper because the monthly payment is lower, but because you are borrowing the money for longer, you pay £780 more overall.",
-        rule: "Always compare the total amount repayable, not just the monthly repayment.",
       },
+      interestAndApr: {
+        interestDefinition: "Interest is the cost of borrowing money.",
+        aprDefinition: "APR means Annual Percentage Rate. It gives an indication of the yearly cost of borrowing, including interest and certain charges, expressed as a percentage.",
+      },
+      rule: "A credit card is not extra money. Before using one, ask yourself: “Could I afford to repay this if the bill arrived tomorrow?”",
       creditHistory: {
-        explanation: "Your credit history is a record of how you have managed borrowing and certain financial commitments. Organisations may use it as one part of deciding whether to offer credit.",
+        explanation: "Credit card behaviour may affect your credit history. It can show how you have managed borrowing and whether payments and agreed limits have been handled reliably.",
         positiveFactors: [
-          "Paying credit cards on time",
-          "Repaying loans on time",
-          "Managing mobile phone contracts",
-          "Paying some utility bills as agreed",
-          "Staying within agreed overdraft limits",
-          "Being registered to vote where eligible",
+          "Paying on time",
+          "Staying within your credit limit",
+          "Keeping borrowing manageable",
+          "Paying more than the minimum where possible",
         ],
         negativeFactors: [
           "Missing payments",
-          "Going over agreed limits",
-          "Defaulting on debts",
+          "Going over your limit",
+          "Only making minimum payments for a long time",
           "Making lots of credit applications in a short period",
         ],
       },
     },
     actions: [
       "Look at the £1,000 phone example and explain why the credit limit is borrowed money rather than extra income.",
-      "Use a sample credit card statement to find the full balance, minimum payment, due date and any interest information.",
-      "Rewrite interest and APR in your own words, then explain why paying only the minimum can increase the time and cost of repayment.",
-      "Recreate the £5,000 comparison and highlight the £780 difference between the total repayment figures.",
-      "Make two credit-history lists: habits that show payments are managed as agreed, and warning signs that could make future borrowing harder.",
+      "Use the paying-in-full example to explain why £1,000 spent creates a £1,000 bill that needs a repayment plan.",
+      "Use a sample statement to find the full balance, minimum payment, payment due date and any interest information.",
+      "Explain in your own words why making only minimum payments can increase both the time and cost of clearing a balance.",
+      "Sort the credit-history behaviours into two lists: habits that may help and habits that may have a negative effect.",
     ],
   },
   buyNowPayLater: {

@@ -3,25 +3,18 @@ import type { RegistrationData } from "@/lib/assessmentTypes";
 import type { QuizScores, ResultBand } from "@/lib/quizScoring";
 
 export type CreditLearningGuide = {
-  basics: { explanation: string; example: string };
-  payingInFull: {
+  basics: { explanation: string };
+  monthlyStatement: { explanation: string; shows: string[] };
+  bestHabit: {
     explanation: string;
-    example: { spent: string; repaid: string; interest: string };
+    benefits: string[];
   };
-  minimumPayments: {
+  minimumPayment: {
     explanation: string;
-    example: string[];
+    consequences: string[];
   };
-  interestAndApr: {
-    interestDefinition: string;
-    aprDefinition: string;
-  };
+  example: string[];
   rule: string;
-  creditHistory: {
-    explanation: string;
-    positiveFactors: string[];
-    negativeFactors: string[];
-  };
 };
 
 export type PremiumPriorityArea = {
@@ -213,65 +206,58 @@ const guidance: Record<QuizCategory, CategoryGuidance> = {
     ],
   },
   creditBorrowing: {
-    whyItMatters: "A credit card uses borrowed money. How the balance is repaid can affect the final cost and may influence credit history.",
+    whyItMatters: "A credit card uses borrowed money. Understanding the monthly statement and repayment choices helps make the true cost clearer.",
     commonMistakes: "Treating a credit limit as extra income, spending without a repayment plan, or making only the minimum payment without noticing how long the balance could remain.",
     whatToLearn: "A credit card lets you borrow money for purchases. Paying the full balance by the due date usually avoids purchase interest, while leaving a balance may allow interest to build.",
     realLifeExample: {
-      title: "A £1,000 phone bought with borrowed money",
-      summary: "You buy a £1,000 phone using a credit card. The £1,000 belongs to the lender until it is repaid.",
+      title: "A £100 credit card statement",
+      summary: "You spend £100 on a credit card and receive a statement at the end of the month.",
       details: [
-        "Amount spent on the card: £1,000",
-        "Amount now owed to the lender: £1,000",
-        "If part of the balance remains after the due date, interest may be charged.",
+        "Pay the full £100 by the due date: you usually pay no interest.",
+        "Pay only the minimum: the rest carries over and may start costing interest.",
       ],
-      takeaway: "A credit card is not extra money. Every purchase creates an amount that must be repaid.",
+      takeaway: "The full balance clears what was borrowed. The minimum payment leaves part of the debt unpaid.",
     },
-    moneySmartTip: "Before using a credit card, ask whether you could afford to repay the purchase if the bill arrived tomorrow.",
+    moneySmartTip: "A credit card is not extra money. Treat it like borrowed money and aim to pay the full balance each month.",
     creditLearningGuide: {
       basics: {
-        explanation: "A credit card lets you borrow money to make purchases and repay the lender later.",
-        example: "You buy a £1,000 phone using a credit card. The £1,000 is not your money — it is money you have borrowed and agreed to repay.",
+        explanation: "A credit card lets you borrow money to spend now and repay later.",
       },
-      payingInFull: {
-        explanation: "If you repay the full balance by the payment due date, you usually will not pay interest.",
-        example: { spent: "£1,000", repaid: "£1,000 by the due date", interest: "£0" },
+      monthlyStatement: {
+        explanation: "The credit card provider sends a bill, called a statement, each month.",
+        shows: ["What you spent", "The minimum payment", "The full balance", "The payment due date"],
       },
-      minimumPayments: {
-        explanation: "If you only make the minimum payment, some of the balance remains unpaid. Interest may be charged on what is left, so the purchase can cost more over time.",
-        example: [
-          "You spend £1,000 on a credit card.",
-          "You only pay back a small amount each month.",
-          "The remaining balance can continue attracting interest.",
-          "The phone could cost more than £1,000 and take much longer to clear.",
+      bestHabit: {
+        explanation: "The best habit is to repay the full balance by the due date whenever possible.",
+        benefits: [
+          "You clear what you borrowed",
+          "You usually avoid paying interest",
+          "You build responsible money habits",
         ],
       },
-      interestAndApr: {
-        interestDefinition: "Interest is the cost of borrowing money.",
-        aprDefinition: "APR means Annual Percentage Rate. It gives an indication of the yearly cost of borrowing, including interest and certain charges, expressed as a percentage.",
-      },
-      rule: "A credit card is not extra money. Before using one, ask yourself: “Could I afford to repay this if the bill arrived tomorrow?”",
-      creditHistory: {
-        explanation: "Credit card behaviour may affect your credit history. It can show how you have managed borrowing and whether payments and agreed limits have been handled reliably.",
-        positiveFactors: [
-          "Paying on time",
-          "Staying within your credit limit",
-          "Keeping borrowing manageable",
-          "Paying more than the minimum where possible",
-        ],
-        negativeFactors: [
-          "Missing payments",
-          "Going over your limit",
-          "Only making minimum payments for a long time",
-          "Making lots of credit applications in a short period",
+      minimumPayment: {
+        explanation: "The minimum payment is the smallest amount you must pay to avoid missing a payment, but it does not clear the full debt.",
+        consequences: [
+          "The remaining balance carries over",
+          "Interest may be charged",
+          "The purchase can cost more over time",
+          "It can take longer to repay",
         ],
       },
+      example: [
+        "You spend £100 on a credit card.",
+        "At the end of the month, your statement arrives.",
+        "If you pay the full £100 by the due date, you usually pay no interest.",
+        "If you only pay the minimum, the rest carries over and may start costing you interest.",
+      ],
+      rule: "A credit card is not extra money. Treat it like borrowed money and aim to pay the full balance each month.",
     },
     actions: [
-      "Look at the £1,000 phone example and explain why the credit limit is borrowed money rather than extra income.",
-      "Use the paying-in-full example to explain why £1,000 spent creates a £1,000 bill that needs a repayment plan.",
-      "Use a sample statement to find the full balance, minimum payment, payment due date and any interest information.",
-      "Explain in your own words why making only minimum payments can increase both the time and cost of clearing a balance.",
-      "Sort the credit-history behaviours into two lists: habits that may help and habits that may have a negative effect.",
+      "Explain in your own words why a credit card balance is borrowed money rather than extra income.",
+      "Use a sample statement to find what was spent, the minimum payment, the full balance and the due date.",
+      "Use the £100 example to explain what happens when the full balance is paid by the due date.",
+      "Explain why paying only the minimum leaves some debt to carry into the next month.",
+      "Write the Cashbrite Rule somewhere you would see it before making a credit card purchase.",
     ],
   },
   buyNowPayLater: {

@@ -418,57 +418,43 @@ function CreditBorrowingLesson({ guide }: { guide: CreditLearningGuide }) {
       <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
         <LessonHeading number="01" title="What is a credit card?" />
         <p className="mt-4 text-base leading-7 text-navy/70">{guide.basics.explanation}</p>
-        <MoneySmartExample>{guide.basics.example}</MoneySmartExample>
       </article>
 
       <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="02" title="Paying in full" />
-        <p className="mt-4 text-base leading-7 text-navy/70">{guide.payingInFull.explanation}</p>
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          <CreditFigure label="Amount spent" value={guide.payingInFull.example.spent} />
-          <CreditFigure label="Amount repaid by due date" value={guide.payingInFull.example.repaid} />
-          <CreditFigure label="Interest charged" value={guide.payingInFull.example.interest} />
-        </div>
+        <LessonHeading number="02" title="The monthly bill" />
+        <p className="mt-4 text-base leading-7 text-navy/70">{guide.monthlyStatement.explanation}</p>
+        <TeachingPoints items={guide.monthlyStatement.shows} />
       </article>
 
       <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="03" title="Minimum payments" />
-        <p className="mt-4 text-base leading-7 text-navy/70">{guide.minimumPayments.explanation}</p>
+        <LessonHeading number="03" title="The best habit" />
+        <p className="mt-4 text-base font-bold leading-7 text-navy">{guide.bestHabit.explanation}</p>
+        <TeachingPoints items={guide.bestHabit.benefits} tone="mint" />
+      </article>
+
+      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
+        <LessonHeading number="04" title="Minimum payment warning" />
+        <p className="mt-4 text-base leading-7 text-navy/70">{guide.minimumPayment.explanation}</p>
+        <TeachingPoints items={guide.minimumPayment.consequences} />
+      </article>
+
+      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
+        <LessonHeading number="05" title="A simple example" />
         <div className="mt-5 border-l-4 border-sea bg-mint/25 p-5">
           <p className="text-xs font-black uppercase tracking-[0.1em] text-sea">Money Smart Example</p>
-          <ul className="mt-3 grid gap-2">
-            {guide.minimumPayments.example.map((line) => (
-              <li key={line} className="flex gap-3 text-base font-bold leading-7 text-navy">
-                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-sea" aria-hidden="true" />
-                {line}
-              </li>
+          <div className="mt-3 grid gap-3">
+            {guide.example.map((line) => (
+              <p key={line} className="text-base font-bold leading-7 text-navy">{line}</p>
             ))}
-          </ul>
+          </div>
         </div>
       </article>
 
       <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="04" title="Interest and APR" />
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
-          <DefinitionCard term="Interest" definition={guide.interestAndApr.interestDefinition} />
-          <DefinitionCard term="APR" definition={guide.interestAndApr.aprDefinition} />
-        </div>
-      </article>
-
-      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="05" title="The Cashbrite Rule" />
+        <LessonHeading number="06" title="The Cashbrite Rule" />
         <div className="mt-5 rounded-lg border-2 border-sea bg-mint/25 p-5 text-center">
           <p className="text-xs font-black uppercase tracking-[0.12em] text-sea">Cashbrite Rule</p>
           <p className="mt-2 text-xl font-black leading-8 text-navy">{guide.rule}</p>
-        </div>
-      </article>
-
-      <article className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_12px_34px_rgba(7,29,43,0.05)] sm:p-6">
-        <LessonHeading number="06" title="Making sense of credit history" />
-        <p className="mt-4 text-base leading-7 text-navy/70">{guide.creditHistory.explanation}</p>
-        <div className="mt-5 grid gap-5 md:grid-cols-2">
-          <CreditHistoryList title="May help show responsible management" items={guide.creditHistory.positiveFactors} tone="mint" />
-          <CreditHistoryList title="Can negatively affect your history" items={guide.creditHistory.negativeFactors} tone="cream" />
         </div>
       </article>
 
@@ -488,48 +474,12 @@ function LessonHeading({ number, title }: { number: string; title: string }) {
   );
 }
 
-function MoneySmartExample({ children }: { children: React.ReactNode }) {
+function TeachingPoints({ items, tone = "cream" }: { items: string[]; tone?: "mint" | "cream" }) {
   return (
-    <div className="mt-5 border-l-4 border-sea bg-mint/25 p-5">
-      <p className="text-xs font-black uppercase tracking-[0.1em] text-sea">Money Smart Example</p>
-      <p className="mt-2 text-base font-bold leading-7 text-navy">{children}</p>
-    </div>
-  );
-}
-
-function CreditFigure({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-md bg-cream p-4">
-      <p className="text-xs font-black uppercase tracking-[0.08em] text-sea">{label}</p>
-      <p className="mt-2 font-black leading-6 text-navy">{value}</p>
-    </div>
-  );
-}
-
-function DefinitionCard({ term, definition }: { term: string; definition: string }) {
-  return (
-    <div className="rounded-md bg-cream p-5">
-      <p className="text-lg font-black text-navy">{term}</p>
-      <p className="mt-2 text-sm leading-6 text-navy/70">{definition}</p>
-    </div>
-  );
-}
-
-function CreditHistoryList({
-  title,
-  items,
-  tone,
-}: {
-  title: string;
-  items: string[];
-  tone: "mint" | "cream";
-}) {
-  return (
-    <div className={`rounded-lg p-5 ${tone === "mint" ? "bg-mint/25" : "bg-cream"}`}>
-      <h4 className="font-black leading-6 text-navy">{title}</h4>
-      <ul className="mt-4 grid gap-3">
+    <div className={`mt-5 rounded-lg p-5 ${tone === "mint" ? "bg-mint/25" : "bg-cream"}`}>
+      <ul className="grid gap-3">
         {items.map((item) => (
-          <li key={item} className="flex gap-3 text-sm leading-6 text-navy/70">
+          <li key={item} className="flex gap-3 text-base font-bold leading-7 text-navy/70">
             <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-sea" aria-hidden="true" />
             {item}
           </li>

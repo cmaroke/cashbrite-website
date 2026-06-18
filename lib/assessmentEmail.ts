@@ -77,7 +77,7 @@ export async function sendInternalAssessmentNotification(params: {
       `Name: ${registration.firstName} ${registration.lastName}`,
       `Age: ${registration.age}`,
       `Email: ${registration.email}`,
-      `User type: ${registration.userType}`,
+      `Current stage: ${registration.educationStage}`,
       `How they heard about Cashbrite: ${registration.referralSource || "Not provided"}`,
       `Marketing consent: ${registration.marketingConsent ? "Yes" : "No"}`,
       "",

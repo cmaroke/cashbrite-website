@@ -1,10 +1,10 @@
 import { quizQuestions } from "@/data/quizQuestions";
 import {
+  educationStages,
   referralSources,
-  userTypes,
+  type EducationStage,
   type ReferralSource,
   type RegistrationData,
-  type UserType,
 } from "@/lib/assessmentTypes";
 
 export type AssessmentRequestBody = {
@@ -23,14 +23,14 @@ export function validateAssessmentRequest(body: AssessmentRequestBody) {
   const lastName = String(registration.lastName ?? "").trim();
   const email = String(registration.email ?? "").trim().toLowerCase();
   const age = Number(registration.age);
-  const userType = String(registration.userType ?? "") as UserType;
+  const educationStage = String(registration.educationStage ?? "") as EducationStage;
   const referralSource = String(registration.referralSource ?? "") as ReferralSource | "";
 
   if (!firstName) return "Please enter your first name.";
   if (!lastName) return "Please enter your last name.";
   if (!Number.isInteger(age) || age < 13 || age > 100) return "Please enter a valid age.";
   if (!emailPattern.test(email)) return "Please enter a valid email address.";
-  if (!userTypes.includes(userType)) return "Please choose a user type.";
+  if (!educationStages.includes(educationStage)) return "Please choose your current stage.";
   if (referralSource && !referralSources.includes(referralSource)) {
     return "Please choose a valid referral source.";
   }
@@ -56,7 +56,7 @@ export function normaliseRegistration(registration: Partial<RegistrationData>): 
     lastName: String(registration.lastName ?? "").trim(),
     age: Number(registration.age),
     email: String(registration.email ?? "").trim().toLowerCase(),
-    userType: String(registration.userType ?? "") as UserType,
+    educationStage: String(registration.educationStage ?? "") as EducationStage,
     referralSource: normaliseReferralSource(registration.referralSource),
     reportConsent: registration.reportConsent === true,
     marketingConsent: registration.marketingConsent === true,

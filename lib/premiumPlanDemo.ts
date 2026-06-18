@@ -13,7 +13,7 @@ export const demoPremiumAssessment: PremiumPlanAssessment = {
     lastName: "Morgan",
     age: 17,
     email: "alex.demo@cashbrite.example",
-    userType: "Student",
+    educationStage: "College or Sixth Form",
     referralSource: "School or College",
     reportConsent: true,
     marketingConsent: false,

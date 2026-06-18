@@ -411,7 +411,7 @@ const checklistCategories: Array<{ category: QuizCategory; topic: string; prompt
 ];
 
 export function generatePremiumActionPlan(
-  registration: Pick<RegistrationData, "firstName" | "age" | "userType">,
+  registration: Pick<RegistrationData, "firstName" | "age" | "educationStage">,
   scores: QuizScores,
 ): PremiumActionPlan {
   const priorityCategories = getPremiumPriorityCategories(scores);
@@ -425,7 +425,7 @@ export function generatePremiumActionPlan(
 
   return {
     moneyPersonality: personalityByBand[scores.band],
-    personalMoneyProfile: `${registration.firstName}, at age ${registration.age}, your ${scores.band} result shows where your money knowledge already supports you and where a little focused practice will make the biggest difference. ${profileByBand[scores.band]} This plan is tailored for you as a ${registration.userType.toLowerCase()}.`,
+    personalMoneyProfile: `${registration.firstName}, at age ${registration.age}, your ${scores.band} result shows where your money knowledge already supports you and where a little focused practice will make the biggest difference. ${profileByBand[scores.band]}${registration.educationStage ? ` This plan reflects your current stage: ${registration.educationStage}.` : ""}`,
     categoryScores: (Object.keys(scores.categoryScores) as QuizCategory[]).map((category) => ({
       category,
       title: categoryLabels[category],

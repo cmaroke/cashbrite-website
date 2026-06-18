@@ -17,7 +17,7 @@ const sections = [
   {
     title: "2. Information We Collect",
     content: [
-      "We may collect your name, age, email address and user type, such as student, parent, teacher/school professional or other.",
+      "We may collect your name, age, email address and current education stage, such as school, college or sixth form, university or other.",
       "When you complete the Money Readiness Assessment, we may collect your assessment results, Money Readiness Score, category scores, areas for improvement, strengths, risk areas and generated Money Action Plan information.",
       "We may collect marketing preferences, enquiry information submitted through our forms, and website analytics or technical data where applicable.",
     ],

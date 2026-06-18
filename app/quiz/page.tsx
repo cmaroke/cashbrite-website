@@ -5,11 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { categoryDescriptions, categoryLabels, quizQuestions, type QuizAnswer } from "@/data/quizQuestions";
 import {
+  educationStages,
   referralSources,
-  userTypes,
+  type EducationStage,
   type ReferralSource,
   type RegistrationData,
-  type UserType,
 } from "@/lib/assessmentTypes";
 
 type RegistrationFormState = {
@@ -17,7 +17,7 @@ type RegistrationFormState = {
   lastName: string;
   age: string;
   email: string;
-  userType: "" | UserType;
+  educationStage: "" | EducationStage;
   referralSource: "" | ReferralSource;
   reportConsent: boolean;
   marketingConsent: boolean;
@@ -28,7 +28,7 @@ const initialRegistration: RegistrationFormState = {
   lastName: "",
   age: "",
   email: "",
-  userType: "",
+  educationStage: "",
   referralSource: "",
   reportConsent: false,
   marketingConsent: false,
@@ -195,17 +195,22 @@ export default function QuizPage() {
                 />
               </label>
               <label className="grid gap-2 text-sm font-bold text-navy sm:col-span-2">
-                User type
+                Which best describes your current stage?
                 <select
                   className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
-                  value={registration.userType}
-                  onChange={(event) => setRegistrationValue("userType", event.target.value as RegistrationFormState["userType"])}
+                  value={registration.educationStage}
+                  onChange={(event) =>
+                    setRegistrationValue(
+                      "educationStage",
+                      event.target.value as RegistrationFormState["educationStage"],
+                    )
+                  }
                   required
                 >
                   <option value="">Choose one</option>
-                  {userTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
+                  {educationStages.map((stage) => (
+                    <option key={stage} value={stage}>
+                      {stage}
                     </option>
                   ))}
                 </select>
@@ -360,7 +365,7 @@ function validateRegistration(registration: RegistrationFormState) {
   if (!registration.lastName.trim()) return "Please enter your last name.";
   if (!Number.isInteger(age) || age < 13 || age > 100) return "Please enter a valid age.";
   if (!emailPattern.test(registration.email.trim())) return "Please enter a valid email address.";
-  if (!registration.userType) return "Please choose a user type.";
+  if (!registration.educationStage) return "Please choose your current stage.";
   if (!registration.reportConsent) {
     return "Please confirm that you agree to receive your personalised Cashbrite Money Action Plan by email.";
   }
@@ -374,7 +379,7 @@ function toRegistrationData(registration: RegistrationFormState): RegistrationDa
     lastName: registration.lastName.trim(),
     age: Number(registration.age),
     email: registration.email.trim().toLowerCase(),
-    userType: registration.userType as UserType,
+    educationStage: registration.educationStage as EducationStage,
     referralSource: registration.referralSource,
     reportConsent: registration.reportConsent,
     marketingConsent: registration.marketingConsent,

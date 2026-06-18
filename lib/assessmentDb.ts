@@ -33,7 +33,7 @@ export async function saveAssessment(params: {
       last_name,
       age,
       email,
-      user_type,
+      education_stage,
       referral_source,
       report_consent,
       marketing_consent,
@@ -53,7 +53,7 @@ export async function saveAssessment(params: {
       ${params.registration.lastName},
       ${params.registration.age},
       ${params.registration.email},
-      ${params.registration.userType},
+      ${params.registration.educationStage},
       ${params.registration.referralSource || null},
       ${params.registration.reportConsent},
       ${params.registration.marketingConsent},
@@ -83,7 +83,8 @@ export async function getAssessment(id: string): Promise<SavedAssessment | null>
       lastName: row.last_name,
       age: row.age,
       email: row.email,
-      userType: row.user_type,
+      educationStage: row.education_stage ?? "",
+      legacyUserType: row.user_type ?? undefined,
       referralSource: row.referral_source ?? "",
       reportConsent: row.report_consent,
       marketingConsent: row.marketing_consent,
@@ -134,7 +135,8 @@ async function ensureAssessmentTable() {
       last_name TEXT NOT NULL,
       age INTEGER NOT NULL,
       email TEXT NOT NULL,
-      user_type TEXT NOT NULL,
+      education_stage TEXT,
+      user_type TEXT,
       referral_source TEXT,
       report_consent BOOLEAN NOT NULL,
       marketing_consent BOOLEAN NOT NULL DEFAULT FALSE,
@@ -150,6 +152,8 @@ async function ensureAssessmentTable() {
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
+  await sql`ALTER TABLE assessment_results ADD COLUMN IF NOT EXISTS education_stage TEXT`;
+  await sql`ALTER TABLE assessment_results ALTER COLUMN user_type DROP NOT NULL`;
   await sql`ALTER TABLE assessment_results ADD COLUMN IF NOT EXISTS referral_source TEXT`;
   await sql`CREATE INDEX IF NOT EXISTS assessment_results_email_idx ON assessment_results (email)`;
   await sql`CREATE INDEX IF NOT EXISTS assessment_results_completed_at_idx ON assessment_results (completed_at DESC)`;

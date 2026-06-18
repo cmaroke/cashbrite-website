@@ -1,7 +1,8 @@
 import type { QuizCategory } from "@/data/quizQuestions";
 import type { QuizScores, ResultBand } from "@/lib/quizScoring";
 
-export const userTypes = ["Student", "Parent", "Teacher/School professional", "Other"] as const;
+export const educationStages = ["School", "College or Sixth Form", "University", "Other"] as const;
+export const legacyUserTypes = ["Student", "Parent", "Teacher/School professional", "Other"] as const;
 export const referralSources = [
   "TikTok",
   "Instagram",
@@ -15,7 +16,8 @@ export const referralSources = [
   "Other",
 ] as const;
 
-export type UserType = (typeof userTypes)[number];
+export type EducationStage = (typeof educationStages)[number];
+export type LegacyUserType = (typeof legacyUserTypes)[number];
 export type ReferralSource = (typeof referralSources)[number];
 
 export type RegistrationData = {
@@ -23,7 +25,8 @@ export type RegistrationData = {
   lastName: string;
   age: number;
   email: string;
-  userType: UserType;
+  educationStage: EducationStage | "";
+  legacyUserType?: LegacyUserType;
   referralSource: ReferralSource | "";
   reportConsent: boolean;
   marketingConsent: boolean;
@@ -65,7 +68,8 @@ export type StoredAssessmentRow = {
   last_name: string;
   age: number;
   email: string;
-  user_type: UserType;
+  education_stage: EducationStage | null;
+  user_type: LegacyUserType | null;
   referral_source: ReferralSource | null;
   report_consent: boolean;
   marketing_consent: boolean;

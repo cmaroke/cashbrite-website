@@ -102,7 +102,7 @@ Result bands are:
 
 ## Assessment Registration And Data Storage
 
-The Money Readiness Assessment starts with a registration step. Users must provide first name, last name, age, email address, user type, and required consent to receive their personalised Cashbrite Money Action Plan by email. Optional marketing consent is stored separately.
+The Money Readiness Assessment starts with a registration step. Users must provide first name, last name, age, email address, their current education stage, and required consent to receive their personalised Cashbrite Money Action Plan by email. Optional marketing consent is stored separately.
 
 Assessment submissions are handled by `app/api/assessments/route.ts`. The route validates the registration and answers, uses the existing quiz scoring logic, generates the Money Action Plan, stores the result and emails the user when Resend is configured.
 

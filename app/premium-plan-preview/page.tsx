@@ -4,6 +4,7 @@ import { Logo } from "@/components/Logo";
 import { PremiumPlanPrintControls } from "@/components/PremiumPlanPrintControls";
 import { getAssessment } from "@/lib/assessmentDb";
 import { generatePremiumActionPlan } from "@/lib/premiumActionPlan";
+import { demoPremiumAssessment, type PremiumPlanAssessment } from "@/lib/premiumPlanDemo";
 
 export const dynamic = "force-dynamic";
 
@@ -20,21 +21,24 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
   const params = await searchParams;
   const id = readParam(params.id);
   const previewKey = readParam(params.key);
+  const isDemo = readParam(params.demo) === "true";
   const configuredKey = process.env.PREMIUM_PLAN_PREVIEW_KEY;
 
-  if (!configuredKey || previewKey !== configuredKey) {
+  if (!isDemo && (!configuredKey || previewKey !== configuredKey)) {
     return <PreviewLocked />;
   }
 
-  if (!id) {
+  if (!isDemo && !id) {
     return <PreviewUnavailable message="Add a valid assessment ID to preview its premium plan." />;
   }
 
-  let assessment;
-  try {
-    assessment = await getAssessment(id);
-  } catch {
-    return <PreviewUnavailable message="The assessment database could not be reached." />;
+  let assessment: PremiumPlanAssessment | null = demoPremiumAssessment;
+  if (!isDemo) {
+    try {
+      assessment = await getAssessment(id!);
+    } catch {
+      return <PreviewUnavailable message="The assessment database could not be reached." />;
+    }
   }
 
   if (!assessment) {
@@ -50,7 +54,15 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
 
   return (
     <article className="premium-plan-preview bg-[#edf4f0] py-8 sm:py-12">
-      <div className="no-print mx-auto mb-6 flex max-w-5xl justify-end px-4 sm:px-6">
+      <div className="no-print mx-auto mb-6 flex max-w-5xl flex-col gap-4 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        {isDemo ? (
+          <div className="rounded-md border border-sea/15 bg-white px-4 py-3 shadow-[0_10px_30px_rgba(7,29,43,0.06)]">
+            <p className="text-sm font-black text-navy">Demo preview</p>
+            <p className="mt-1 text-xs font-semibold text-navy/65">Sample data only. No customer information is shown.</p>
+          </div>
+        ) : (
+          <span />
+        )}
         <PremiumPlanPrintControls />
       </div>
 
@@ -67,7 +79,7 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
           <div className="flex items-center justify-between gap-6 border-b border-white/15 pb-7">
             <Logo href="" light />
             <span className="rounded-full border border-mint/25 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-mint">
-              Personal report
+              {isDemo ? "Demo report" : "Personal report"}
             </span>
           </div>
           <div className="my-auto py-14">
@@ -91,6 +103,11 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
               <p className="text-sm font-bold uppercase tracking-[0.12em] text-white/55">Result band</p>
               <p className="mt-2 text-2xl font-black">{assessment.scores.band}</p>
               <p className="mt-2 text-sm text-white/55">Prepared for {assessment.registration.email}</p>
+              {isDemo ? (
+                <p className="mt-3 text-xs font-black uppercase tracking-[0.1em] text-mint">
+                  Sample data &middot; design preview only
+                </p>
+              ) : null}
             </div>
           </div>
         </section>

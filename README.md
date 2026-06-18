@@ -137,6 +137,14 @@ For production, verify a sending domain in Resend and update `CONTACT_FROM_EMAIL
 
 The full paid workbook is available through a private, no-index test route. It is not linked from the free results page.
 
+To review the design safely with synthetic data and no database lookup, open:
+
+```text
+/premium-plan-preview?demo=true
+```
+
+The demo is visibly labelled and uses only a fictional profile. No environment variable is required for demo mode.
+
 1. Add a long random `PREMIUM_PLAN_PREVIEW_KEY` to `.env.local` and to Vercel when a deployed preview is needed.
 2. Copy an assessment ID from the `id` value in a completed results-page URL.
 3. Open:

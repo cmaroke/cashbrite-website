@@ -107,7 +107,7 @@ export async function getAssessment(id: string): Promise<SavedAssessment | null>
 
 export async function recordPremiumInterest(params: {
   assessmentId: string;
-  interestType: "preview" | "unlock";
+  interestType: "unlock_click";
 }) {
   const sql = getSql();
   await ensurePremiumInterestTable();
@@ -166,9 +166,13 @@ async function ensurePremiumInterestTable() {
       id BIGSERIAL PRIMARY KEY,
       assessment_id UUID NOT NULL REFERENCES assessment_results(id) ON DELETE CASCADE,
       email TEXT NOT NULL,
-      interest_type TEXT NOT NULL CHECK (interest_type IN ('preview', 'unlock')),
+      interest_type TEXT NOT NULL,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
+  `;
+  await sql`
+    ALTER TABLE premium_plan_interest
+    DROP CONSTRAINT IF EXISTS premium_plan_interest_interest_type_check
   `;
   await sql`
     CREATE INDEX IF NOT EXISTS premium_plan_interest_assessment_idx

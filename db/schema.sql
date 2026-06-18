@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS premium_plan_interest (
   id BIGSERIAL PRIMARY KEY,
   assessment_id UUID NOT NULL REFERENCES assessment_results(id) ON DELETE CASCADE,
   email TEXT NOT NULL,
-  interest_type TEXT NOT NULL CHECK (interest_type IN ('preview', 'unlock')),
+  interest_type TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { PreviewPlanLink } from "@/components/PremiumPlanCtas";
+import { UnlockPlanButton } from "@/components/PremiumPlanCtas";
 import { categoryDescriptions, categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import { getAssessment } from "@/lib/assessmentDb";
+import { generatePremiumActionPlan, getPremiumPreview } from "@/lib/premiumActionPlan";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +33,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
 
   const scores = assessment.scores;
   const actionPlan = assessment.actionPlan;
+  const premiumPreview = getPremiumPreview(generatePremiumActionPlan(assessment.registration, scores));
   const categoryEntries = Object.entries(scores.categoryScores) as Array<
     [QuizCategory, (typeof scores.categoryScores)[QuizCategory]]
   >;
@@ -172,40 +174,68 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           </div>
         </section>
 
-        <section className="relative mt-8 overflow-hidden rounded-lg border border-sea/25 bg-white p-6 shadow-[0_24px_70px_rgba(7,29,43,0.12)] sm:p-9">
-          <div className="absolute right-0 top-0 h-32 w-32 translate-x-10 -translate-y-10 rounded-full bg-mint/45" aria-hidden="true" />
-          <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Cashbrite Money Ready Plan</p>
-                <span className="rounded-full bg-navy px-3 py-1 text-xs font-black uppercase tracking-[0.1em] text-mint">
-                  Premium
-                </span>
-              </div>
-              <h2 className="mt-3 max-w-3xl text-3xl font-black text-navy sm:text-4xl">
-                Unlock your full Cashbrite Money Ready Plan
-              </h2>
-              <p className="mt-4 max-w-3xl text-lg leading-8 text-navy/72">
-                Get a personalised 30-day roadmap based on your assessment results, including practical weekly
-                actions, parent conversation prompts, and a full Money Ready checklist.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2 text-sm font-bold text-navy/68">
-                {[
-                  "Tailored to your results",
-                  "Four weekly action plans",
-                  "Parent conversation guide",
-                ].map((item) => (
-                  <span key={item} className="rounded-full border border-navy/10 bg-cream px-3 py-2">
-                    {item}
-                  </span>
-                ))}
-              </div>
+        <section className="relative mt-8 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-9">
+          <div className="relative">
+            <div className="flex flex-wrap items-center gap-3">
+              <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Cashbrite Money Ready Plan</p>
+              <span className="rounded-full border border-mint/25 bg-white/8 px-3 py-1 text-xs font-black uppercase tracking-[0.1em] text-mint">
+                Premium
+              </span>
             </div>
-            <div className="rounded-lg bg-navy p-5 text-white lg:min-w-64">
-              <p className="text-sm font-bold text-white/65">Launch price</p>
-              <p className="mt-1 text-4xl font-black text-mint">£19</p>
-              <div className="mt-5">
-                <PreviewPlanLink assessmentId={assessment.id} />
+            <div className="mt-4 grid gap-8 lg:grid-cols-[1fr_0.38fr] lg:items-start">
+              <div>
+                <h2 className="max-w-3xl text-3xl font-black sm:text-4xl">
+                  Unlock your full Cashbrite Money Ready Plan
+                </h2>
+                <p className="mt-4 max-w-3xl text-lg leading-8 text-white/75">
+                  Get your personalised 30-day roadmap based on your assessment results, including weekly actions,
+                  parent conversation prompts and a full Money Ready checklist.
+                </p>
+
+                <div className="mt-7">
+                  <p className="text-sm font-black uppercase tracking-[0.12em] text-mint">Your top 3 priority areas</p>
+                  <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                    {premiumPreview.priorityAreas.map((area, index) => (
+                      <div key={area.category} className="rounded-md border border-white/12 bg-white/8 p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-xs font-black text-mint">0{index + 1}</span>
+                          <span className="text-sm font-black text-white/65">{area.score}%</span>
+                        </div>
+                        <p className="mt-3 font-black leading-6 text-white">{area.title}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-7">
+                  <p className="text-sm font-black uppercase tracking-[0.12em] text-mint">What your full plan includes</p>
+                  <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                    {[
+                      "Personal Money Profile",
+                      "Top 3 Priority Areas",
+                      "30-Day Roadmap",
+                      "Parent Conversation Guide",
+                      "Money Ready Checklist",
+                      "Recommended Next Steps",
+                    ].map((item) => (
+                      <li key={item} className="flex items-center gap-3 text-base font-bold text-white/82">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint text-xs font-black text-navy" aria-hidden="true">
+                          &#10003;
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="border-t border-white/12 pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+                <p className="text-sm font-bold text-white/62">Launch price</p>
+                <p className="mt-1 text-5xl font-black text-mint">£19</p>
+                <p className="mt-2 text-sm font-semibold text-white/58">One personalised plan</p>
+                <div className="mt-6">
+                  <UnlockPlanButton assessmentId={assessment.id} />
+                </div>
               </div>
             </div>
           </div>

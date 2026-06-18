@@ -16,6 +16,7 @@ export type CreditLearningGuide = {
   example: {
     title: string;
     scenario: string;
+    monthTitle: string;
     statement: Array<{ label: string; value: string }>;
     options: Array<{ title: string; payment: string; outcomes: string[] }>;
   };
@@ -215,15 +216,15 @@ const guidance: Record<QuizCategory, CategoryGuidance> = {
     commonMistakes: "Treating a credit limit as extra income, spending without a repayment plan, or making only the minimum payment without noticing how long the balance could remain.",
     whatToLearn: "A credit card lets you borrow money for purchases. Paying the full balance by the due date usually avoids purchase interest, while leaving a balance may allow interest to build.",
     realLifeExample: {
-      title: "Credit card example: trainers for £100",
-      summary: "You buy a pair of trainers for £100 using your credit card. At the end of the month, your statement arrives.",
+      title: "You buy trainers for £100 — what happens next?",
+      summary: "You buy a pair of trainers for £100 using your credit card. In Month 1, your statement arrives.",
       details: [
-        "Full balance: £100. Pay it by 15th October and you usually avoid interest.",
-        "Minimum payment: £5. Pay only this and £95 remains unpaid.",
+        "Pay the full £100 by 15 October: your balance becomes £0 and you usually avoid interest.",
+        "Pay only £5: you still owe £95 and interest may be added to the remaining balance.",
       ],
-      takeaway: "Paying the full balance clears what was borrowed. Paying only the minimum leaves most of the balance to carry over.",
+      takeaway: "The £100 trainers can still cost £100 when the full balance is cleared, but they may cost more when a balance carries over.",
     },
-    moneySmartTip: "A credit card is not extra money. If you use one, aim to repay the full balance when your statement arrives.",
+    moneySmartTip: "A credit card bill is not asking, ‘What is the smallest amount I can pay?’ It is showing you the amount you have borrowed. If you can, aim to repay the full balance every month.",
     creditLearningGuide: {
       basics: {
         explanation: "A credit card lets you borrow money to spend now and repay later.",
@@ -250,32 +251,35 @@ const guidance: Record<QuizCategory, CategoryGuidance> = {
         ],
       },
       example: {
-        title: "Credit card example: trainers for £100",
-        scenario: "You buy a pair of trainers for £100 using your credit card. At the end of the month, your statement arrives.",
+        title: "You buy trainers for £100 — what happens next?",
+        scenario: "You buy a pair of trainers for £100 using your credit card.",
+        monthTitle: "Month 1 — Your statement arrives",
         statement: [
           { label: "Amount spent", value: "£100" },
           { label: "Minimum payment", value: "£5" },
           { label: "Full balance", value: "£100" },
-          { label: "Payment due date", value: "15th October" },
+          { label: "Payment due date", value: "15 October" },
         ],
         options: [
           {
-            title: "Option 1: Pay the full balance",
-            payment: "You pay the full £100 by the due date.",
-            outcomes: ["Your balance is cleared", "You usually avoid paying interest", "You build a good money habit"],
+            title: "Option A — Pay the full balance",
+            payment: "You pay £100.",
+            outcomes: ["Your balance is now £0", "You usually avoid paying interest", "Your trainers still cost £100"],
           },
           {
-            title: "Option 2: Pay only the minimum payment",
-            payment: "You pay £5 and leave £95 unpaid.",
+            title: "Option B — Pay only the minimum",
+            payment: "You pay £5.",
             outcomes: [
               "You still owe £95",
-              "Interest may be charged on the remaining balance",
-              "It could take much longer to clear what you owe",
+              "Interest may be added to the remaining balance",
+              "Your next statement may show a higher amount owed than expected",
+              "It could take many months to fully repay the trainers",
+              "The £100 trainers could eventually cost more than £100",
             ],
           },
         ],
       },
-      rule: "A credit card is not extra money. If you use one, aim to repay the full balance when your statement arrives.",
+      rule: "A credit card bill is not asking, ‘What is the smallest amount I can pay?’ It is showing you the amount you have borrowed. If you can, aim to repay the full balance every month.",
     },
     actions: [
       "Explain in your own words why a credit card balance is borrowed money rather than extra income.",

@@ -443,7 +443,7 @@ function CreditBorrowingLesson({ guide }: { guide: CreditLearningGuide }) {
         <p className="mt-4 text-base leading-7 text-navy/70">{guide.example.scenario}</p>
         <div className="mt-5 overflow-hidden rounded-lg border border-sea/15">
           <div className="bg-mint/25 px-5 py-3">
-            <p className="text-xs font-black uppercase tracking-[0.1em] text-sea">Your monthly statement</p>
+            <p className="text-sm font-black text-sea">{guide.example.monthTitle}</p>
           </div>
           <dl className="grid sm:grid-cols-2">
             {guide.example.statement.map((item) => (
@@ -454,11 +454,13 @@ function CreditBorrowingLesson({ guide }: { guide: CreditLearningGuide }) {
             ))}
           </dl>
         </div>
+        <p className="mt-5 text-base font-black text-navy">You have two choices:</p>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {guide.example.options.map((option, index) => (
             <div key={option.title} className={`rounded-lg p-5 ${index === 0 ? "bg-mint/25" : "bg-cream"}`}>
               <p className="text-sm font-black uppercase tracking-[0.08em] text-sea">{option.title}</p>
               <p className="mt-3 font-black leading-7 text-navy">{option.payment}</p>
+              <p className="mt-4 text-xs font-black uppercase tracking-[0.08em] text-sea">Result</p>
               <ul className="mt-4 grid gap-3">
                 {option.outcomes.map((outcome) => (
                   <li key={outcome} className="flex gap-3 text-sm leading-6 text-navy/70">

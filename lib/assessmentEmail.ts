@@ -53,7 +53,7 @@ export async function sendActionPlanEmail(params: {
       "",
       `View your free results: ${resultUrl}`,
       "",
-      "Cashbrite provides educational guidance and not regulated financial advice.",
+      "Cashbrite is an educational platform and does not provide regulated financial advice.",
       `Privacy Policy: ${siteUrl}/privacy-policy`,
       `Financial Disclaimer: ${siteUrl}/financial-disclaimer`,
       `Contact: ${contactEmail}`,
@@ -186,7 +186,7 @@ function buildAssessmentEmailHtml(params: {
           </tr>
           <tr>
             <td style="padding:24px 28px;background:#fbf7ec;color:#66747c;font-size:12px;line-height:19px;text-align:center;">
-              <p style="margin:0 0 10px;">Cashbrite provides educational guidance and not regulated financial advice.</p>
+              <p style="margin:0 0 10px;">Cashbrite is an educational platform and does not provide regulated financial advice.</p>
               <p style="margin:0;"><a href="${siteUrl}/privacy-policy" style="color:#2f8f7b;">Privacy Policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="${siteUrl}/financial-disclaimer" style="color:#2f8f7b;">Financial Disclaimer</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:${escapeHtml(contactEmail)}" style="color:#2f8f7b;">${escapeHtml(contactEmail)}</a></p>
             </td>
           </tr>

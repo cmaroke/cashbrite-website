@@ -17,6 +17,7 @@ Cashbrite is a UK financial education platform for school leavers, students and 
 app/
   api/assessments/route.ts Server-side assessment save/email endpoint
   api/contact/route.ts  Server-side contact form email endpoint
+  api/money-ready-plan/pdf/ Payment-verified premium PDF download
   api/stripe/checkout/  Server-side Stripe Checkout session endpoint
   api/stripe/webhook/   Signed Stripe payment webhook endpoint
   contact/page.tsx       Contact page
@@ -25,6 +26,7 @@ app/
   page.tsx               Home page
   premium-plan-preview/  Locked premium workbook preview
   money-ready-plan/success/ Verified premium plan access page
+  checkout/money-ready-plan/ Assessment email checkout recovery page
   quiz/page.tsx          Money Readiness Questionnaire
   results/page.tsx       Quiz results page
   schools/page.tsx       Schools page
@@ -41,6 +43,7 @@ db/
 lib/
   actionPlan.ts          Money Action Plan generation
   premiumActionPlan.ts   Premium Money Ready Plan generation
+  moneyReadyPlanPdf.ts   Branded premium PDF generation
   premiumPurchaseDb.ts   Premium purchase database helpers
   stripe.ts              Server-only Stripe configuration
   assessmentDb.ts        Neon database helpers
@@ -169,7 +172,29 @@ Example preview-only environment variable:
 PREMIUM_PLAN_PREVIEW_KEY=use-a-long-random-preview-key
 ```
 
-The preview includes a print button, which can use the browser's Save as PDF option. The separate Download PDF button is intentionally a placeholder for future automated PDF generation.
+The preview includes a print button, and paid plans also provide a server-generated branded PDF download.
+
+## Premium PDF Delivery
+
+After Stripe confirms a paid Checkout Session, Cashbrite generates a branded A4 Money Ready Plan from the same assessment data used by the premium web workbook. The PDF is attached to the Resend purchase confirmation email and remains available from the unlocked web plan through a payment-verified download URL.
+
+The download endpoint is:
+
+```text
+/api/money-ready-plan/pdf?session_id=STRIPE_CHECKOUT_SESSION_ID
+```
+
+The endpoint retrieves the Checkout Session directly from Stripe and only returns a PDF when the session is complete, paid, linked to the Cashbrite Money Ready Plan product and connected to a valid assessment. No additional environment variables are required beyond the existing Stripe, Neon and Resend configuration.
+
+## Assessment Email And Checkout Recovery
+
+Assessment emails use a responsive branded HTML layout with a plain-text fallback. The upgrade button links to:
+
+```text
+/checkout/money-ready-plan?assessmentId=ASSESSMENT_ID&source=email
+```
+
+The recovery page validates the assessment, shows its score, result band and three priority areas, and reuses the normal server-side Stripe Checkout flow. Opening the page records `checkout_recovery_view`; links carrying `source=email` also record `email_checkout_click`. These events use the existing `premium_plan_interest` table and require no database migration.
 
 ## Stripe Checkout Setup
 

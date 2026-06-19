@@ -39,7 +39,13 @@ async function createCheckout(assessmentId: string) {
   return checkoutUrl.toString();
 }
 
-export function UnlockPlanButton({ assessmentId }: { assessmentId: string }) {
+export function UnlockPlanButton({
+  assessmentId,
+  label = "Unlock My £19 Money Ready Plan",
+}: {
+  assessmentId: string;
+  label?: string;
+}) {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -67,7 +73,7 @@ export function UnlockPlanButton({ assessmentId }: { assessmentId: string }) {
         disabled={isSubmitting}
         className="focus-ring inline-flex min-h-12 w-full items-center justify-center rounded-full bg-mint px-6 py-4 text-center text-base font-black leading-6 text-navy shadow-[0_16px_34px_rgba(185,234,216,0.18)] transition hover:-translate-y-0.5 hover:bg-[#a7dfcd] disabled:cursor-wait disabled:opacity-70 sm:text-lg"
       >
-        {isSubmitting ? "Opening secure checkout..." : "Unlock My £19 Money Ready Plan"}
+        {isSubmitting ? "Opening secure checkout..." : label}
       </button>
       <p
         className={`mt-3 min-h-6 text-sm font-semibold leading-6 ${message ? "text-[#a43f47]" : "text-navy/70"}`}

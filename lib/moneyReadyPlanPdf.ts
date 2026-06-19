@@ -391,19 +391,19 @@ class PdfComposer {
   }
 
   checklist(topic: string, prompt: string) {
-    const titleLines = topic ? this.wrap(topic, this.bold, 10.5, CONTENT_WIDTH - 58) : [];
-    const promptLines = this.wrap(prompt, this.regular, 9.5, CONTENT_WIDTH - 58);
-    const height = Math.max(43, 16 + titleLines.length * 14 + promptLines.length * 14);
+    const titleLines = topic ? this.wrap(topic, this.bold, 10, CONTENT_WIDTH - 58) : [];
+    const promptLines = this.wrap(prompt, this.regular, 9, CONTENT_WIDTH - 58);
+    const height = Math.max(38, 12 + titleLines.length * 13 + promptLines.length * 12.5);
     this.ensure(height);
     this.page.drawRectangle({ x: MARGIN, y: this.y - height, width: CONTENT_WIDTH, height, color: WHITE, borderColor: BORDER, borderWidth: 1 });
-    this.page.drawRectangle({ x: MARGIN + 16, y: this.y - 29, width: 14, height: 14, color: WHITE, borderColor: SEA, borderWidth: 1.5 });
-    let textY = this.y - 18;
+    this.page.drawRectangle({ x: MARGIN + 16, y: this.y - 25, width: 13, height: 13, color: WHITE, borderColor: SEA, borderWidth: 1.5 });
+    let textY = this.y - 15;
     if (titleLines.length) {
-      this.drawLines(titleLines, MARGIN + 42, textY, 10.5, 14, this.bold, NAVY);
-      textY -= titleLines.length * 14 + 2;
+      this.drawLines(titleLines, MARGIN + 42, textY, 10, 13, this.bold, NAVY);
+      textY -= titleLines.length * 13 + 1;
     }
-    this.drawLines(promptLines, MARGIN + 42, textY, 9.5, 14, this.regular, MUTED);
-    this.y -= height + 7;
+    this.drawLines(promptLines, MARGIN + 42, textY, 9, 12.5, this.regular, MUTED);
+    this.y -= height + 4;
   }
 
   scoreComparison(current: number, goal: number) {

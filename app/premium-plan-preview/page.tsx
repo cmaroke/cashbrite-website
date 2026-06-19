@@ -22,6 +22,7 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
   const id = readParam(params.id);
   const previewKey = readParam(params.key);
   const isDemo = readParam(params.demo) === "true";
+  const downloadSessionId = readParam(params.downloadSessionId);
   const configuredKey = process.env.PREMIUM_PLAN_PREVIEW_KEY ?? process.env.STRIPE_SECRET_KEY;
 
   if (!isDemo && (!configuredKey || previewKey !== configuredKey)) {
@@ -63,7 +64,15 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
         ) : (
           <span />
         )}
-        <PremiumPlanPrintControls />
+        <PremiumPlanPrintControls
+          downloadUrl={
+            downloadSessionId
+              ? `/api/money-ready-plan/pdf?session_id=${encodeURIComponent(downloadSessionId)}`
+              : isDemo && process.env.NODE_ENV !== "production"
+                ? "/api/money-ready-plan/pdf?demo=true"
+                : undefined
+          }
+        />
       </div>
 
       <div className="premium-workbook mx-auto grid max-w-5xl gap-7 px-4 sm:px-6">

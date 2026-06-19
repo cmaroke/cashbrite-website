@@ -50,7 +50,11 @@ export default async function MoneyReadyPlanSuccessPage({ searchParams }: Succes
         </div>
       </section>
       {await PremiumPlanPreviewPage({
-        searchParams: Promise.resolve({ id: access.assessmentId, key: internalPreviewKey }),
+        searchParams: Promise.resolve({
+          id: access.assessmentId,
+          key: internalPreviewKey,
+          downloadSessionId: sessionId,
+        }),
       })}
     </>
   );

@@ -95,6 +95,7 @@ export async function sendPremiumPurchaseConfirmation(params: {
   amount: number;
   currency: string;
   accessUrl: string;
+  pdfAttachment: Buffer;
 }) {
   const resendApiKey = process.env.RESEND_API_KEY;
   const fromEmail = process.env.CONTACT_FROM_EMAIL ?? "Cashbrite <onboarding@resend.dev>";
@@ -111,12 +112,18 @@ export async function sendPremiumPurchaseConfirmation(params: {
       from: fromEmail,
       to: params.registration.email,
       subject: "Your Cashbrite Money Ready Plan is unlocked",
+      attachments: [
+        {
+          filename: `Cashbrite-Money-Ready-Plan-${params.registration.firstName.replace(/[^a-z0-9-]/gi, "-")}.pdf`,
+          content: params.pdfAttachment,
+        },
+      ],
       text: [
         `Hi ${params.registration.firstName},`,
         "",
         `Thank you for purchasing your Cashbrite Money Ready Plan for ${price}.`,
         "",
-        "Your personalised workbook is ready. Use this secure link to access it:",
+        "Your personalised workbook is attached as a PDF. You can also use this secure link to view it online:",
         params.accessUrl,
         "",
         "Cashbrite provides financial education and confidence-building guidance. It is not regulated financial, legal, tax or investment advice.",

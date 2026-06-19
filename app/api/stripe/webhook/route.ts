@@ -2,6 +2,7 @@ import type Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { sendPremiumPurchaseConfirmation } from "@/lib/assessmentEmail";
 import { getAssessment } from "@/lib/assessmentDb";
+import { generateMoneyReadyPlanPdf } from "@/lib/moneyReadyPlanPdf";
 import { markCheckoutExpired, markPaymentFailed, markPurchasePaid } from "@/lib/premiumPurchaseDb";
 import { getSiteUrl, getStripe, moneyReadyPlanProduct } from "@/lib/stripe";
 
@@ -52,6 +53,11 @@ async function handleCompletedCheckout(session: Stripe.Checkout.Session) {
     return;
   }
 
+  const assessment = await getAssessment(assessmentId);
+  if (!assessment) return;
+
+  // Generate before marking the purchase paid so Stripe can retry if PDF creation fails.
+  const pdfAttachment = await generateMoneyReadyPlanPdf(assessment);
   const newlyPaid = await markPurchasePaid({
     assessmentId,
     email,
@@ -63,14 +69,12 @@ async function handleCompletedCheckout(session: Stripe.Checkout.Session) {
 
   if (!newlyPaid) return;
 
-  const assessment = await getAssessment(assessmentId);
-  if (!assessment) return;
-
   const accessUrl = `${getSiteUrl()}/money-ready-plan/success?session_id=${encodeURIComponent(session.id)}`;
   await sendPremiumPurchaseConfirmation({
     registration: assessment.registration,
     amount: session.amount_total ?? 1900,
     currency: session.currency ?? "gbp",
     accessUrl,
+    pdfAttachment,
   });
 }

@@ -69,7 +69,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
   const premiumPreview = getPremiumPreview(generatePremiumActionPlan(assessment.registration, scores));
 
   return (
-    <section className="bg-cream py-16 sm:py-20">
+    <section className="bg-cream py-10 sm:py-14">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-6 rounded-lg bg-navy p-6 text-white shadow-soft sm:p-8 md:grid-cols-[0.72fr_1fr] md:items-center">
           <div className="rounded-lg border border-white/10 bg-white/8 p-6 text-center">
@@ -80,46 +80,18 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           <div>
             <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Your Cashbrite report</p>
             <h1 className="mt-3 text-4xl font-black sm:text-5xl">{scores.band}</h1>
-            <p className="mt-4 text-xl leading-8 text-white/78">
-              {assessment.registration.firstName}, your free personalised Cashbrite Money Action Plan is ready.
-            </p>
+            <p className="mt-4 text-lg leading-8 text-white/78">{actionPlan.summary}</p>
             <p className="mt-3 text-sm leading-6 text-white/62">
               A copy has been sent to {assessment.registration.email} if email delivery is configured.
             </p>
           </div>
         </div>
 
-        <section className="mt-8 rounded-lg border border-navy/10 bg-white p-6 shadow-soft sm:p-8">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Your Money Readiness Summary</p>
-          <h2 className="mt-2 text-3xl font-black text-navy">A supportive snapshot of where you are now</h2>
-          <p className="mt-4 max-w-4xl text-lg leading-8 text-navy/74">{actionPlan.summary}</p>
-        </section>
-
-        <section className="mt-8 rounded-lg border border-navy/10 bg-white p-6 shadow-soft sm:p-8">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Your Top 3 Priority Areas</p>
-          <h2 className="mt-2 text-3xl font-black text-navy">Your biggest opportunities to build confidence</h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            {actionPlan.priorityAreas.map((area, index) => (
-              <article key={area.category} className="rounded-md border border-navy/10 bg-cream p-5">
-                <div className="flex items-center gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy text-sm font-black text-white">
-                    {index + 1}
-                  </span>
-                  <h3 className="text-xl font-black leading-7 text-navy">{area.title}</h3>
-                </div>
-              </article>
-            ))}
-          </div>
-          <p className="mt-5 border-t border-navy/10 pt-5 text-base font-semibold leading-7 text-navy/68">
-            Your Money Ready Plan explains exactly what these areas mean and gives you practical steps to improve.
-          </p>
-        </section>
-
-        <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-black leading-8 text-navy">
-          You now know your score. The next step is knowing exactly how to improve it.
+        <p className="mx-auto mt-5 max-w-3xl text-center text-lg font-black leading-8 text-navy">
+          Your score tells you where you are today. Your Money Ready Plan shows you exactly how to improve.
         </p>
 
-        <section className="relative mt-4 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-9 lg:p-11">
+        <section className="relative mt-3 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-9 lg:p-11">
           <div className="flex flex-wrap items-center gap-3">
             <Image src="/brand/cashbrite-icon.svg" alt="" width={24} height={24} aria-hidden="true" />
             <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Cashbrite Money Ready Plan</p>
@@ -128,17 +100,16 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
             </span>
           </div>
 
-          <div className="mt-5 grid gap-9 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
-            <div>
-              <h2 className="max-w-3xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
-                Unlock Your Personal Cashbrite Money Ready Plan
-              </h2>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
-                Your personalised roadmap to financial confidence, built from your Money Readiness Assessment
-                results.
-              </p>
+          <h2 className="mt-5 max-w-3xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
+            Unlock Your Personal Cashbrite Money Ready Plan
+          </h2>
+          <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
+            Your personalised roadmap to financial confidence, built from your Money Readiness Assessment results.
+          </p>
 
-              <div className="mt-8">
+          <div className="mt-7 grid gap-9 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
+            <div className="order-2 xl:order-1">
+              <div>
                 <p className="text-sm font-black uppercase tracking-[0.12em] text-mint">Built around your results</p>
                 <div className="mt-3 grid gap-3 sm:grid-cols-3">
                   {premiumPreview.priorityAreas.map((area, index) => (
@@ -171,8 +142,8 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
               </div>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-1">
-              <div className="rounded-lg bg-cream p-4 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.22)] sm:p-5">
+            <div className="order-1 grid gap-5 sm:grid-cols-2 xl:order-2 xl:grid-cols-1">
+              <div className="order-2 rounded-lg bg-cream p-4 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.22)] sm:p-5">
                 <div className="overflow-hidden rounded-md border border-navy/10 bg-white">
                   <div className="bg-navy p-5">
                     <Image
@@ -210,7 +181,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                 <p className="mt-3 text-center text-xs font-bold text-navy/60">A practical workbook built from your answers</p>
               </div>
 
-              <div className="rounded-lg border border-mint/25 bg-white p-6 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.18)] sm:p-7">
+              <div className="order-1 rounded-lg border border-mint/25 bg-white p-6 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.18)] sm:p-7">
                 <p className="text-sm font-black uppercase tracking-[0.12em] text-sea">Launch Offer</p>
                 <div className="mt-3 flex items-end gap-3">
                   <p className="text-6xl font-black leading-none text-navy">£19</p>
@@ -243,6 +214,26 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           </div>
         </section>
 
+        <section className="mt-7 rounded-lg border border-navy/10 bg-white p-6 shadow-soft sm:p-8">
+          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Your Top 3 Priority Areas</p>
+          <h2 className="mt-2 text-3xl font-black text-navy">Your biggest opportunities for growth</h2>
+          <p className="mt-3 max-w-3xl text-base leading-7 text-navy/68">
+            These are the areas your personalised Money Ready Plan will help you understand and improve.
+          </p>
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {actionPlan.priorityAreas.map((area, index) => (
+              <article key={area.category} className="rounded-md border border-navy/10 bg-cream p-5">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy text-sm font-black text-white">
+                    {index + 1}
+                  </span>
+                  <h3 className="text-xl font-black leading-7 text-navy">{area.title}</h3>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section className="mt-8 rounded-lg border border-sea/15 bg-mint/30 p-6 sm:p-8">
           <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Your next step</p>
           <h2 className="mt-2 max-w-3xl text-3xl font-black text-navy">
@@ -266,6 +257,17 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
               </li>
             ))}
           </ul>
+        </section>
+
+        <section className="mt-7 rounded-lg bg-navy px-6 py-8 text-center text-white shadow-soft sm:px-8 sm:py-10">
+          <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Your next move</p>
+          <h2 className="mt-2 text-3xl font-black">Ready to become more confident with money?</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-white/70">
+            Unlock your personalised roadmap with one secure payment and no subscription.
+          </p>
+          <div className="mx-auto mt-5 max-w-md">
+            <UnlockPlanButton assessmentId={assessment.id} />
+          </div>
         </section>
       </div>
     </section>

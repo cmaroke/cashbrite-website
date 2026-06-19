@@ -89,3 +89,62 @@ export async function sendInternalAssessmentNotification(params: {
     ].join("\n"),
   });
 }
+
+export async function sendPremiumPurchaseConfirmation(params: {
+  registration: RegistrationData;
+  amount: number;
+  currency: string;
+  accessUrl: string;
+}) {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.CONTACT_FROM_EMAIL ?? "Cashbrite <onboarding@resend.dev>";
+  if (!resendApiKey) return;
+
+  const resend = new Resend(resendApiKey);
+  const price = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: params.currency.toUpperCase(),
+  }).format(params.amount / 100);
+
+  const deliveries = [
+    resend.emails.send({
+      from: fromEmail,
+      to: params.registration.email,
+      subject: "Your Cashbrite Money Ready Plan is unlocked",
+      text: [
+        `Hi ${params.registration.firstName},`,
+        "",
+        `Thank you for purchasing your Cashbrite Money Ready Plan for ${price}.`,
+        "",
+        "Your personalised workbook is ready. Use this secure link to access it:",
+        params.accessUrl,
+        "",
+        "Cashbrite provides financial education and confidence-building guidance. It is not regulated financial, legal, tax or investment advice.",
+        "",
+        "Cashbrite",
+      ].join("\n"),
+    }),
+  ];
+
+  const internalEmail = process.env.CONTACT_TO_EMAIL;
+  if (internalEmail) {
+    deliveries.push(
+      resend.emails.send({
+        from: fromEmail,
+        to: internalEmail,
+        replyTo: params.registration.email,
+        subject: `Cashbrite Money Ready Plan purchased by ${params.registration.firstName} ${params.registration.lastName}`,
+        text: [
+          "A Cashbrite Money Ready Plan purchase has been completed.",
+          "",
+          `Name: ${params.registration.firstName} ${params.registration.lastName}`,
+          `Email: ${params.registration.email}`,
+          `Amount: ${price}`,
+          `Plan access: ${params.accessUrl}`,
+        ].join("\n"),
+      }),
+    );
+  }
+
+  await Promise.allSettled(deliveries);
+}

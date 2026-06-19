@@ -34,3 +34,22 @@ CREATE TABLE IF NOT EXISTS premium_plan_interest (
 
 CREATE INDEX IF NOT EXISTS premium_plan_interest_assessment_idx
 ON premium_plan_interest (assessment_id, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS premium_purchases (
+  id BIGSERIAL PRIMARY KEY,
+  assessment_id UUID NOT NULL REFERENCES assessment_results(id) ON DELETE CASCADE,
+  email TEXT NOT NULL,
+  stripe_checkout_session_id TEXT NOT NULL UNIQUE,
+  stripe_payment_intent_id TEXT,
+  amount INTEGER NOT NULL,
+  currency TEXT NOT NULL,
+  payment_status TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS premium_purchases_assessment_idx
+ON premium_purchases (assessment_id, created_at DESC);
+
+CREATE INDEX IF NOT EXISTS premium_purchases_payment_intent_idx
+ON premium_purchases (stripe_payment_intent_id);

@@ -22,7 +22,7 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
   const id = readParam(params.id);
   const previewKey = readParam(params.key);
   const isDemo = readParam(params.demo) === "true";
-  const configuredKey = process.env.PREMIUM_PLAN_PREVIEW_KEY;
+  const configuredKey = process.env.PREMIUM_PLAN_PREVIEW_KEY ?? process.env.STRIPE_SECRET_KEY;
 
   if (!isDemo && (!configuredKey || previewKey !== configuredKey)) {
     return <PreviewLocked />;

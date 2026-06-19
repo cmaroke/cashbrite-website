@@ -9,7 +9,7 @@ Cashbrite is a UK financial education platform for school leavers, students and 
 - Tailwind CSS
 - Neon Postgres for assessment result storage
 - Resend for email delivery
-- No payment processing
+- Stripe Checkout for one-off Money Ready Plan purchases
 
 ## File Structure
 
@@ -17,11 +17,14 @@ Cashbrite is a UK financial education platform for school leavers, students and 
 app/
   api/assessments/route.ts Server-side assessment save/email endpoint
   api/contact/route.ts  Server-side contact form email endpoint
+  api/stripe/checkout/  Server-side Stripe Checkout session endpoint
+  api/stripe/webhook/   Signed Stripe payment webhook endpoint
   contact/page.tsx       Contact page
   globals.css            Tailwind and global styles
   layout.tsx             Shared navigation and footer
   page.tsx               Home page
   premium-plan-preview/  Locked premium workbook preview
+  money-ready-plan/success/ Verified premium plan access page
   quiz/page.tsx          Money Readiness Questionnaire
   results/page.tsx       Quiz results page
   schools/page.tsx       Schools page
@@ -38,6 +41,8 @@ db/
 lib/
   actionPlan.ts          Money Action Plan generation
   premiumActionPlan.ts   Premium Money Ready Plan generation
+  premiumPurchaseDb.ts   Premium purchase database helpers
+  stripe.ts              Server-only Stripe configuration
   assessmentDb.ts        Neon database helpers
   assessmentEmail.ts     Assessment email helpers
   assessmentTypes.ts     Shared assessment types
@@ -129,6 +134,11 @@ DATABASE_URL=your_neon_database_url
 RESEND_API_KEY=your_resend_api_key
 CONTACT_TO_EMAIL=cmaroke@me.com
 CONTACT_FROM_EMAIL=Cashbrite <onboarding@resend.dev>
+STRIPE_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_PRICE_ID=price_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 For production, verify a sending domain in Resend and update `CONTACT_FROM_EMAIL` to an address on that domain, such as `Cashbrite <hello@yourdomain.co.uk>`. `CONTACT_TO_EMAIL` should remain `cmaroke@me.com` for internal contact/enquiry notifications.
@@ -161,6 +171,62 @@ PREMIUM_PLAN_PREVIEW_KEY=use-a-long-random-preview-key
 
 The preview includes a print button, which can use the browser's Save as PDF option. The separate Download PDF button is intentionally a placeholder for future automated PDF generation.
 
+## Stripe Checkout Setup
+
+Cashbrite uses Stripe-hosted Checkout in one-off payment mode. The app never exposes the Stripe secret key to the browser. A signed webhook marks a purchase as paid, and the plan access page retrieves the Checkout Session from Stripe before showing any premium customer content.
+
+### Create the £19 product and price
+
+1. Open Stripe Dashboard and switch on **Test mode** while setting up.
+2. Go to the Product catalogue and create a product named `Cashbrite Money Ready Plan`.
+3. Add a one-off price of `£19.00 GBP`.
+4. Copy the Price ID beginning with `price_` into `STRIPE_PRICE_ID`.
+5. Copy the test publishable and secret API keys into `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` and `STRIPE_SECRET_KEY`.
+
+Use Stripe Price IDs rather than changing the amount in code. This keeps the charged price controlled by Stripe and lets test and production deployments use different prices safely.
+
+### Configure the webhook
+
+In Stripe Workbench, create a webhook destination for:
+
+```text
+https://YOUR_DOMAIN/api/stripe/webhook
+```
+
+Subscribe it to:
+
+```text
+checkout.session.completed
+checkout.session.expired
+payment_intent.payment_failed
+```
+
+Reveal the endpoint signing secret beginning with `whsec_` and save it as `STRIPE_WEBHOOK_SECRET`. The webhook route verifies Stripe's signature against the untouched request body before processing an event.
+
+### Test locally
+
+1. Put test-mode keys and the test Price ID in `.env.local`.
+2. Set `NEXT_PUBLIC_SITE_URL=http://localhost:3000`.
+3. Run `pnpm dev`.
+4. Use the Stripe CLI to forward events:
+
+```bash
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+```
+
+5. Use the `whsec_` value printed by the CLI as the local `STRIPE_WEBHOOK_SECRET`.
+6. Complete an assessment and click **Unlock My £19 Money Ready Plan**.
+7. In Stripe Checkout, use test card `4242 4242 4242 4242`, any future expiry date, and any CVC/postcode.
+8. Confirm that Checkout returns to `/money-ready-plan/success`, the workbook is visible, `premium_purchases.payment_status` is `paid`, and the confirmation email arrives.
+
+Use Stripe's documented declined or authentication test cards to check failed-payment behaviour. Do not use real card details in test mode.
+
+### Purchase data and access
+
+The app creates the `premium_purchases` table automatically when Checkout is first used. `db/schema.sql` also contains the schema for manual setup. The table records the assessment reference, Stripe session and PaymentIntent IDs, amount, currency and payment state.
+
+The email access link contains a Stripe Checkout Session ID. Each visit is verified server-side with Stripe and must belong to the Cashbrite product with a completed, paid status. Invalid, incomplete or unrelated sessions do not unlock a workbook.
+
 ## Deploying To Vercel
 
 1. Push the project to GitHub, GitLab or Bitbucket.
@@ -168,8 +234,13 @@ The preview includes a print button, which can use the browser's Save as PDF opt
 3. Import the repository.
 4. Create a Neon Postgres database and add `DATABASE_URL` in Vercel Project Settings.
 5. Add the Resend environment variables in Vercel Project Settings.
-6. Add `PREMIUM_PLAN_PREVIEW_KEY` if the private workbook preview is required on that deployment.
-7. Use the default Next.js settings.
-8. Deploy.
+6. Create the Stripe product and £19 one-off price, then add all five Stripe environment variables.
+7. Set `NEXT_PUBLIC_SITE_URL` to the production origin, for example `https://cashbrite.co.uk`, with no trailing path.
+8. Deploy once so the webhook route is live.
+9. Add the production webhook destination in Stripe and save its signing secret as `STRIPE_WEBHOOK_SECRET` in Vercel.
+10. Redeploy after changing environment variables.
+11. Add `PREMIUM_PLAN_PREVIEW_KEY` if the private workbook preview is required on that deployment.
+
+Use Stripe test keys and a test Price ID for Vercel Preview environments. For Production, replace all Stripe values with live-mode keys, a live £19 Price ID and the signing secret from the live webhook destination. Never put `STRIPE_SECRET_KEY` or `STRIPE_WEBHOOK_SECRET` in a `NEXT_PUBLIC_` variable.
 
 Vercel will install dependencies and run the production build automatically.

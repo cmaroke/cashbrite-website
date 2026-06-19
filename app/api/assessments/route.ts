@@ -31,6 +31,7 @@ export async function POST(request: Request) {
     const id = randomUUID();
     const origin = new URL(request.url).origin;
     const resultUrl = `${origin}/results?id=${id}`;
+    const checkoutRecoveryUrl = `${origin}/checkout/money-ready-plan?assessmentId=${id}&source=email`;
 
     await saveAssessment({
       id,
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
     });
 
     await Promise.allSettled([
-      sendActionPlanEmail({ registration, scores, actionPlan, resultUrl }),
+      sendActionPlanEmail({ registration, scores, actionPlan, resultUrl, checkoutRecoveryUrl }),
       sendInternalAssessmentNotification({ registration, scores, actionPlan, resultUrl }),
     ]);
 

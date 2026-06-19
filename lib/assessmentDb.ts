@@ -108,7 +108,7 @@ export async function getAssessment(id: string): Promise<SavedAssessment | null>
 
 export async function recordPremiumInterest(params: {
   assessmentId: string;
-  interestType: "unlock_click";
+  interestType: "unlock_click" | "checkout_recovery_view" | "email_checkout_click";
 }) {
   const sql = getSql();
   await ensurePremiumInterestTable();

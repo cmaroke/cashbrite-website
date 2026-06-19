@@ -115,32 +115,11 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           </p>
         </section>
 
-        <section className="mt-8 rounded-lg border border-sea/15 bg-mint/30 p-6 sm:p-8">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Your next step</p>
-          <h2 className="mt-2 max-w-3xl text-3xl font-black text-navy">
-            Turn your assessment insight into practical confidence
-          </h2>
-          <p className="mt-4 max-w-4xl text-lg leading-8 text-navy/72">
-            Your assessment has identified the money topics that could have the biggest impact on your confidence.
-          </p>
-          <p className="mt-5 font-black text-navy">Unlock your personalised Cashbrite Money Ready Plan to discover:</p>
-          <ul className="mt-4 grid gap-3 text-base font-semibold leading-7 text-navy/72 sm:grid-cols-2 lg:grid-cols-5">
-            {[
-              "Why these topics matter",
-              "Common mistakes to avoid",
-              "Real-life money examples",
-              "Practical actions you can start today",
-              "Your 30-day Money Confidence Roadmap",
-            ].map((item) => (
-              <li key={item} className="flex gap-3 rounded-md bg-white/75 p-4">
-                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-sea" aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-black leading-8 text-navy">
+          You now know your score. The next step is knowing exactly how to improve it.
+        </p>
 
-        <section className="relative mt-8 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-9 lg:p-11">
+        <section className="relative mt-4 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-9 lg:p-11">
           <div className="flex flex-wrap items-center gap-3">
             <Image src="/brand/cashbrite-icon.svg" alt="" width={24} height={24} aria-hidden="true" />
             <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Cashbrite Money Ready Plan</p>
@@ -262,6 +241,31 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
               ))}
             </div>
           </div>
+        </section>
+
+        <section className="mt-8 rounded-lg border border-sea/15 bg-mint/30 p-6 sm:p-8">
+          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Your next step</p>
+          <h2 className="mt-2 max-w-3xl text-3xl font-black text-navy">
+            Turn your assessment insight into practical confidence
+          </h2>
+          <p className="mt-4 max-w-4xl text-lg leading-8 text-navy/72">
+            Your assessment has identified the money topics that could have the biggest impact on your confidence.
+          </p>
+          <p className="mt-5 font-black text-navy">Unlock your personalised Cashbrite Money Ready Plan to discover:</p>
+          <ul className="mt-4 grid gap-3 text-base font-semibold leading-7 text-navy/72 sm:grid-cols-2 lg:grid-cols-5">
+            {[
+              "Why these topics matter",
+              "Common mistakes to avoid",
+              "Real-life money examples",
+              "Practical actions you can start today",
+              "Your 30-day Money Confidence Roadmap",
+            ].map((item) => (
+              <li key={item} className="flex gap-3 rounded-md bg-white/75 p-4">
+                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-sea" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </section>

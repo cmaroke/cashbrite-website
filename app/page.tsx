@@ -14,10 +14,7 @@ export default function Home() {
     <>
       <section className="overflow-hidden bg-cream">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:py-14">
-          <div>
-            <p className="mb-4 inline-flex rounded-full border border-sea/15 bg-white px-4 py-2 text-sm font-black uppercase tracking-[0.14em] text-sea shadow-sm">
-              UK financial education for young adults
-            </p>
+          <div className="py-1 sm:py-2 lg:py-0">
             <h1 className="max-w-4xl text-4xl font-black leading-[1.03] tracking-normal text-navy sm:text-6xl lg:text-7xl">
               Money confidence for life after school.
             </h1>

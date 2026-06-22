@@ -64,12 +64,12 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "budgeting-3",
     category: "budgetingSpending",
-    prompt: "A friend invites you to something you cannot really afford. What is closest to your response?",
+    prompt: "You notice you have spent more money than planned this month. What should you do?",
     answers: [
-      { id: "a", label: "I go and work out the cost later", points: 0 },
-      { id: "b", label: "I suggest something cheaper or say I cannot go", points: 3 },
-      { id: "c", label: "I ask someone to pay and repay them later", points: 1 },
-      { id: "d", label: "I check my spending plan before deciding", points: 2 },
+      { id: "a", label: "Ignore it and hope next month is better", points: 0 },
+      { id: "b", label: "Review my spending and adjust my budget", points: 3 },
+      { id: "c", label: "Use credit to cover the difference", points: 1 },
+      { id: "d", label: "Cut back on some things until I next receive money", points: 2 },
     ],
   },
   {
@@ -185,12 +185,12 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "credit-1",
     category: "creditBorrowing",
-    prompt: "You buy something using money you will pay back later. What does this mean?",
+    prompt: "What does it mean to use credit?",
     answers: [
-      { id: "a", label: "I am borrowing money and agreeing to repay it", points: 3 },
-      { id: "b", label: "The money becomes part of my available balance", points: 0 },
-      { id: "c", label: "The payment is delayed without creating a debt", points: 1 },
-      { id: "d", label: "I can decide how to repay after the bill arrives", points: 2 },
+      { id: "a", label: "Borrowing money that you agree to repay", points: 3 },
+      { id: "b", label: "Getting a discount when you buy something", points: 0 },
+      { id: "c", label: "Receiving extra money in your account to spend", points: 1 },
+      { id: "d", label: "Using money now and planning how you will repay it", points: 2 },
     ],
   },
   {
@@ -306,12 +306,12 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "pay-3",
     category: "payslipsTaxNi",
-    prompt: "If your pay looks lower than expected, what should you check first?",
+    prompt: "When you start a new job, what should you check before your first payday?",
     answers: [
-      { id: "a", label: "My hours, pay rate, tax code and deductions", points: 3 },
-      { id: "b", label: "Only the amount paid into my bank", points: 1 },
-      { id: "c", label: "My hours and pay rate, but not deductions", points: 2 },
-      { id: "d", label: "Wait to see whether next month's pay is different", points: 0 },
+      { id: "a", label: "My hourly pay, expected hours and payday", points: 3 },
+      { id: "b", label: "What I plan to spend my money on", points: 1 },
+      { id: "c", label: "My job details and roughly when I will be paid", points: 2 },
+      { id: "d", label: "Whether my friends are paid more than me", points: 0 },
     ],
   },
   {

@@ -18,6 +18,7 @@ export type QuizScores = {
 };
 
 const categories = Object.keys(categoryLabels) as QuizCategory[];
+const scoreCurveExponent = 1.15;
 
 const categoryNextSteps: Record<QuizCategory, string> = {
   budgetingSpending: "Create a simple weekly spending plan with essentials first, then set a realistic limit for flexible spending.",
@@ -68,10 +69,10 @@ export function scoreQuiz(selectedAnswers: Record<string, string>): QuizScores {
 
   for (const category of categories) {
     const score = categoryScores[category];
-    score.percentage = score.max === 0 ? 0 : Math.round((score.score / score.max) * 100);
+    score.percentage = normaliseScore(score.score, score.max);
   }
 
-  const readinessScore = maxScore === 0 ? 0 : Math.round((totalScore / maxScore) * 100);
+  const readinessScore = normaliseScore(totalScore, maxScore);
   const rankedCategories = [...categories].sort(
     (a, b) => categoryScores[a].percentage - categoryScores[b].percentage,
   );
@@ -118,4 +119,9 @@ function getPersonalisedNextSteps(
   const categorySteps = priorityCategories.slice(0, 3).map((category) => categoryNextSteps[category]);
 
   return [bandNextSteps[band], ...categorySteps];
+}
+
+function normaliseScore(score: number, maxScore: number) {
+  if (maxScore === 0) return 0;
+  return Math.round(Math.pow(score / maxScore, scoreCurveExponent) * 100);
 }

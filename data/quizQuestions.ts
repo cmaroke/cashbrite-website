@@ -55,10 +55,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "budgetingSpending",
     prompt: "When you get money, what is the best first step?",
     answers: [
-      { id: "a", label: "Spend it first and think about the rest later", points: 0 },
-      { id: "b", label: "Keep a rough idea of what I need it for", points: 2 },
-      { id: "c", label: "Decide what to save, spend and keep aside", points: 3 },
-      { id: "d", label: "Spend some and hope enough is left", points: 1 },
+      { id: "a", label: "Spend most of it first and think about the rest later", points: 0 },
+      { id: "b", label: "Keep a rough idea of what I want to use it for", points: 2 },
+      { id: "c", label: "Decide what to save, spend and keep aside first", points: 3 },
+      { id: "d", label: "Spend some and hope enough remains for what I need later", points: 1 },
     ],
   },
   {
@@ -311,7 +311,7 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "a", label: "My hourly pay, expected hours and payday", points: 3 },
       { id: "b", label: "What I plan to spend my money on", points: 1 },
       { id: "c", label: "My job details and roughly when I will be paid", points: 2 },
-      { id: "d", label: "Whether my friends are paid more than me", points: 0 },
+      { id: "d", label: "Only what I plan to spend my first pay on", points: 0 },
     ],
   },
   {

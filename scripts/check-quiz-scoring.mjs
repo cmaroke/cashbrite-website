@@ -48,11 +48,19 @@ for (const question of quizQuestions) {
   }
 }
 
+const maxRawScore = quizQuestions.reduce(
+  (total, question) => total + Math.max(...question.answers.map((answer) => answer.points)),
+  0,
+);
+if (maxRawScore !== 90) throw new Error(`Maximum raw score is ${maxRawScore}; expected 90.`);
+
 const scenarios = {
-  strong: { pattern: [3, 3, 3, 3, 3, 3, 3, 3, 3, 2], min: 85, max: 100 },
-  average: { pattern: [2, 2, 1], min: 55, max: 75 },
-  weak: { pattern: [1, 1, 0], min: 0, max: 54 },
-  poor: { pattern: [0, 0, 0, 1], min: 0, max: 39 },
+  allBest: { pattern: [3], min: 100, max: 100 },
+  mostlyBest: { pattern: [3, 3, 3, 3, 2], min: 85, max: 95 },
+  allSecondBest: { pattern: [2], min: 55, max: 65 },
+  mixed: { pattern: [2, 1], min: 45, max: 65 },
+  mostlyWeak: { pattern: [1], min: 25, max: 40 },
+  mostlyPoor: { pattern: [0, 0, 0, 0, 1], min: 0, max: 24 },
 };
 
 const results = Object.fromEntries(
@@ -65,4 +73,4 @@ const results = Object.fromEntries(
   }),
 );
 
-console.log(`Cashbrite scoring sanity check passed: ${JSON.stringify(results)}`);
+console.log(`Cashbrite scoring sanity check passed: ${JSON.stringify({ maxRawScore, ...results })}`);

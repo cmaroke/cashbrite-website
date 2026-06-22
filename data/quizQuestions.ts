@@ -66,9 +66,9 @@ export const quizQuestions: QuizQuestion[] = [
     category: "budgetingSpending",
     prompt: "A friend invites you to something you cannot really afford. What is closest to your response?",
     answers: [
-      { id: "a", label: "I go anyway and worry later", points: 0 },
+      { id: "a", label: "I go and assume I can cut back on something else later", points: 0 },
       { id: "b", label: "I suggest a cheaper option or say I need to skip it", points: 4 },
-      { id: "c", label: "I borrow from someone without a repayment plan", points: 1 },
+      { id: "c", label: "I ask someone to cover me and plan to sort it out later", points: 1 },
       { id: "d", label: "I check my budget and decide after that", points: 3 },
     ],
   },
@@ -77,9 +77,9 @@ export const quizQuestions: QuizQuestion[] = [
     category: "budgetingSpending",
     prompt: "You have £30 left until you next receive money, but you see something you really want for £25. What do you do?",
     answers: [
-      { id: "a", label: "Buy it and hope the remaining £5 is enough", points: 0 },
+      { id: "a", label: "Buy it now and plan to manage with the remaining £5", points: 0 },
       { id: "b", label: "Pause and keep enough money for essentials until I next receive money", points: 4 },
-      { id: "c", label: "Check what I still need to pay for before deciding", points: 2 },
+      { id: "c", label: "Check the obvious things I need money for, then decide", points: 2 },
       { id: "d", label: "Use credit or Buy Now Pay Later so I can keep the £30", points: 1 },
     ],
   },
@@ -89,9 +89,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You know you need money for a birthday, travel or course item next month. What do you do?",
     answers: [
       { id: "a", label: "Break the cost into smaller weekly amounts", points: 4 },
-      { id: "b", label: "Hope I can cover it when it happens", points: 0 },
-      { id: "c", label: "Think about it but do not change anything yet", points: 1 },
-      { id: "d", label: "Put something aside if I remember", points: 2 },
+      { id: "b", label: "Wait until next month and use whatever money I have then", points: 0 },
+      { id: "c", label: "Plan to spend less nearer the time, without setting an amount aside now", points: 1 },
+      { id: "d", label: "Put aside whatever is left at the end of each week", points: 2 },
     ],
   },
   {
@@ -100,9 +100,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "What is the main purpose of an emergency fund?",
     answers: [
       { id: "a", label: "To cover an unexpected important cost without having to panic or borrow", points: 4 },
-      { id: "b", label: "To spend on treats whenever I want", points: 0 },
-      { id: "c", label: "Only to use for holidays", points: 1 },
-      { id: "d", label: "I have heard of it but I am not sure", points: 2 },
+      { id: "b", label: "To pay for planned spending when my usual money runs low", points: 0 },
+      { id: "c", label: "To save towards a future goal, even if it is not unexpected", points: 1 },
+      { id: "d", label: "To provide some backup when normal spending costs more than expected", points: 2 },
     ],
   },
   {
@@ -110,10 +110,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "savingHabits",
     prompt: "You want to save money for something important. What is the best way to stop yourself spending it?",
     answers: [
-      { id: "a", label: "Keep it with the rest of my money and try not to touch it", points: 1 },
+      { id: "a", label: "Keep it in my usual balance and rely on myself not to spend it", points: 1 },
       { id: "b", label: "Move it to a separate savings pot, account or safe place", points: 4 },
-      { id: "c", label: "Keep it as cash somewhere and hope I remember not to spend it", points: 2 },
-      { id: "d", label: "Leave it mixed in with money I can spend", points: 0 },
+      { id: "c", label: "Put the cash somewhere separate, without tracking how close I am to my goal", points: 2 },
+      { id: "d", label: "Use the same balance and plan to replace any savings I spend", points: 0 },
     ],
   },
   {
@@ -122,9 +122,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "If you receive student maintenance money, what is it mainly designed to help pay for?",
     answers: [
       { id: "a", label: "Living costs such as rent, food, travel and course needs", points: 4 },
-      { id: "b", label: "Only nights out during freshers' week", points: 0 },
-      { id: "c", label: "Only tuition fees", points: 1 },
-      { id: "d", label: "Anything, because it does not need planning", points: 0 },
+      { id: "b", label: "Mainly social activities and personal spending", points: 0 },
+      { id: "c", label: "Only academic costs such as tuition, books and equipment", points: 1 },
+      { id: "d", label: "General spending during term, with no need to divide it across essential costs", points: 0 },
     ],
   },
   {
@@ -133,9 +133,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "Which support might be worth checking if money is tight while studying?",
     answers: [
       { id: "a", label: "Hardship funds, bursaries, scholarships or student support services", points: 4 },
-      { id: "b", label: "Only payday loans", points: 0 },
-      { id: "c", label: "Nothing, support is never available", points: 0 },
-      { id: "d", label: "Rely only on friends to lend me money", points: 1 },
+      { id: "b", label: "A short-term high-cost loan to cover the gap quickly", points: 0 },
+      { id: "c", label: "An extra student finance payment that is automatically available to everyone", points: 0 },
+      { id: "d", label: "Ask friends or family for help before checking what student support is available", points: 1 },
     ],
   },
   {
@@ -144,8 +144,8 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You receive a large student finance payment at the start of term. What is the smartest way to manage it?",
     answers: [
       { id: "a", label: "Split it across the weeks or months it needs to cover", points: 4 },
-      { id: "b", label: "Spend freely at first and plan later", points: 0 },
-      { id: "c", label: "Keep a rough idea but not work out how long it needs to last", points: 1 },
+      { id: "b", label: "Use what I need during the first few weeks and budget whatever remains", points: 0 },
+      { id: "c", label: "Keep a rough idea of my spending without setting a weekly or monthly amount", points: 1 },
       { id: "d", label: "Set aside obvious essentials and review often", points: 3 },
     ],
   },
@@ -154,10 +154,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "bankAccountsOverdrafts",
     prompt: "You spend more money than you have in your bank account and go into your arranged overdraft. What does this mean?",
     answers: [
-      { id: "a", label: "Borrowing through your current account that may have rules or charges", points: 4 },
-      { id: "b", label: "Free money that never needs repaying", points: 0 },
-      { id: "c", label: "A savings account", points: 0 },
-      { id: "d", label: "A reward for spending more", points: 1 },
+      { id: "a", label: "Borrowing through your current account that must be repaid and may have charges", points: 4 },
+      { id: "b", label: "An extra amount added to my balance because the bank has approved it", points: 0 },
+      { id: "c", label: "A temporary extension of my balance that clears without needing a repayment plan", points: 0 },
+      { id: "d", label: "Agreed borrowing that will sort itself out when money next enters my account", points: 1 },
     ],
   },
   {
@@ -165,10 +165,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "bankAccountsOverdrafts",
     prompt: "You keep wondering where your money disappears each week. What could help you stay on track?",
     answers: [
-      { id: "a", label: "Balance alerts, spending notifications or pots", points: 4 },
-      { id: "b", label: "Turning off all notifications and never checking", points: 0 },
-      { id: "c", label: "Using only contactless without tracking", points: 1 },
-      { id: "d", label: "Relying on memory without checking what I spend", points: 0 },
+      { id: "a", label: "Use balance alerts, spending notifications or separate pots", points: 4 },
+      { id: "b", label: "Check my balance only when a payment is declined", points: 0 },
+      { id: "c", label: "Look at my balance occasionally without checking individual spending", points: 1 },
+      { id: "d", label: "Move money between accounts when one balance gets low without reviewing my spending", points: 0 },
     ],
   },
   {
@@ -177,9 +177,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "If you go into an arranged overdraft, what is a sensible next step?",
     answers: [
       { id: "a", label: "Check any charges and make a plan to reduce it", points: 4 },
-      { id: "b", label: "Ignore it because the bank allowed it", points: 0 },
-      { id: "c", label: "Open more accounts to avoid seeing it", points: 1 },
-      { id: "d", label: "Use it for non-essential spending as long as possible", points: 0 },
+      { id: "b", label: "Leave it until money next enters my account because it is already arranged", points: 0 },
+      { id: "c", label: "Reduce some spending but wait for the account to return above zero on its own", points: 1 },
+      { id: "d", label: "Keep using it within the agreed limit because that means it is part of my available money", points: 0 },
     ],
   },
   {
@@ -188,9 +188,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You buy something using money you will pay back later. What does this mean?",
     answers: [
       { id: "a", label: "Borrowed money or a payment agreement that usually needs repaying", points: 4 },
-      { id: "b", label: "Income you have earned", points: 0 },
-      { id: "c", label: "A discount code", points: 0 },
-      { id: "d", label: "Money I can spend without planning how to repay it", points: 1 },
+      { id: "b", label: "Money added to my available balance once the purchase is approved", points: 0 },
+      { id: "c", label: "A way to delay paying without taking on a repayment commitment", points: 0 },
+      { id: "d", label: "Money I can use now and plan how to repay after the bill arrives", points: 1 },
     ],
   },
   {
@@ -199,9 +199,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You receive your monthly credit card statement. What is usually the best way to manage it?",
     answers: [
       { id: "a", label: "Pay the full statement balance when possible", points: 4 },
-      { id: "b", label: "Pay only the minimum amount each month", points: 1 },
-      { id: "c", label: "Treat the available limit as extra money I can spend", points: 0 },
-      { id: "d", label: "Use it to buy things for friends and assume they will pay me back", points: 0 },
+      { id: "b", label: "Pay the minimum because I think that means I am managing it properly", points: 1 },
+      { id: "c", label: "Leave the balance until next month if I am still within my credit limit", points: 0 },
+      { id: "d", label: "Assume an automatic payment will clear the full balance without checking", points: 0 },
     ],
   },
   {
@@ -210,9 +210,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "What should you do if you think you cannot make a repayment?",
     answers: [
       { id: "a", label: "Tell the lender early or ask a trusted person or free debt adviser for help", points: 4 },
-      { id: "b", label: "Wait until missed payments build up", points: 0 },
-      { id: "c", label: "Borrow more without checking the cost", points: 1 },
-      { id: "d", label: "Delete the app and avoid messages", points: 0 },
+      { id: "b", label: "Wait until the payment is missed, then explain what happened", points: 0 },
+      { id: "c", label: "Use another form of borrowing to make this repayment", points: 1 },
+      { id: "d", label: "Cancel the payment and wait for the lender to contact me with another option", points: 0 },
     ],
   },
   {
@@ -221,9 +221,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You see trainers online with a 'Buy Now Pay Later' option. What does this usually mean?",
     answers: [
       { id: "a", label: "Get something now and pay later or in instalments", points: 4 },
-      { id: "b", label: "Get things for free", points: 0 },
-      { id: "c", label: "Avoid needing a budget", points: 0 },
-      { id: "d", label: "Pay nothing unless I decide to later", points: 0 },
+      { id: "b", label: "Reserve the item now and decide later whether to complete the purchase", points: 0 },
+      { id: "c", label: "Split the cost into smaller amounts that do not count as borrowing", points: 0 },
+      { id: "d", label: "Receive the item before deciding how and when to pay for it", points: 0 },
     ],
   },
   {
@@ -232,9 +232,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "What is a risk of having several buy now pay later purchases at once?",
     answers: [
       { id: "a", label: "Small payments can stack up and become hard to track", points: 4 },
-      { id: "b", label: "It makes every purchase cheaper", points: 0 },
-      { id: "c", label: "It removes the need to check due dates", points: 0 },
-      { id: "d", label: "There is no risk if each item is small", points: 1 },
+      { id: "b", label: "Each payment stays small, so the total should remain affordable", points: 0 },
+      { id: "c", label: "Each provider checks my other plans before approving another purchase", points: 0 },
+      { id: "d", label: "The risk should stay low as long as every individual payment is small", points: 1 },
     ],
   },
   {
@@ -243,9 +243,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "Your Buy Now Pay Later payment is due tomorrow but you do not have enough money. What should you do?",
     answers: [
       { id: "a", label: "Contact the provider, check my options and ask for help before I miss it", points: 4 },
-      { id: "b", label: "Ignore it because it is not a real bill", points: 0 },
-      { id: "c", label: "Use another BNPL purchase to cover the problem", points: 0 },
-      { id: "d", label: "Hope it does not matter", points: 1 },
+      { id: "b", label: "Wait for the payment to fail and contact the provider afterwards", points: 0 },
+      { id: "c", label: "Use another form of short-term credit to cover the payment", points: 0 },
+      { id: "d", label: "Check when I next receive money and plan to deal with the payment then", points: 1 },
     ],
   },
   {
@@ -253,10 +253,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "fraudScamsOnlineSafety",
     prompt: "You receive a text saying your bank account is at risk and asking for your PIN. What should you do?",
     answers: [
-      { id: "a", label: "Reply quickly so the account is safe", points: 0 },
+      { id: "a", label: "Follow the instructions because the message includes my bank's name and sounds urgent", points: 0 },
       { id: "b", label: "Use official bank contact details or the app to check", points: 4 },
-      { id: "c", label: "Click the link but enter only some details", points: 0 },
-      { id: "d", label: "Forward it to friends first", points: 1 },
+      { id: "c", label: "Open the link to check whether the page looks like my bank's website", points: 0 },
+      { id: "d", label: "Search the phone number online and trust the message if nobody has reported it", points: 1 },
     ],
   },
   {
@@ -265,9 +265,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "What is a common warning sign of a scam?",
     answers: [
       { id: "a", label: "Pressure to act immediately or keep it secret", points: 4 },
-      { id: "b", label: "A clear returns policy", points: 0 },
-      { id: "c", label: "A normal receipt after checkout", points: 0 },
-      { id: "d", label: "A website with contact information", points: 1 },
+      { id: "b", label: "A company offering a normal introductory discount to new customers", points: 0 },
+      { id: "c", label: "A message that looks professional and includes personal details such as your name", points: 0 },
+      { id: "d", label: "An unfamiliar website that shows contact details and customer reviews", points: 1 },
     ],
   },
   {
@@ -276,9 +276,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "What should you do if you think you have shared bank details with a scammer?",
     answers: [
       { id: "a", label: "Contact your bank immediately and follow their safety steps", points: 4 },
-      { id: "b", label: "Wait a few days to see what happens", points: 0 },
-      { id: "c", label: "Only tell friends online", points: 1 },
-      { id: "d", label: "Delete the message and do nothing else", points: 0 },
+      { id: "b", label: "Monitor the account for a few days and contact the bank only if money leaves", points: 0 },
+      { id: "c", label: "Change my banking password first and ask someone I trust what else to do", points: 1 },
+      { id: "d", label: "Block the sender and assume that prevents the details from being used", points: 0 },
     ],
   },
   {
@@ -287,9 +287,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You get your first payslip from a job. Why should you check it?",
     answers: [
       { id: "a", label: "It shows pay earned, deductions and take-home pay", points: 4 },
-      { id: "b", label: "It only shows your employer's logo", points: 0 },
-      { id: "c", label: "It replaces a bank statement", points: 0 },
-      { id: "d", label: "It only shows how many hours your friends worked", points: 0 },
+      { id: "b", label: "It confirms the amount paid, so I only need to compare that with my bank account", points: 0 },
+      { id: "c", label: "It is mainly a payroll record, so I assume the figures are correct unless the total looks very wrong", points: 0 },
+      { id: "d", label: "It lets me check my hours and rate, while tax and other deductions are fixed automatically", points: 0 },
     ],
   },
   {
@@ -299,8 +299,8 @@ export const quizQuestions: QuizQuestion[] = [
     answers: [
       { id: "a", label: "The amount paid to you after deductions such as tax or National Insurance", points: 4 },
       { id: "b", label: "The amount before any deductions", points: 1 },
-      { id: "c", label: "Only cash tips", points: 0 },
-      { id: "d", label: "Money your employer keeps", points: 0 },
+      { id: "c", label: "Your basic pay before overtime or bonuses are added", points: 0 },
+      { id: "d", label: "The amount left after your regular spending and bills", points: 0 },
     ],
   },
   {
@@ -309,9 +309,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "If your pay looks lower than expected, what should you check first?",
     answers: [
       { id: "a", label: "Hours, rate of pay, tax code, deductions and whether anything changed", points: 4 },
-      { id: "b", label: "Nothing, payslips are always wrong", points: 0 },
-      { id: "c", label: "Only whether you spent too much", points: 1 },
-      { id: "d", label: "Delete the payslip", points: 0 },
+      { id: "b", label: "The amount in my bank account, because that confirms payroll was correct", points: 0 },
+      { id: "c", label: "My hours and rate of pay, because deductions should always stay the same", points: 1 },
+      { id: "d", label: "Assume payroll has calculated it correctly unless the difference happens again", points: 0 },
     ],
   },
   {
@@ -320,9 +320,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You are preparing to move into your first place. Which costs should you plan for before you move in?",
     answers: [
       { id: "a", label: "Deposit, first rent, travel, basic items and possible setup costs", points: 4 },
-      { id: "b", label: "Only food for the first week", points: 1 },
-      { id: "c", label: "Only streaming subscriptions", points: 0 },
-      { id: "d", label: "Nothing until after moving day", points: 0 },
+      { id: "b", label: "The deposit and first rent, because everyday costs can come from my usual spending money", points: 1 },
+      { id: "c", label: "The first rent payment and furniture, assuming the deposit can be arranged later", points: 0 },
+      { id: "d", label: "The advertised monthly rent, then work out deposits and setup costs after I agree to move", points: 0 },
     ],
   },
   {
@@ -331,9 +331,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "Why should you read a tenancy agreement before signing?",
     answers: [
       { id: "a", label: "It explains responsibilities, rent, deposits, notice and rules", points: 4 },
-      { id: "b", label: "It is only paperwork and never matters", points: 0 },
-      { id: "c", label: "Only to find the Wi-Fi password", points: 0 },
-      { id: "d", label: "To see if it has nice formatting", points: 1 },
+      { id: "b", label: "To check the rent and move-in date, while assuming the remaining terms are standard", points: 0 },
+      { id: "c", label: "To confirm the main costs, because anything discussed verbally should be enough", points: 0 },
+      { id: "d", label: "To skim the main terms and ask about something only if it looks unusual", points: 1 },
     ],
   },
   {
@@ -341,9 +341,9 @@ export const quizQuestions: QuizQuestion[] = [
     category: "movingOutRentBills",
     prompt: "Which household bill can change depending on how much you use and who supplies it?",
     answers: [
-      { id: "a", label: "Energy, water, broadband or mobile costs", points: 4 },
-      { id: "b", label: "Every bill is always fixed forever", points: 0 },
-      { id: "c", label: "Only clothes shopping", points: 0 },
+      { id: "a", label: "Energy bills, because usage and the supplier's tariff can affect the cost", points: 4 },
+      { id: "b", label: "Council Tax, because it changes each month with household usage", points: 0 },
+      { id: "c", label: "Rent, because it normally changes each month with household usage", points: 0 },
       { id: "d", label: "I am not sure, but I know bills can vary", points: 2 },
     ],
   },
@@ -353,8 +353,8 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You see a money term online that you do not understand. What is the best thing to do?",
     answers: [
       { id: "a", label: "Ask a trusted person or check a reliable source", points: 4 },
-      { id: "b", label: "Pretend I understand and carry on", points: 0 },
-      { id: "c", label: "Guess from social media comments", points: 1 },
+      { id: "b", label: "Use the first clear explanation I find without checking who published it", points: 0 },
+      { id: "c", label: "Work out the meaning from comments by people discussing it online", points: 1 },
       { id: "d", label: "Save the question and look it up later", points: 3 },
     ],
   },
@@ -364,8 +364,8 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "Before making an important money decision, what is the smartest approach?",
     answers: [
       { id: "a", label: "Compare options, costs and consequences before deciding", points: 4 },
-      { id: "b", label: "Choose whatever feels easiest in the moment", points: 1 },
-      { id: "c", label: "Copy what a friend did without checking if it fits me", points: 0 },
+      { id: "b", label: "Choose the option with the lowest immediate cost", points: 1 },
+      { id: "c", label: "Choose the option that worked for someone I trust because our needs seem similar", points: 0 },
       { id: "d", label: "Keep putting it off because it feels confusing", points: 1 },
     ],
   },
@@ -375,9 +375,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "If you make a money mistake, what is the most helpful response?",
     answers: [
       { id: "a", label: "Work out what happened, get help if needed and make a recovery plan", points: 4 },
-      { id: "b", label: "Hide it from everyone and hope it disappears", points: 0 },
-      { id: "c", label: "Blame yourself and stop checking your money", points: 0 },
-      { id: "d", label: "Notice it but avoid changing anything", points: 1 },
+      { id: "b", label: "Focus on replacing the money quickly without first working out what caused the mistake", points: 0 },
+      { id: "c", label: "Pause checking my money for a while because I feel less likely to make another mistake", points: 0 },
+      { id: "d", label: "Make a note of what happened but continue with the same approach", points: 1 },
     ],
   },
 ];

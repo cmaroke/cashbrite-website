@@ -119,11 +119,13 @@ export default function QuizPage() {
             Build a clearer picture of your money confidence
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-navy/72">
-            Register first so Cashbrite can generate your free personalised Money Action Plan. Then choose the answers
-            that feel closest to you right now. This is a helpful confidence assessment, not a school test.
+            Register first so Cashbrite can generate your free personalised Money Action Plan. Then complete the
+            5-minute Money Readiness Assessment by choosing the answers that feel closest to you right now. This is a
+            helpful confidence assessment, not a school test.
           </p>
-          <div className="mt-6 grid gap-3 text-sm font-bold text-navy/70 sm:grid-cols-3">
-            <span className="rounded-full bg-mint/45 px-4 py-2">50 practical questions</span>
+          <div className="mt-6 grid gap-3 text-sm font-bold text-navy/70 sm:grid-cols-2 lg:grid-cols-4">
+            <span className="rounded-full bg-mint/45 px-4 py-2">{quizQuestions.length} practical questions</span>
+            <span className="rounded-full bg-mint/45 px-4 py-2">About 5 minutes</span>
             <span className="rounded-full bg-mint/45 px-4 py-2">10 real-life money areas</span>
             <span className="rounded-full bg-mint/45 px-4 py-2">Free action plan</span>
           </div>
@@ -280,7 +282,7 @@ export default function QuizPage() {
               className="focus-ring mt-6 rounded-full bg-navy px-6 py-4 text-base font-black text-white shadow-[0_14px_30px_rgba(7,29,43,0.22)] transition hover:-translate-y-0.5 hover:bg-ink"
               type="submit"
             >
-              Start the assessment
+              Start the 5-minute assessment
             </button>
           </form>
         ) : (

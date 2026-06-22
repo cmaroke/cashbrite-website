@@ -62,17 +62,6 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: "budgeting-2",
-    category: "budgetingSpending",
-    prompt: "How often do you check your balance or banking app?",
-    answers: [
-      { id: "a", label: "Most days or before I spend", points: 4 },
-      { id: "b", label: "About once a week", points: 3 },
-      { id: "c", label: "Only when I think money might be low", points: 1 },
-      { id: "d", label: "Almost never", points: 0 },
-    ],
-  },
-  {
     id: "budgeting-3",
     category: "budgetingSpending",
     prompt: "A friend invites you to something you cannot really afford. What is closest to your response?",
@@ -84,17 +73,6 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: "budgeting-4",
-    category: "budgetingSpending",
-    prompt: "Which cost is easiest to forget when planning a week?",
-    answers: [
-      { id: "a", label: "Small regular spends like snacks, subscriptions and travel top-ups", points: 4 },
-      { id: "b", label: "Only rent or big bills", points: 1 },
-      { id: "c", label: "Nothing, because plans always work out exactly", points: 0 },
-      { id: "d", label: "I am not sure, but I know some costs can sneak up", points: 2 },
-    ],
-  },
-  {
     id: "budgeting-5",
     category: "budgetingSpending",
     prompt: "If your spending plan stops working halfway through the month, what would help most?",
@@ -103,17 +81,6 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "b", label: "Review what changed and adjust the remaining spending", points: 4 },
       { id: "c", label: "Cut every non-essential cost without checking what is realistic", points: 2 },
       { id: "d", label: "Use credit to cover the gap without checking the cost", points: 1 },
-    ],
-  },
-  {
-    id: "saving-1",
-    category: "savingHabits",
-    prompt: "What does saving money mainly mean to you right now?",
-    answers: [
-      { id: "a", label: "Only something to think about when I earn a lot", points: 0 },
-      { id: "b", label: "Putting away small amounts when I can", points: 3 },
-      { id: "c", label: "Having a plan for short-term goals and emergencies", points: 4 },
-      { id: "d", label: "Whatever is accidentally left over", points: 1 },
     ],
   },
   {
@@ -150,17 +117,6 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: "saving-5",
-    category: "savingHabits",
-    prompt: "What is a realistic first savings goal for many students?",
-    answers: [
-      { id: "a", label: "A small buffer such as £50 to £100 for unexpected costs", points: 4 },
-      { id: "b", label: "A huge amount straight away or nothing", points: 1 },
-      { id: "c", label: "Only saving once every bill is gone forever", points: 0 },
-      { id: "d", label: "Saving without knowing what the money is for", points: 2 },
-    ],
-  },
-  {
     id: "student-finance-1",
     category: "studentFinance",
     prompt: "What is maintenance money usually meant to help with?",
@@ -169,28 +125,6 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "b", label: "Only nights out during freshers' week", points: 0 },
       { id: "c", label: "Only tuition fees", points: 1 },
       { id: "d", label: "Anything, because it does not need planning", points: 0 },
-    ],
-  },
-  {
-    id: "student-finance-2",
-    category: "studentFinance",
-    prompt: "Before choosing a university or course, what money question is useful to ask?",
-    answers: [
-      { id: "a", label: "What are the likely rent, travel and living costs in that area?", points: 4 },
-      { id: "b", label: "Which place has the best social media posts?", points: 0 },
-      { id: "c", label: "Can I ignore costs until I arrive?", points: 0 },
-      { id: "d", label: "Only how much the hoodie costs", points: 1 },
-    ],
-  },
-  {
-    id: "student-finance-3",
-    category: "studentFinance",
-    prompt: "What should you do if student finance payments are delayed?",
-    answers: [
-      { id: "a", label: "Contact student finance, the university/college and plan essential spending", points: 4 },
-      { id: "b", label: "Take any loan advertised online immediately", points: 0 },
-      { id: "c", label: "Ignore rent or bills without speaking to anyone", points: 1 },
-      { id: "d", label: "Ask friends for money without knowing when you can repay", points: 1 },
     ],
   },
   {
@@ -213,17 +147,6 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "b", label: "Spend freely at first and plan later", points: 0 },
       { id: "c", label: "Keep a rough note but do not include rent or bills", points: 1 },
       { id: "d", label: "Set aside obvious essentials and review often", points: 3 },
-    ],
-  },
-  {
-    id: "banking-1",
-    category: "bankAccountsOverdrafts",
-    prompt: "What should you check before opening a student bank account?",
-    answers: [
-      { id: "a", label: "Overdraft limits, fees, repayment rules and useful features", points: 4 },
-      { id: "b", label: "Only the free gift", points: 0 },
-      { id: "c", label: "Only whether a friend uses the same bank", points: 1 },
-      { id: "d", label: "Nothing, all accounts are exactly the same", points: 0 },
     ],
   },
   {
@@ -260,17 +183,6 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: "banking-5",
-    category: "bankAccountsOverdrafts",
-    prompt: "Why is it risky to share your card, PIN or banking login?",
-    answers: [
-      { id: "a", label: "Someone could access money or make payments in your name", points: 4 },
-      { id: "b", label: "It is only risky with strangers, never friends", points: 1 },
-      { id: "c", label: "It helps the bank trust you more", points: 0 },
-      { id: "d", label: "There is no risk if you trust the person", points: 0 },
-    ],
-  },
-  {
     id: "credit-1",
     category: "creditBorrowing",
     prompt: "What is credit?",
@@ -282,17 +194,6 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: "credit-2",
-    category: "creditBorrowing",
-    prompt: "Which habit can support a healthier credit history?",
-    answers: [
-      { id: "a", label: "Paying agreed bills and repayments on time", points: 4 },
-      { id: "b", label: "Applying for lots of credit in a short time", points: 0 },
-      { id: "c", label: "Ignoring letters and app messages", points: 0 },
-      { id: "d", label: "Only making payments when reminded by friends", points: 1 },
-    ],
-  },
-  {
     id: "credit-3",
     category: "creditBorrowing",
     prompt: "If you use a credit card, what is usually the safest habit?",
@@ -301,17 +202,6 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "b", label: "Only pay the minimum forever", points: 1 },
       { id: "c", label: "Treat the limit as extra income", points: 0 },
       { id: "d", label: "Use it for friends and hope they pay you back", points: 0 },
-    ],
-  },
-  {
-    id: "credit-4",
-    category: "creditBorrowing",
-    prompt: "Before borrowing money, what should you compare?",
-    answers: [
-      { id: "a", label: "Total repayment, interest, fees and what happens if you miss a payment", points: 4 },
-      { id: "b", label: "Only the monthly payment if it looks small", points: 1 },
-      { id: "c", label: "Only whether the advert looks friendly", points: 0 },
-      { id: "d", label: "Nothing if the lender approves you", points: 0 },
     ],
   },
   {
@@ -348,28 +238,6 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: "bnpl-3",
-    category: "buyNowPayLater",
-    prompt: "Before using buy now pay later, what should you check?",
-    answers: [
-      { id: "a", label: "Payment dates, late fees and whether you can afford each payment", points: 4 },
-      { id: "b", label: "Only whether checkout is faster", points: 0 },
-      { id: "c", label: "Only whether friends use it", points: 1 },
-      { id: "d", label: "Nothing, because it is not borrowing", points: 0 },
-    ],
-  },
-  {
-    id: "bnpl-4",
-    category: "buyNowPayLater",
-    prompt: "Which purchase is the strongest reason to pause before using buy now pay later?",
-    answers: [
-      { id: "a", label: "Something you want but could not afford if the payment came out today", points: 4 },
-      { id: "b", label: "A planned essential with money already set aside", points: 2 },
-      { id: "c", label: "A purchase you have compared and budgeted for", points: 3 },
-      { id: "d", label: "A small item you forgot to include in your budget", points: 1 },
-    ],
-  },
-  {
     id: "bnpl-5",
     category: "buyNowPayLater",
     prompt: "If a buy now pay later payment is due tomorrow and you are short, what is best?",
@@ -392,17 +260,6 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: "scams-2",
-    category: "fraudScamsOnlineSafety",
-    prompt: "Which job offer should make you pause?",
-    answers: [
-      { id: "a", label: "One asking you to receive and move money through your account", points: 4 },
-      { id: "b", label: "One with normal interview details and a clear employer", points: 1 },
-      { id: "c", label: "One asking for your availability", points: 0 },
-      { id: "d", label: "One from your school careers portal", points: 0 },
-    ],
-  },
-  {
     id: "scams-3",
     category: "fraudScamsOnlineSafety",
     prompt: "What is a common warning sign of a scam?",
@@ -411,17 +268,6 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "b", label: "A clear returns policy", points: 0 },
       { id: "c", label: "A normal receipt after checkout", points: 0 },
       { id: "d", label: "A website with contact information", points: 1 },
-    ],
-  },
-  {
-    id: "scams-4",
-    category: "fraudScamsOnlineSafety",
-    prompt: "Before buying from a seller you do not know, what should you do?",
-    answers: [
-      { id: "a", label: "Check reviews, payment protection and whether the deal seems realistic", points: 4 },
-      { id: "b", label: "Pay by bank transfer quickly to secure it", points: 0 },
-      { id: "c", label: "Trust it if the item picture looks good", points: 1 },
-      { id: "d", label: "Send personal details before asking questions", points: 0 },
     ],
   },
   {
@@ -469,28 +315,6 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: "pay-4",
-    category: "payslipsTaxNi",
-    prompt: "What is National Insurance linked to?",
-    answers: [
-      { id: "a", label: "UK contributions connected to earnings and some state benefits", points: 4 },
-      { id: "b", label: "Home contents insurance", points: 0 },
-      { id: "c", label: "A student discount scheme", points: 0 },
-      { id: "d", label: "A bank account password", points: 0 },
-    ],
-  },
-  {
-    id: "pay-5",
-    category: "payslipsTaxNi",
-    prompt: "Why is it useful to keep payslips or download copies?",
-    answers: [
-      { id: "a", label: "They can help check pay, tax, applications and employment records", points: 4 },
-      { id: "b", label: "There is no reason to keep them", points: 0 },
-      { id: "c", label: "Only to compare with friends", points: 1 },
-      { id: "d", label: "To share online as proof of income", points: 0 },
-    ],
-  },
-  {
     id: "moving-1",
     category: "movingOutRentBills",
     prompt: "Before moving out, which upfront costs should you plan for?",
@@ -499,17 +323,6 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "b", label: "Only food for the first week", points: 1 },
       { id: "c", label: "Only streaming subscriptions", points: 0 },
       { id: "d", label: "Nothing until after moving day", points: 0 },
-    ],
-  },
-  {
-    id: "moving-2",
-    category: "movingOutRentBills",
-    prompt: "In shared housing, what should be agreed early?",
-    answers: [
-      { id: "a", label: "How rent, bills, council tax rules and shared items will be handled", points: 4 },
-      { id: "b", label: "Only who gets the biggest room", points: 1 },
-      { id: "c", label: "Nothing, because it always works itself out", points: 0 },
-      { id: "d", label: "Who can ignore bills if they are busy", points: 0 },
     ],
   },
   {
@@ -535,17 +348,6 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: "moving-5",
-    category: "movingOutRentBills",
-    prompt: "What is a sensible way to prepare for monthly bills?",
-    answers: [
-      { id: "a", label: "List expected bills, due dates and who pays what", points: 4 },
-      { id: "b", label: "Wait for reminders and hope there is enough money", points: 0 },
-      { id: "c", label: "Pay whoever asks first", points: 1 },
-      { id: "d", label: "Only plan rent and ignore smaller bills", points: 2 },
-    ],
-  },
-  {
     id: "confidence-1",
     category: "moneyConfidence",
     prompt: "When you do not understand a money word or product, what do you usually do?",
@@ -554,17 +356,6 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "b", label: "Pretend I understand and carry on", points: 0 },
       { id: "c", label: "Guess from social media comments", points: 1 },
       { id: "d", label: "Save the question and look it up later", points: 3 },
-    ],
-  },
-  {
-    id: "confidence-2",
-    category: "moneyConfidence",
-    prompt: "How do you feel about talking about money with a trusted adult, teacher or adviser?",
-    answers: [
-      { id: "a", label: "Comfortable enough to ask when needed", points: 4 },
-      { id: "b", label: "A bit awkward, but I could do it", points: 3 },
-      { id: "c", label: "I would avoid it unless things got serious", points: 1 },
-      { id: "d", label: "I would never ask", points: 0 },
     ],
   },
   {
@@ -587,17 +378,6 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "b", label: "Hide it from everyone and hope it disappears", points: 0 },
       { id: "c", label: "Blame yourself and stop checking your money", points: 0 },
       { id: "d", label: "Notice it but avoid changing anything", points: 1 },
-    ],
-  },
-  {
-    id: "confidence-5",
-    category: "moneyConfidence",
-    prompt: "Which statement feels closest to you right now?",
-    answers: [
-      { id: "a", label: "I can make everyday money decisions and know where to get help", points: 4 },
-      { id: "b", label: "I understand some things but want clearer guidance", points: 3 },
-      { id: "c", label: "I feel unsure about most money decisions", points: 1 },
-      { id: "d", label: "I do not think money skills matter yet", points: 0 },
     ],
   },
 ];

@@ -91,6 +91,8 @@ http://localhost:3000
 
 Quiz content lives in `data/quizQuestions.ts`.
 
+The assessment contains 30 questions: three questions in each of the 10 money categories. It is positioned as a 5-minute Money Readiness Assessment.
+
 Each answer has a `points` value. The scoring helper in `lib/quizScoring.ts` calculates:
 
 - overall Money Readiness Score out of 100

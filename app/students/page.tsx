@@ -25,8 +25,8 @@ export default function StudentsPage() {
         <div className="mt-10 rounded-lg bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-black text-navy">Start with your Money Readiness score</h2>
           <p className="mt-3 max-w-3xl text-lg leading-8 text-navy/72">
-            The quiz takes a few minutes and shows where you are already strong, plus where a bit more guidance could
-            help.
+            The 5-minute Money Readiness Assessment uses 30 practical questions to show where you are already strong,
+            plus where a bit more guidance could help.
           </p>
           <div className="mt-6">
             <ButtonLink href="/quiz">Take the quiz</ButtonLink>

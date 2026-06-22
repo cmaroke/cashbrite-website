@@ -1,7 +1,8 @@
 import { neon } from "@neondatabase/serverless";
 import type { QuizCategory } from "@/data/quizQuestions";
+import { createActionPlanSummary, generateActionPlan, getPriorityCategories } from "@/lib/actionPlan";
 import type { ActionPlan, RegistrationData, SavedAssessment, StoredAssessmentRow } from "@/lib/assessmentTypes";
-import type { QuizScores } from "@/lib/quizScoring";
+import { getResultBand, type QuizScores } from "@/lib/quizScoring";
 
 let schemaReady = false;
 let premiumInterestSchemaReady = false;
@@ -76,33 +77,37 @@ export async function getAssessment(id: string): Promise<SavedAssessment | null>
   const row = rows[0] as StoredAssessmentRow | undefined;
   if (!row) return null;
 
+  const registration: RegistrationData = {
+    firstName: row.first_name,
+    lastName: row.last_name,
+    age: row.age,
+    email: row.email,
+    educationStage: row.education_stage ?? "",
+    legacyUserType: row.user_type ?? undefined,
+    referralSource: row.referral_source ?? "",
+    reportConsent: row.report_consent,
+    marketingConsent: row.marketing_consent,
+  };
+  const scores: QuizScores = {
+    totalScore: 0,
+    maxScore: 0,
+    readinessScore: row.readiness_score,
+    categoryScores: row.category_scores,
+    band: getResultBand(row.readiness_score, row.category_scores),
+    strengths: row.strengths,
+    riskAreas: row.risk_areas,
+    nextSteps: [],
+  };
+  const actionPlan = generateActionPlan(registration, scores);
+
   return {
     id: row.id,
-    registration: {
-      firstName: row.first_name,
-      lastName: row.last_name,
-      age: row.age,
-      email: row.email,
-      educationStage: row.education_stage ?? "",
-      legacyUserType: row.user_type ?? undefined,
-      referralSource: row.referral_source ?? "",
-      reportConsent: row.report_consent,
-      marketingConsent: row.marketing_consent,
-    },
+    registration,
     completedAt: row.completed_at,
-    scores: {
-      totalScore: 0,
-      maxScore: 0,
-      readinessScore: row.readiness_score,
-      categoryScores: row.category_scores,
-      band: row.result_band,
-      strengths: row.strengths,
-      riskAreas: row.risk_areas,
-      nextSteps: [],
-    },
-    priorityAreas: row.priority_areas,
-    actionPlan: row.action_plan,
-    actionPlanSummary: row.action_plan_summary,
+    scores,
+    priorityAreas: getPriorityCategories(scores),
+    actionPlan,
+    actionPlanSummary: createActionPlanSummary(actionPlan),
   };
 }
 

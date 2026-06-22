@@ -1,14 +1,12 @@
 import { categoryDescriptions, categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import type { ActionPlan, PriorityAreaPlan, RegistrationData } from "@/lib/assessmentTypes";
-import type { QuizScores, ResultBand } from "@/lib/quizScoring";
+import { hasSeriousKnowledgeGaps, type QuizScores, type ResultBand } from "@/lib/quizScoring";
 
 const bandSummaries: Record<ResultBand, string> = {
-  "Money Foundations Needed":
-    "You are at the beginning of building money confidence, and that is a completely valid place to start. Focus first on simple habits: checking what money is coming in, knowing what must go out, and asking for help before pressure builds.",
   "Getting Started":
-    "You already have some useful instincts, but a few everyday money areas could still feel uncertain. The aim now is to turn awareness into steady routines that protect you when life gets busier after school.",
-  "Building Confidence":
-    "You have a solid base to build from. Your next step is to strengthen the areas that could become expensive or stressful, especially when income, study costs, work or living arrangements change.",
+    "You are at the beginning of building money confidence, and that is a completely valid place to start. Focus first on simple habits and trusted support so everyday decisions feel more manageable.",
+  "Building Money Confidence":
+    "You have useful knowledge to build from. Your next step is to strengthen the areas that could become expensive or stressful when income, study costs, work or living arrangements change.",
   "Nearly Money Ready":
     "You are close to being ready for many real-world money decisions. Keep checking the details, comparing options and using trusted support before signing up to products or commitments.",
   "Money Ready":
@@ -148,9 +146,12 @@ export function generateActionPlan(registration: RegistrationData, scores: QuizS
   const firstName = registration.firstName;
   const priorityCategories = getPriorityCategories(scores);
   const strengthCategories = scores.strengths.length > 0 ? scores.strengths : getTopCategories(scores).slice(0, 3);
+  const summary = hasSeriousKnowledgeGaps(scores)
+    ? "Your overall score shows a strong foundation, but your assessment also identified a few important gaps. These areas matter because they can affect real-life money decisions, so your Money Ready Plan focuses on helping you build confidence where it counts most."
+    : bandSummaries[scores.band];
 
   return {
-    summary: `${firstName}, your result is ${scores.band}. ${bandSummaries[scores.band]}`,
+    summary: `${firstName}, your result is ${scores.band}. ${summary}`,
     priorityAreas: priorityCategories.map((category) => ({
       category,
       title: categoryLabels[category],

@@ -102,13 +102,12 @@ Each answer has a `points` value. The scoring helper in `lib/quizScoring.ts` cal
 - risk areas
 - personalised next steps
 
-Result bands are:
+Result bands combine the overall score with category-level safeguards:
 
-- `0-25`: Money Foundations Needed
-- `26-50`: Getting Started
-- `51-70`: Building Confidence
-- `71-85`: Nearly Money Ready
-- `86-100`: Money Ready
+- `Money Ready`: overall score of at least 80 with no category below 50%
+- `Nearly Money Ready`: overall score of at least 65, no more than one category below 40%, and no category below 30%
+- `Building Money Confidence`: overall score of at least 40 when the higher readiness safeguards are not met
+- `Getting Started`: overall score below 40
 
 ## Assessment Registration And Data Storage
 

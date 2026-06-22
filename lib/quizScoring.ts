@@ -1,9 +1,8 @@
 import { categoryLabels, quizQuestions, type QuizCategory } from "@/data/quizQuestions";
 
 export type ResultBand =
-  | "Money Foundations Needed"
   | "Getting Started"
-  | "Building Confidence"
+  | "Building Money Confidence"
   | "Nearly Money Ready"
   | "Money Ready";
 
@@ -34,12 +33,10 @@ const categoryNextSteps: Record<QuizCategory, string> = {
 };
 
 const bandNextSteps: Record<ResultBand, string> = {
-  "Money Foundations Needed":
-    "Focus on the basics first: checking balances, planning essentials and knowing where to get trusted help.",
   "Getting Started":
-    "Build a few steady habits before taking on bigger decisions, especially around borrowing, bills and scams.",
-  "Building Confidence":
-    "You have useful foundations. Strengthen the areas that could become stressful when income or living costs change.",
+    "Focus on a few steady foundations before taking on bigger decisions, especially around borrowing, bills and scams.",
+  "Building Money Confidence":
+    "Your overall understanding may already be useful, but strengthening the weakest areas will make real-life decisions safer and calmer.",
   "Nearly Money Ready":
     "You are close. Keep practising real-world planning and check the details before signing up to financial products.",
   "Money Ready":
@@ -83,33 +80,49 @@ export function scoreQuiz(selectedAnswers: Record<string, string>): QuizScores {
     .filter((category) => categoryScores[category].percentage >= 75)
     .sort((a, b) => categoryScores[b].percentage - categoryScores[a].percentage)
     .slice(0, 4);
+  const band = getResultBand(readinessScore, categoryScores);
 
   return {
     totalScore,
     maxScore,
     readinessScore,
     categoryScores,
-    band: getResultBand(readinessScore),
+    band,
     strengths,
     riskAreas,
-    nextSteps: getPersonalisedNextSteps(readinessScore, riskAreas, rankedCategories),
+    nextSteps: getPersonalisedNextSteps(band, riskAreas, rankedCategories),
   };
 }
 
-export function getResultBand(scorePercentage: number): ResultBand {
-  if (scorePercentage <= 25) return "Money Foundations Needed";
-  if (scorePercentage <= 50) return "Getting Started";
-  if (scorePercentage <= 70) return "Building Confidence";
-  if (scorePercentage <= 85) return "Nearly Money Ready";
-  return "Money Ready";
+export function getResultBand(
+  readinessScore: number,
+  categoryScores: QuizScores["categoryScores"],
+): ResultBand {
+  const percentages = categories.map((category) => categoryScores[category].percentage);
+  const lowestCategoryScore = Math.min(...percentages);
+  const categoriesBelow40 = percentages.filter((score) => score < 40).length;
+
+  if (readinessScore < 40) return "Getting Started";
+  if (readinessScore >= 80 && lowestCategoryScore >= 50) return "Money Ready";
+  if (readinessScore >= 65 && categoriesBelow40 <= 1 && lowestCategoryScore >= 30) {
+    return "Nearly Money Ready";
+  }
+  return "Building Money Confidence";
+}
+
+export function hasSeriousKnowledgeGaps(scores: Pick<QuizScores, "readinessScore" | "categoryScores">) {
+  const percentages = categories.map((category) => scores.categoryScores[category].percentage);
+  const lowestCategoryScore = Math.min(...percentages);
+  const categoriesBelow40 = percentages.filter((score) => score < 40).length;
+
+  return scores.readinessScore >= 65 && (lowestCategoryScore < 30 || categoriesBelow40 >= 2);
 }
 
 function getPersonalisedNextSteps(
-  readinessScore: number,
+  band: ResultBand,
   riskAreas: QuizCategory[],
   rankedCategories: QuizCategory[],
 ) {
-  const band = getResultBand(readinessScore);
   const priorityCategories = riskAreas.length > 0 ? riskAreas : rankedCategories.slice(0, 3);
   const categorySteps = priorityCategories.slice(0, 3).map((category) => categoryNextSteps[category]);
 

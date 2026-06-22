@@ -39,6 +39,7 @@ export async function sendActionPlanEmail(params: {
       "",
       `Money Readiness Score: ${scores.readinessScore}/100`,
       `Result band: ${scores.band}`,
+      actionPlan.summary,
       "",
       "Your top 3 money priorities:",
       ...actionPlan.priorityAreas.map((area, index) => `${index + 1}. ${area.title}`),
@@ -148,6 +149,9 @@ function buildAssessmentEmailHtml(params: {
                 </tr>
               </table>
             </td>
+          </tr>
+          <tr>
+            <td style="padding:0 28px 26px;color:#4f6069;font-size:15px;line-height:24px;">${escapeHtml(actionPlan.summary)}</td>
           </tr>
           <tr>
             <td style="padding:0 28px 28px;">

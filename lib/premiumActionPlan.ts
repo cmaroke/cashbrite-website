@@ -1,6 +1,6 @@
 import { categoryDescriptions, categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import type { RegistrationData } from "@/lib/assessmentTypes";
-import type { QuizScores, ResultBand } from "@/lib/quizScoring";
+import { hasSeriousKnowledgeGaps, type QuizScores, type ResultBand } from "@/lib/quizScoring";
 
 export type CreditLearningGuide = {
   basics: { explanation: string };
@@ -62,12 +62,10 @@ export type PremiumActionPlan = {
 type CategoryGuidance = Omit<PremiumPriorityArea, "category" | "title" | "score">;
 
 const profileByBand: Record<ResultBand, string> = {
-  "Money Foundations Needed":
-    "You are at the start of your money-confidence journey. Your plan focuses on a few clear foundations so everyday choices feel less uncertain and more manageable.",
   "Getting Started":
-    "You have begun building useful money awareness. Your plan will help turn that early knowledge into practical habits you can rely on when study, work and living costs become more independent.",
-  "Building Confidence":
-    "You have a sound base and are ready to make it more consistent. Your plan targets the details most likely to protect your money and reduce stress as your responsibilities grow.",
+    "You are at the start of your money-confidence journey. Your plan focuses on clear foundations so everyday choices feel less uncertain and more manageable.",
+  "Building Money Confidence":
+    "You have useful awareness and are ready to make it more consistent. Your plan targets the details most likely to protect your money and reduce stress as your responsibilities grow.",
   "Nearly Money Ready":
     "You already approach many money decisions thoughtfully. Your plan will sharpen the remaining gaps and help you prepare for bigger commitments with calm, informed confidence.",
   "Money Ready":
@@ -75,15 +73,11 @@ const profileByBand: Record<ResultBand, string> = {
 };
 
 const personalityByBand: Record<ResultBand, { title: string; description: string }> = {
-  "Money Foundations Needed": {
+  "Getting Started": {
     title: "The Foundation Builder",
     description: "You are ready to turn unfamiliar money topics into simple, repeatable foundations.",
   },
-  "Getting Started": {
-    title: "The Curious Starter",
-    description: "You have useful instincts and are beginning to connect them with practical everyday habits.",
-  },
-  "Building Confidence": {
+  "Building Money Confidence": {
     title: "The Practical Progressor",
     description: "You understand many of the basics and learn best by applying them to real decisions.",
   },
@@ -98,17 +92,12 @@ const personalityByBand: Record<ResultBand, { title: string; description: string
 };
 
 const nextStepsByBand: Record<ResultBand, string[]> = {
-  "Money Foundations Needed": [
+  "Getting Started": [
     "Complete one priority action at a time rather than trying to change everything at once.",
     "Ask a trusted adult to work through unfamiliar terms or decisions with you.",
     "Repeat the Money Readiness Assessment after 30 days to see what has improved.",
   ],
-  "Getting Started": [
-    "Turn the first two roadmap actions into regular weekly habits.",
-    "Keep a short list of money questions and check them with a trusted source.",
-    "Review your progress at the end of the month and choose your next focus.",
-  ],
-  "Building Confidence": [
+  "Building Money Confidence": [
     "Practise your weaker topics using real figures from your own plans.",
     "Compare options before your next financial commitment, even when the amount seems small.",
     "Share your roadmap with someone who can keep you accountable.",
@@ -422,10 +411,13 @@ export function generatePremiumActionPlan(
     ...guidance[category],
   }));
   const strengthCategories = getPremiumStrengthCategories(scores);
+  const gapAwareProfile = hasSeriousKnowledgeGaps(scores)
+    ? "Your overall score shows a strong foundation, while a few important gaps need focused attention. This plan concentrates on those areas because they can affect real-life money decisions."
+    : profileByBand[scores.band];
 
   return {
     moneyPersonality: personalityByBand[scores.band],
-    personalMoneyProfile: `${registration.firstName}, at age ${registration.age}, your ${scores.band} result shows where your money knowledge already supports you and where a little focused practice will make the biggest difference. ${profileByBand[scores.band]}${registration.educationStage ? ` This plan reflects your current stage: ${registration.educationStage}.` : ""}`,
+    personalMoneyProfile: `${registration.firstName}, at age ${registration.age}, your ${scores.band} result shows where your money knowledge already supports you and where focused practice will make the biggest difference. ${gapAwareProfile}${registration.educationStage ? ` This plan reflects your current stage: ${registration.educationStage}.` : ""}`,
     categoryScores: (Object.keys(scores.categoryScores) as QuizCategory[]).map((category) => ({
       category,
       title: categoryLabels[category],

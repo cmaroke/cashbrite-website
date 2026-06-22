@@ -1,5 +1,5 @@
 import type { QuizCategory } from "@/data/quizQuestions";
-import type { QuizScores, ResultBand } from "@/lib/quizScoring";
+import type { QuizScores } from "@/lib/quizScoring";
 
 export const educationStages = ["School", "College or Sixth Form", "University", "Other"] as const;
 export const legacyUserTypes = ["Student", "Parent", "Teacher/School professional", "Other"] as const;
@@ -75,7 +75,7 @@ export type StoredAssessmentRow = {
   marketing_consent: boolean;
   completed_at: string;
   readiness_score: number;
-  result_band: ResultBand;
+  result_band: string;
   category_scores: QuizScores["categoryScores"];
   strengths: QuizCategory[];
   risk_areas: QuizCategory[];

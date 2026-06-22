@@ -1,9 +1,9 @@
 import { categoryLabels, quizQuestions, type QuizCategory } from "@/data/quizQuestions";
 
 export type ResultBand =
-  | "Getting Started"
+  | "Starting Your Money Journey"
+  | "Developing Money Skills"
   | "Building Money Confidence"
-  | "Nearly Money Ready"
   | "Money Ready";
 
 export type QuizScores = {
@@ -33,12 +33,12 @@ const categoryNextSteps: Record<QuizCategory, string> = {
 };
 
 const bandNextSteps: Record<ResultBand, string> = {
-  "Getting Started":
-    "Focus on a few steady foundations before taking on bigger decisions, especially around borrowing, bills and scams.",
+  "Starting Your Money Journey":
+    "Start with a few steady foundations, especially around spending, borrowing, bills and staying safe from scams.",
+  "Developing Money Skills":
+    "You have some useful foundations. Focus on the areas where a little more knowledge could make everyday decisions safer and calmer.",
   "Building Money Confidence":
-    "Your overall understanding may already be useful, but strengthening the weakest areas will make real-life decisions safer and calmer.",
-  "Nearly Money Ready":
-    "You are close. Keep practising real-world planning and check the details before signing up to financial products.",
+    "You understand many money essentials. Strengthen the remaining gaps and keep checking details before making commitments.",
   "Money Ready":
     "Keep reviewing your plan as life changes and use your confidence to help friends spot risks early.",
 };
@@ -80,7 +80,7 @@ export function scoreQuiz(selectedAnswers: Record<string, string>): QuizScores {
     .filter((category) => categoryScores[category].percentage >= 75)
     .sort((a, b) => categoryScores[b].percentage - categoryScores[a].percentage)
     .slice(0, 4);
-  const band = getResultBand(readinessScore, categoryScores);
+  const band = getResultBand(readinessScore);
 
   return {
     totalScore,
@@ -94,20 +94,11 @@ export function scoreQuiz(selectedAnswers: Record<string, string>): QuizScores {
   };
 }
 
-export function getResultBand(
-  readinessScore: number,
-  categoryScores: QuizScores["categoryScores"],
-): ResultBand {
-  const percentages = categories.map((category) => categoryScores[category].percentage);
-  const lowestCategoryScore = Math.min(...percentages);
-  const categoriesBelow40 = percentages.filter((score) => score < 40).length;
-
-  if (readinessScore < 40) return "Getting Started";
-  if (readinessScore >= 80 && lowestCategoryScore >= 50) return "Money Ready";
-  if (readinessScore >= 65 && categoriesBelow40 <= 1 && lowestCategoryScore >= 30) {
-    return "Nearly Money Ready";
-  }
-  return "Building Money Confidence";
+export function getResultBand(readinessScore: number): ResultBand {
+  if (readinessScore >= 85) return "Money Ready";
+  if (readinessScore >= 70) return "Building Money Confidence";
+  if (readinessScore >= 50) return "Developing Money Skills";
+  return "Starting Your Money Journey";
 }
 
 export function hasSeriousKnowledgeGaps(scores: Pick<QuizScores, "readinessScore" | "categoryScores">) {

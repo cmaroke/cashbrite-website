@@ -3,11 +3,11 @@ import type { ActionPlan, PriorityAreaPlan, RegistrationData } from "@/lib/asses
 import { hasSeriousKnowledgeGaps, type QuizScores, type ResultBand } from "@/lib/quizScoring";
 
 const bandSummaries: Record<ResultBand, string> = {
-  "Getting Started":
+  "Starting Your Money Journey":
     "You are at the beginning of building money confidence, and that is a completely valid place to start. Focus first on simple habits and trusted support so everyday decisions feel more manageable.",
-  "Building Money Confidence":
+  "Developing Money Skills":
     "You have useful knowledge to build from. Your next step is to strengthen the areas that could become expensive or stressful when income, study costs, work or living arrangements change.",
-  "Nearly Money Ready":
+  "Building Money Confidence":
     "You are close to being ready for many real-world money decisions. Keep checking the details, comparing options and using trusted support before signing up to products or commitments.",
   "Money Ready":
     "You are showing strong money awareness and decision-making. Keep reviewing your habits as life changes, and remember that confidence is strongest when it stays curious and cautious.",

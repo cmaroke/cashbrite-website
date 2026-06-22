@@ -93,7 +93,7 @@ export async function getAssessment(id: string): Promise<SavedAssessment | null>
     maxScore: 0,
     readinessScore: row.readiness_score,
     categoryScores: row.category_scores,
-    band: getResultBand(row.readiness_score, row.category_scores),
+    band: getResultBand(row.readiness_score),
     strengths: row.strengths,
     riskAreas: row.risk_areas,
     nextSteps: [],

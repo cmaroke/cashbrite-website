@@ -102,12 +102,12 @@ Each answer has a `points` value. The scoring helper in `lib/quizScoring.ts` cal
 - risk areas
 - personalised next steps
 
-Result bands combine the overall score with category-level safeguards:
+Each question uses a consistent `3 / 2 / 1 / 0` progression from the strongest answer to the weakest. Result bands are:
 
-- `Money Ready`: overall score of at least 80 with no category below 50%
-- `Nearly Money Ready`: overall score of at least 65, no more than one category below 40%, and no category below 30%
-- `Building Money Confidence`: overall score of at least 40 when the higher readiness safeguards are not met
-- `Getting Started`: overall score below 40
+- `Money Ready`: 85-100
+- `Building Money Confidence`: 70-84
+- `Developing Money Skills`: 50-69
+- `Starting Your Money Journey`: below 50
 
 ## Assessment Registration And Data Storage
 

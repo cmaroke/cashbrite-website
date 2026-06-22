@@ -62,26 +62,26 @@ export type PremiumActionPlan = {
 type CategoryGuidance = Omit<PremiumPriorityArea, "category" | "title" | "score">;
 
 const profileByBand: Record<ResultBand, string> = {
-  "Getting Started":
+  "Starting Your Money Journey":
     "You are at the start of your money-confidence journey. Your plan focuses on clear foundations so everyday choices feel less uncertain and more manageable.",
-  "Building Money Confidence":
+  "Developing Money Skills":
     "You have useful awareness and are ready to make it more consistent. Your plan targets the details most likely to protect your money and reduce stress as your responsibilities grow.",
-  "Nearly Money Ready":
+  "Building Money Confidence":
     "You already approach many money decisions thoughtfully. Your plan will sharpen the remaining gaps and help you prepare for bigger commitments with calm, informed confidence.",
   "Money Ready":
     "You are showing strong financial awareness and judgement. Your plan is designed to help you maintain those strengths, pressure-test your choices and stay ready as life changes.",
 };
 
 const personalityByBand: Record<ResultBand, { title: string; description: string }> = {
-  "Getting Started": {
+  "Starting Your Money Journey": {
     title: "The Foundation Builder",
     description: "You are ready to turn unfamiliar money topics into simple, repeatable foundations.",
   },
-  "Building Money Confidence": {
+  "Developing Money Skills": {
     title: "The Practical Progressor",
     description: "You understand many of the basics and learn best by applying them to real decisions.",
   },
-  "Nearly Money Ready": {
+  "Building Money Confidence": {
     title: "The Thoughtful Planner",
     description: "You usually pause, compare and plan, with a few details left to strengthen before greater independence.",
   },
@@ -92,17 +92,17 @@ const personalityByBand: Record<ResultBand, { title: string; description: string
 };
 
 const nextStepsByBand: Record<ResultBand, string[]> = {
-  "Getting Started": [
+  "Starting Your Money Journey": [
     "Complete one priority action at a time rather than trying to change everything at once.",
     "Ask a trusted adult to work through unfamiliar terms or decisions with you.",
     "Repeat the Money Readiness Assessment after 30 days to see what has improved.",
   ],
-  "Building Money Confidence": [
+  "Developing Money Skills": [
     "Practise your weaker topics using real figures from your own plans.",
     "Compare options before your next financial commitment, even when the amount seems small.",
     "Share your roadmap with someone who can keep you accountable.",
   ],
-  "Nearly Money Ready": [
+  "Building Money Confidence": [
     "Use your priority areas to check the detail behind your otherwise strong decisions.",
     "Prepare a realistic plan for one upcoming change such as university, work or moving out.",
     "Keep reviewing financial products and commitments as their terms change.",

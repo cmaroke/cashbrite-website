@@ -39,7 +39,6 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function QuizPage() {
   const router = useRouter();
   const quizStartRef = useRef<HTMLFormElement>(null);
-  const hasScrolledToQuiz = useRef(false);
   const [registration, setRegistration] = useState<RegistrationFormState>(initialRegistration);
   const [registrationComplete, setRegistrationComplete] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
@@ -72,14 +71,24 @@ export default function QuizPage() {
   );
 
   useEffect(() => {
-    if (!registrationComplete || hasScrolledToQuiz.current) return;
+    if (!registrationComplete) return;
 
-    hasScrolledToQuiz.current = true;
-    const animationFrame = window.requestAnimationFrame(() => {
-      quizStartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    let secondFrame: number | undefined;
+    const firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(() => {
+        const quizStart = quizStartRef.current;
+        if (!quizStart) return;
+
+        const headerHeight = document.querySelector<HTMLElement>("body > header")?.offsetHeight ?? 0;
+        const quizTop = window.scrollY + quizStart.getBoundingClientRect().top;
+        window.scrollTo({ top: Math.max(0, quizTop - headerHeight - 16), behavior: "auto" });
+      });
     });
 
-    return () => window.cancelAnimationFrame(animationFrame);
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      if (secondFrame !== undefined) window.cancelAnimationFrame(secondFrame);
+    };
   }, [registrationComplete]);
 
   function handleRegistrationSubmit(event: FormEvent<HTMLFormElement>) {
@@ -302,7 +311,7 @@ export default function QuizPage() {
           <form
             ref={quizStartRef}
             onSubmit={handleAssessmentSubmit}
-            className="grid scroll-mt-36 gap-8 md:scroll-mt-28"
+            className="grid gap-8"
           >
             {Object.entries(groupedQuestions).map(([category, questions]) => (
               <fieldset

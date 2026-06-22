@@ -53,7 +53,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "budgeting-1",
     category: "budgetingSpending",
-    prompt: "When money comes in, what do you usually do first?",
+    prompt: "When you receive money — such as birthday money, pocket money, a part-time job or wages — what do you usually do first?",
     answers: [
       { id: "a", label: "I spend normally and see what is left later", points: 0 },
       { id: "b", label: "I keep a rough idea in my head", points: 2 },
@@ -75,12 +75,12 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "budgeting-5",
     category: "budgetingSpending",
-    prompt: "If your spending plan stops working halfway through the month, what would help most?",
+    prompt: "You have £30 left until you next receive money, but you see something you really want for £25. What do you do?",
     answers: [
-      { id: "a", label: "Ignore it until next month", points: 0 },
-      { id: "b", label: "Review what changed and adjust the remaining spending", points: 4 },
-      { id: "c", label: "Cut every non-essential cost without checking what is realistic", points: 2 },
-      { id: "d", label: "Use credit to cover the gap without checking the cost", points: 1 },
+      { id: "a", label: "Buy it and hope the remaining £5 is enough", points: 0 },
+      { id: "b", label: "Pause and keep enough money for essentials until I next receive money", points: 4 },
+      { id: "c", label: "Check what I still need to pay for before deciding", points: 2 },
+      { id: "d", label: "Use credit or Buy Now Pay Later so I can keep the £30", points: 1 },
     ],
   },
   {
@@ -108,7 +108,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "saving-4",
     category: "savingHabits",
-    prompt: "How do you usually separate money you want to save?",
+    prompt: "You want to save money for something important. What is the best way to stop yourself spending it?",
     answers: [
       { id: "a", label: "I keep it in the same balance and try not to touch it", points: 1 },
       { id: "b", label: "I use a separate pot, account or clear note in my banking app", points: 4 },
@@ -119,7 +119,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "student-finance-1",
     category: "studentFinance",
-    prompt: "What is maintenance money usually meant to help with?",
+    prompt: "If you receive student maintenance money, what is it mainly designed to help pay for?",
     answers: [
       { id: "a", label: "Living costs such as rent, food, travel and course needs", points: 4 },
       { id: "b", label: "Only nights out during freshers' week", points: 0 },
@@ -141,7 +141,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "student-finance-5",
     category: "studentFinance",
-    prompt: "How should a large termly payment be handled?",
+    prompt: "You receive a large student finance payment at the start of term. What is the smartest way to manage it?",
     answers: [
       { id: "a", label: "Split it across the weeks or months it needs to cover", points: 4 },
       { id: "b", label: "Spend freely at first and plan later", points: 0 },
@@ -152,7 +152,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "banking-2",
     category: "bankAccountsOverdrafts",
-    prompt: "What is an overdraft?",
+    prompt: "You spend more money than you have in your bank account and go into your arranged overdraft. What does this mean?",
     answers: [
       { id: "a", label: "Borrowing through your current account that may have rules or charges", points: 4 },
       { id: "b", label: "Free money that never needs repaying", points: 0 },
@@ -163,7 +163,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "banking-3",
     category: "bankAccountsOverdrafts",
-    prompt: "Which banking feature can help prevent surprise overspending?",
+    prompt: "You keep wondering where your money disappears each week. What could help you stay on track?",
     answers: [
       { id: "a", label: "Balance alerts, spending notifications or pots", points: 4 },
       { id: "b", label: "Turning off all notifications and never checking", points: 0 },
@@ -185,7 +185,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "credit-1",
     category: "creditBorrowing",
-    prompt: "What is credit?",
+    prompt: "You buy something using money you will pay back later. What does this mean?",
     answers: [
       { id: "a", label: "Borrowed money or a payment agreement that usually needs repaying", points: 4 },
       { id: "b", label: "Income you have earned", points: 0 },
@@ -196,7 +196,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "credit-3",
     category: "creditBorrowing",
-    prompt: "If you use a credit card, what is usually the safest habit?",
+    prompt: "You receive your monthly credit card statement. What is usually the best way to manage it?",
     answers: [
       { id: "a", label: "Pay the full statement balance when possible", points: 4 },
       { id: "b", label: "Only pay the minimum forever", points: 1 },
@@ -218,7 +218,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "bnpl-1",
     category: "buyNowPayLater",
-    prompt: "What does buy now pay later usually let you do?",
+    prompt: "You see trainers online with a 'Buy Now Pay Later' option. What does this usually mean?",
     answers: [
       { id: "a", label: "Get something now and pay later or in instalments", points: 4 },
       { id: "b", label: "Get things for free", points: 0 },
@@ -240,7 +240,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "bnpl-5",
     category: "buyNowPayLater",
-    prompt: "If a buy now pay later payment is due tomorrow and you are short, what is best?",
+    prompt: "Your Buy Now Pay Later payment is due tomorrow but you do not have enough money. What should you do?",
     answers: [
       { id: "a", label: "Check the provider options and seek help before missing it", points: 4 },
       { id: "b", label: "Ignore it because it is not a real bill", points: 0 },
@@ -251,7 +251,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "scams-1",
     category: "fraudScamsOnlineSafety",
-    prompt: "A message says your bank needs your PIN urgently. What should you do?",
+    prompt: "You receive a text saying your bank account is at risk and asking for your PIN. What should you do?",
     answers: [
       { id: "a", label: "Reply quickly so the account is safe", points: 0 },
       { id: "b", label: "Use official bank contact details or the app to check", points: 4 },
@@ -284,18 +284,18 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "pay-1",
     category: "payslipsTaxNi",
-    prompt: "What is a payslip for?",
+    prompt: "You get your first payslip from a job. Why should you check it?",
     answers: [
-      { id: "a", label: "Showing pay earned, deductions and take-home pay", points: 4 },
-      { id: "b", label: "Only showing your employer's logo", points: 0 },
-      { id: "c", label: "Replacing a bank statement", points: 0 },
-      { id: "d", label: "Showing only how many hours your friends worked", points: 0 },
+      { id: "a", label: "It shows pay earned, deductions and take-home pay", points: 4 },
+      { id: "b", label: "It only shows your employer's logo", points: 0 },
+      { id: "c", label: "It replaces a bank statement", points: 0 },
+      { id: "d", label: "It only shows how many hours your friends worked", points: 0 },
     ],
   },
   {
     id: "pay-2",
     category: "payslipsTaxNi",
-    prompt: "What does take-home pay mean?",
+    prompt: "When you receive your pay, what does 'take-home pay' mean?",
     answers: [
       { id: "a", label: "The amount paid to you after deductions such as tax or National Insurance", points: 4 },
       { id: "b", label: "The amount before any deductions", points: 1 },
@@ -317,7 +317,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "moving-1",
     category: "movingOutRentBills",
-    prompt: "Before moving out, which upfront costs should you plan for?",
+    prompt: "You are preparing to move into your first place. Which costs should you plan for before you move in?",
     answers: [
       { id: "a", label: "Deposit, first rent, travel, basic items and possible setup costs", points: 4 },
       { id: "b", label: "Only food for the first week", points: 1 },
@@ -339,7 +339,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "moving-4",
     category: "movingOutRentBills",
-    prompt: "Which bill can change depending on use or supplier?",
+    prompt: "Which household bill can change depending on how much you use and who supplies it?",
     answers: [
       { id: "a", label: "Energy, water, broadband or mobile costs", points: 4 },
       { id: "b", label: "Every bill is always fixed forever", points: 0 },
@@ -350,7 +350,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "confidence-1",
     category: "moneyConfidence",
-    prompt: "When you do not understand a money word or product, what do you usually do?",
+    prompt: "You see a money term online that you do not understand. What is the best thing to do?",
     answers: [
       { id: "a", label: "Ask a trusted person or check a reliable source", points: 4 },
       { id: "b", label: "Pretend I understand and carry on", points: 0 },
@@ -361,7 +361,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "confidence-3",
     category: "moneyConfidence",
-    prompt: "Before making a bigger money decision, what helps most?",
+    prompt: "Before making an important money decision, what is the smartest approach?",
     answers: [
       { id: "a", label: "Compare options, costs and consequences before deciding", points: 4 },
       { id: "b", label: "Choose whatever feels easiest in the moment", points: 1 },

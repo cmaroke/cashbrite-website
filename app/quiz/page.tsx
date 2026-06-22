@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { categoryDescriptions, categoryLabels, quizQuestions, type QuizAnswer } from "@/data/quizQuestions";
@@ -38,6 +38,8 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function QuizPage() {
   const router = useRouter();
+  const quizStartRef = useRef<HTMLFormElement>(null);
+  const hasScrolledToQuiz = useRef(false);
   const [registration, setRegistration] = useState<RegistrationFormState>(initialRegistration);
   const [registrationComplete, setRegistrationComplete] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
@@ -68,6 +70,17 @@ export default function QuizPage() {
       ) as Record<string, QuizAnswer[]>,
     [],
   );
+
+  useEffect(() => {
+    if (!registrationComplete || hasScrolledToQuiz.current) return;
+
+    hasScrolledToQuiz.current = true;
+    const animationFrame = window.requestAnimationFrame(() => {
+      quizStartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [registrationComplete]);
 
   function handleRegistrationSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -286,7 +299,11 @@ export default function QuizPage() {
             </button>
           </form>
         ) : (
-          <form onSubmit={handleAssessmentSubmit} className="grid gap-8">
+          <form
+            ref={quizStartRef}
+            onSubmit={handleAssessmentSubmit}
+            className="grid scroll-mt-36 gap-8 md:scroll-mt-28"
+          >
             {Object.entries(groupedQuestions).map(([category, questions]) => (
               <fieldset
                 key={category}

@@ -53,12 +53,12 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "budgeting-1",
     category: "budgetingSpending",
-    prompt: "When you get money, what is the best first step?",
+    prompt: "You receive £100 for your birthday. What do you do with it?",
     answers: [
-      { id: "a", label: "Spend most of it first and think about the rest later", points: 0 },
-      { id: "b", label: "Keep a rough idea of what I want to use it for", points: 2 },
-      { id: "c", label: "Decide what to save, spend and keep aside first", points: 3 },
-      { id: "d", label: "Spend some and hope enough remains for what I need later", points: 1 },
+      { id: "a", label: "Spend it all on shopping or going out", points: 0 },
+      { id: "b", label: "Keep it until I decide what I want it for", points: 2 },
+      { id: "c", label: "Split it between spending, saving and future plans", points: 3 },
+      { id: "d", label: "Spend some and save whatever is left later", points: 1 },
     ],
   },
   {
@@ -110,10 +110,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "savingHabits",
     prompt: "You want to save money for something important. What is the best way to stop yourself spending it?",
     answers: [
-      { id: "a", label: "Leave it in my usual account and try not to spend it", points: 1 },
+      { id: "a", label: "Leave it in my usual account and rely on self-control", points: 1 },
       { id: "b", label: "Move it to a separate savings pot or account", points: 3 },
-      { id: "c", label: "Keep it separate but do not track my goal", points: 2 },
-      { id: "d", label: "Spend it now and plan to replace it later", points: 0 },
+      { id: "c", label: "Keep it separate without tracking my goal", points: 2 },
+      { id: "d", label: "Spend it and replace it later", points: 0 },
     ],
   },
   {
@@ -298,9 +298,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "When you receive your pay, what does 'take-home pay' mean?",
     answers: [
       { id: "a", label: "Pay after deductions such as tax or National Insurance", points: 3 },
-      { id: "b", label: "Pay before any deductions", points: 2 },
-      { id: "c", label: "Basic pay before overtime or bonuses", points: 1 },
-      { id: "d", label: "Money left after regular spending and bills", points: 0 },
+      { id: "b", label: "The amount that reaches my bank account", points: 2 },
+      { id: "c", label: "My basic pay before overtime or bonuses", points: 1 },
+      { id: "d", label: "Money left after spending and bills", points: 0 },
     ],
   },
   {
@@ -309,9 +309,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "When you start a new job, what should you check before your first payday?",
     answers: [
       { id: "a", label: "My hourly pay, expected hours and payday", points: 3 },
-      { id: "b", label: "What I plan to spend my money on", points: 1 },
+      { id: "b", label: "Roughly what I expect to receive", points: 1 },
       { id: "c", label: "My job details and roughly when I will be paid", points: 2 },
-      { id: "d", label: "Only what I plan to spend my first pay on", points: 0 },
+      { id: "d", label: "The payday, without checking my rate or hours", points: 0 },
     ],
   },
   {
@@ -321,8 +321,8 @@ export const quizQuestions: QuizQuestion[] = [
     answers: [
       { id: "a", label: "Deposit, first rent, basic items and setup costs", points: 3 },
       { id: "b", label: "Deposit and first rent, then plan the remaining costs", points: 2 },
-      { id: "c", label: "First rent and furniture, with no deposit plan", points: 0 },
-      { id: "d", label: "Monthly rent, then work out other costs later", points: 1 },
+      { id: "c", label: "First rent and furniture, then arrange the deposit", points: 0 },
+      { id: "d", label: "Plan the monthly rent and deal with extras later", points: 1 },
     ],
   },
   {
@@ -341,9 +341,9 @@ export const quizQuestions: QuizQuestion[] = [
     category: "movingOutRentBills",
     prompt: "Which household bill can change depending on how much you use and who supplies it?",
     answers: [
-      { id: "a", label: "Energy, because usage and the supplier's tariff affect the cost", points: 3 },
-      { id: "b", label: "Council Tax, because it changes with monthly usage", points: 1 },
-      { id: "c", label: "Rent, because it changes with household usage", points: 0 },
+      { id: "a", label: "Energy, because usage and the tariff affect the cost", points: 3 },
+      { id: "b", label: "Council Tax, because the amount varies by property", points: 1 },
+      { id: "c", label: "Rent, because the amount changes with household use", points: 0 },
       { id: "d", label: "I know bills vary, but I am unsure which ones", points: 2 },
     ],
   },

@@ -55,10 +55,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "budgetingSpending",
     prompt: "When you receive money — such as birthday money, pocket money, a part-time job or wages — what do you usually do first?",
     answers: [
-      { id: "a", label: "I spend normally and see what is left later", points: 0 },
-      { id: "b", label: "I keep a rough idea in my head", points: 2 },
-      { id: "c", label: "I set aside money for essentials before flexible spending", points: 4 },
-      { id: "d", label: "I avoid checking because it feels stressful", points: 1 },
+      { id: "a", label: "I spend most of it straight away and think about the rest later", points: 0 },
+      { id: "b", label: "I keep a rough idea in my head of what I want to use it for", points: 2 },
+      { id: "c", label: "I decide what I want to save, spend and keep aside before using it", points: 4 },
+      { id: "d", label: "I spend some and hope I have enough left for what I need or want later", points: 1 },
     ],
   },
   {
@@ -99,7 +99,7 @@ export const quizQuestions: QuizQuestion[] = [
     category: "savingHabits",
     prompt: "What is the main purpose of an emergency fund?",
     answers: [
-      { id: "a", label: "To cover unexpected essentials without panic borrowing", points: 4 },
+      { id: "a", label: "To cover an unexpected important cost without having to panic or borrow", points: 4 },
       { id: "b", label: "To spend on treats whenever I want", points: 0 },
       { id: "c", label: "Only to use for holidays", points: 1 },
       { id: "d", label: "I have heard of it but I am not sure", points: 2 },
@@ -110,10 +110,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "savingHabits",
     prompt: "You want to save money for something important. What is the best way to stop yourself spending it?",
     answers: [
-      { id: "a", label: "I keep it in the same balance and try not to touch it", points: 1 },
-      { id: "b", label: "I use a separate pot, account or clear note in my banking app", points: 4 },
-      { id: "c", label: "I withdraw cash and hope I do not spend it", points: 2 },
-      { id: "d", label: "I do not separate it at all", points: 0 },
+      { id: "a", label: "Keep it with the rest of my money and try not to touch it", points: 1 },
+      { id: "b", label: "Move it to a separate savings pot, account or safe place", points: 4 },
+      { id: "c", label: "Keep it as cash somewhere and hope I remember not to spend it", points: 2 },
+      { id: "d", label: "Leave it mixed in with money I can spend", points: 0 },
     ],
   },
   {
@@ -135,7 +135,7 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "a", label: "Hardship funds, bursaries, scholarships or student support services", points: 4 },
       { id: "b", label: "Only payday loans", points: 0 },
       { id: "c", label: "Nothing, support is never available", points: 0 },
-      { id: "d", label: "Only asking classmates to solve it", points: 1 },
+      { id: "d", label: "Rely only on friends to lend me money", points: 1 },
     ],
   },
   {
@@ -145,7 +145,7 @@ export const quizQuestions: QuizQuestion[] = [
     answers: [
       { id: "a", label: "Split it across the weeks or months it needs to cover", points: 4 },
       { id: "b", label: "Spend freely at first and plan later", points: 0 },
-      { id: "c", label: "Keep a rough note but do not include rent or bills", points: 1 },
+      { id: "c", label: "Keep a rough idea but not work out how long it needs to last", points: 1 },
       { id: "d", label: "Set aside obvious essentials and review often", points: 3 },
     ],
   },
@@ -168,7 +168,7 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "a", label: "Balance alerts, spending notifications or pots", points: 4 },
       { id: "b", label: "Turning off all notifications and never checking", points: 0 },
       { id: "c", label: "Using only contactless without tracking", points: 1 },
-      { id: "d", label: "Saving passwords in public places", points: 0 },
+      { id: "d", label: "Relying on memory without checking what I spend", points: 0 },
     ],
   },
   {
@@ -190,7 +190,7 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "a", label: "Borrowed money or a payment agreement that usually needs repaying", points: 4 },
       { id: "b", label: "Income you have earned", points: 0 },
       { id: "c", label: "A discount code", points: 0 },
-      { id: "d", label: "Money that only adults need to understand", points: 1 },
+      { id: "d", label: "Money I can spend without planning how to repay it", points: 1 },
     ],
   },
   {
@@ -199,9 +199,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You receive your monthly credit card statement. What is usually the best way to manage it?",
     answers: [
       { id: "a", label: "Pay the full statement balance when possible", points: 4 },
-      { id: "b", label: "Only pay the minimum forever", points: 1 },
-      { id: "c", label: "Treat the limit as extra income", points: 0 },
-      { id: "d", label: "Use it for friends and hope they pay you back", points: 0 },
+      { id: "b", label: "Pay only the minimum amount each month", points: 1 },
+      { id: "c", label: "Treat the available limit as extra money I can spend", points: 0 },
+      { id: "d", label: "Use it to buy things for friends and assume they will pay me back", points: 0 },
     ],
   },
   {
@@ -209,7 +209,7 @@ export const quizQuestions: QuizQuestion[] = [
     category: "creditBorrowing",
     prompt: "What should you do if you think you cannot make a repayment?",
     answers: [
-      { id: "a", label: "Contact the lender or a free debt advice service early", points: 4 },
+      { id: "a", label: "Tell the lender early or ask a trusted person or free debt adviser for help", points: 4 },
       { id: "b", label: "Wait until missed payments build up", points: 0 },
       { id: "c", label: "Borrow more without checking the cost", points: 1 },
       { id: "d", label: "Delete the app and avoid messages", points: 0 },
@@ -223,7 +223,7 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "a", label: "Get something now and pay later or in instalments", points: 4 },
       { id: "b", label: "Get things for free", points: 0 },
       { id: "c", label: "Avoid needing a budget", points: 0 },
-      { id: "d", label: "Earn wages earlier", points: 0 },
+      { id: "d", label: "Pay nothing unless I decide to later", points: 0 },
     ],
   },
   {
@@ -242,7 +242,7 @@ export const quizQuestions: QuizQuestion[] = [
     category: "buyNowPayLater",
     prompt: "Your Buy Now Pay Later payment is due tomorrow but you do not have enough money. What should you do?",
     answers: [
-      { id: "a", label: "Check the provider options and seek help before missing it", points: 4 },
+      { id: "a", label: "Contact the provider, check my options and ask for help before I miss it", points: 4 },
       { id: "b", label: "Ignore it because it is not a real bill", points: 0 },
       { id: "c", label: "Use another BNPL purchase to cover the problem", points: 0 },
       { id: "d", label: "Hope it does not matter", points: 1 },
@@ -366,7 +366,7 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "a", label: "Compare options, costs and consequences before deciding", points: 4 },
       { id: "b", label: "Choose whatever feels easiest in the moment", points: 1 },
       { id: "c", label: "Copy what a friend did without checking if it fits me", points: 0 },
-      { id: "d", label: "Delay forever because all money choices feel scary", points: 1 },
+      { id: "d", label: "Keep putting it off because it feels confusing", points: 1 },
     ],
   },
   {

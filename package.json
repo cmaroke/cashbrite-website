@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
+    "check:quiz": "node scripts/check-quiz-scoring.mjs",
     "start": "next start",
     "lint": "eslint ."
   },

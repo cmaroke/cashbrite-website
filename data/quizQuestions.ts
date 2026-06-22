@@ -53,23 +53,23 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "budgeting-1",
     category: "budgetingSpending",
-    prompt: "When you receive money — such as birthday money, pocket money, a part-time job or wages — what do you usually do first?",
+    prompt: "When you get money, what is the best first step?",
     answers: [
-      { id: "a", label: "I spend most of it straight away and think about the rest later", points: 0 },
-      { id: "b", label: "I keep a rough idea of what I want to use it for", points: 2 },
-      { id: "c", label: "I decide what to save, spend and keep aside first", points: 3 },
-      { id: "d", label: "I spend some and hope enough remains for what I need later", points: 1 },
+      { id: "a", label: "Spend it first and think about the rest later", points: 0 },
+      { id: "b", label: "Keep a rough idea of what I need it for", points: 2 },
+      { id: "c", label: "Decide what to save, spend and keep aside", points: 3 },
+      { id: "d", label: "Spend some and hope enough is left", points: 1 },
     ],
   },
   {
     id: "budgeting-3",
     category: "budgetingSpending",
-    prompt: "You notice you have spent more money than planned this month. What should you do?",
+    prompt: "You realise your money is running out faster than expected. What should you do?",
     answers: [
-      { id: "a", label: "Ignore it and hope next month is better", points: 0 },
-      { id: "b", label: "Review my spending and adjust my budget", points: 3 },
-      { id: "c", label: "Use credit to cover the difference", points: 1 },
-      { id: "d", label: "Cut back on some things until I next receive money", points: 2 },
+      { id: "a", label: "Ignore it and hope it works out", points: 0 },
+      { id: "b", label: "Check where it went and adjust my spending", points: 3 },
+      { id: "c", label: "Use credit or BNPL to cover the gap", points: 1 },
+      { id: "d", label: "Cut back until I next get money", points: 2 },
     ],
   },
   {
@@ -88,10 +88,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "savingHabits",
     prompt: "You know you need money for a birthday, travel or course item next month. What do you do?",
     answers: [
-      { id: "a", label: "Save a set amount towards it each week", points: 3 },
-      { id: "b", label: "Wait and use whatever money I have next month", points: 0 },
-      { id: "c", label: "Plan to spend less when the date gets closer", points: 1 },
-      { id: "d", label: "Save whatever is left at the end of each week", points: 2 },
+      { id: "a", label: "Save a set amount each week", points: 3 },
+      { id: "b", label: "Use whatever money I have when the cost arrives", points: 0 },
+      { id: "c", label: "Wait until closer, then cut back", points: 1 },
+      { id: "d", label: "Save whatever is left each week", points: 2 },
     ],
   },
   {
@@ -99,10 +99,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "savingHabits",
     prompt: "What is the main purpose of an emergency fund?",
     answers: [
-      { id: "a", label: "To cover an unexpected important cost without needing to borrow", points: 3 },
+      { id: "a", label: "To cover an unexpected essential cost", points: 3 },
       { id: "b", label: "To cover planned spending when my usual money runs out", points: 0 },
-      { id: "c", label: "To save for a future goal or planned purchase", points: 1 },
-      { id: "d", label: "To cover small overspending at the end of a month", points: 2 },
+      { id: "c", label: "To build savings for future costs", points: 2 },
+      { id: "d", label: "To cover overspending at the end of the month", points: 1 },
     ],
   },
   {
@@ -110,10 +110,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "savingHabits",
     prompt: "You want to save money for something important. What is the best way to stop yourself spending it?",
     answers: [
-      { id: "a", label: "Leave it in my usual balance and try not to spend it", points: 1 },
+      { id: "a", label: "Leave it in my usual account and try not to spend it", points: 1 },
       { id: "b", label: "Move it to a separate savings pot or account", points: 3 },
-      { id: "c", label: "Keep the cash separately but do not track my progress", points: 2 },
-      { id: "d", label: "Spend from it now and plan to replace it later", points: 0 },
+      { id: "c", label: "Keep it separate but do not track my goal", points: 2 },
+      { id: "d", label: "Spend it now and plan to replace it later", points: 0 },
     ],
   },
   {
@@ -199,9 +199,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You receive your monthly credit card statement. What is usually the best way to manage it?",
     answers: [
       { id: "a", label: "Pay the full statement balance when possible", points: 3 },
-      { id: "b", label: "Pay the minimum and assume that is enough", points: 2 },
+      { id: "b", label: "Pay the minimum and assume that is enough", points: 1 },
       { id: "c", label: "Leave it unpaid while I am within my limit", points: 0 },
-      { id: "d", label: "Assume automatic payment will clear it without checking", points: 1 },
+      { id: "d", label: "Assume automatic payment will clear it without checking", points: 2 },
     ],
   },
   {
@@ -243,9 +243,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "Your Buy Now Pay Later payment is due tomorrow but you do not have enough money. What should you do?",
     answers: [
       { id: "a", label: "Contact the provider before I miss the payment", points: 3 },
-      { id: "b", label: "Wait for it to fail, then contact them", points: 1 },
+      { id: "b", label: "Wait for it to fail, then contact them", points: 2 },
       { id: "c", label: "Use other short-term credit to cover it", points: 0 },
-      { id: "d", label: "Deal with it when I next receive money", points: 2 },
+      { id: "d", label: "Deal with it when I next receive money", points: 1 },
     ],
   },
   {
@@ -319,10 +319,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "movingOutRentBills",
     prompt: "You are preparing to move into your first place. Which costs should you plan for before you move in?",
     answers: [
-      { id: "a", label: "Deposit, first rent, travel, basic items and setup costs", points: 3 },
-      { id: "b", label: "Deposit and first rent, then work out everything else", points: 2 },
-      { id: "c", label: "First rent and furniture, then arrange the deposit", points: 0 },
-      { id: "d", label: "The advertised rent, with other costs planned after moving", points: 1 },
+      { id: "a", label: "Deposit, first rent, basic items and setup costs", points: 3 },
+      { id: "b", label: "Deposit and first rent, then plan the remaining costs", points: 2 },
+      { id: "c", label: "First rent and furniture, with no deposit plan", points: 0 },
+      { id: "d", label: "Monthly rent, then work out other costs later", points: 1 },
     ],
   },
   {
@@ -330,10 +330,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "movingOutRentBills",
     prompt: "Why should you read a tenancy agreement before signing?",
     answers: [
-      { id: "a", label: "To understand the costs, responsibilities, notice and rules", points: 3 },
+      { id: "a", label: "To understand the rent, deposit, rules and responsibilities", points: 3 },
       { id: "b", label: "To check the rent and move-in date only", points: 1 },
-      { id: "c", label: "To confirm the costs, then rely on verbal agreements", points: 0 },
-      { id: "d", label: "To skim the main terms and question anything unusual", points: 2 },
+      { id: "c", label: "To rely on what was agreed verbally", points: 0 },
+      { id: "d", label: "To check the main terms and ask about anything unclear", points: 2 },
     ],
   },
   {
@@ -375,9 +375,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "If you make a money mistake, what is the most helpful response?",
     answers: [
       { id: "a", label: "Understand what happened, get help and make a recovery plan", points: 3 },
-      { id: "b", label: "Replace the money quickly without reviewing what happened", points: 1 },
+      { id: "b", label: "Replace the money quickly without reviewing what happened", points: 2 },
       { id: "c", label: "Stop checking my money for a while", points: 0 },
-      { id: "d", label: "Note the mistake but keep the same approach", points: 2 },
+      { id: "d", label: "Note the mistake but keep the same approach", points: 1 },
     ],
   },
 ];

@@ -55,10 +55,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "budgetingSpending",
     prompt: "When money comes in, what would you most likely do first?",
     answers: [
-      { id: "a", label: "Spend first and think about it later", points: 0 },
-      { id: "b", label: "Keep it while I decide", points: 2 },
-      { id: "c", label: "Split it between spending, saving and needs", points: 3 },
-      { id: "d", label: "Spend some and save what is left", points: 1 },
+      { id: "a", label: "Spend first and think later", points: 0 },
+      { id: "b", label: "Wait and think before deciding", points: 2 },
+      { id: "c", label: "Plan spending, saving and essentials", points: 3 },
+      { id: "d", label: "Spend some, then save something", points: 1 },
     ],
   },
   {
@@ -112,7 +112,7 @@ export const quizQuestions: QuizQuestion[] = [
     answers: [
       { id: "a", label: "Keep it in my account and try not to spend it", points: 1 },
       { id: "b", label: "Put money regularly into a separate savings pot", points: 3 },
-      { id: "c", label: "Save whatever I have left over", points: 2 },
+      { id: "c", label: "Save if I have money left later", points: 2 },
       { id: "d", label: "Wait until closer to the time to start saving", points: 0 },
     ],
   },
@@ -124,7 +124,7 @@ export const quizQuestions: QuizQuestion[] = [
       { id: "a", label: "Living costs such as rent, food, travel and course needs", points: 3 },
       { id: "b", label: "Mainly social activities and personal spending", points: 1 },
       { id: "c", label: "Course costs such as books and equipment", points: 2 },
-      { id: "d", label: "Any term-time spending, without needing a plan", points: 0 },
+      { id: "d", label: "General term-time spending as I go", points: 0 },
     ],
   },
   {
@@ -320,9 +320,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "Before moving into your first place, which costs are most important to plan for?",
     answers: [
       { id: "a", label: "Deposit, first rent, bills and setup costs", points: 3 },
-      { id: "b", label: "Deposit and first rent, then other costs", points: 2 },
-      { id: "c", label: "Furniture first, then rent and deposit", points: 0 },
-      { id: "d", label: "Monthly rent first, then everything else", points: 1 },
+      { id: "b", label: "Deposit and first rent only", points: 2 },
+      { id: "c", label: "Furniture first, then rent later", points: 0 },
+      { id: "d", label: "Rent only", points: 1 },
     ],
   },
   {

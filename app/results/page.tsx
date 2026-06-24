@@ -3,34 +3,29 @@ import Link from "next/link";
 import { UnlockPlanButton } from "@/components/PremiumPlanCtas";
 import { categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import { getAssessment } from "@/lib/assessmentDb";
-import { generatePremiumActionPlan, getPremiumPreview } from "@/lib/premiumActionPlan";
 
 export const dynamic = "force-dynamic";
 
 const premiumBenefits = [
   {
-    title: "Your Money Confidence Profile",
-    description: "Understand your current strengths and where to improve.",
+    title: "What to improve first",
+    description: "A clear order of focus based on your quiz answers.",
   },
   {
-    title: "Your Top 3 Priority Areas",
-    description: "Focus on the money topics that will make the biggest difference to your future.",
+    title: "Mistakes to avoid",
+    description: "The biggest money traps linked to your weakest areas.",
   },
   {
-    title: "Real-Life Money Examples",
-    description: "Learn through practical situations such as credit cards, payslips, budgeting and scams.",
+    title: "Tailored action steps",
+    description: "Practical next moves built around your results.",
   },
   {
-    title: "30-Day Money Roadmap",
-    description: "Follow a step-by-step plan to build confidence.",
+    title: "30-day confidence plan",
+    description: "A simple roadmap to build stronger money habits.",
   },
   {
-    title: "Money Smart Tips & Checklists",
-    description: "Simple habits and practical actions you can use immediately.",
-  },
-  {
-    title: "90-Day Progress Tracker",
-    description: "Return and measure how far your confidence has grown.",
+    title: "Matched resources",
+    description: "Guidance connected to the areas that need most work.",
   },
 ];
 
@@ -69,20 +64,12 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
 
   const scores = assessment.scores;
   const actionPlan = assessment.actionPlan;
-  const premiumPreview = getPremiumPreview(generatePremiumActionPlan(assessment.registration, scores));
   const categoryResults = categoryOrder.map((category) => ({
     category,
     name: categoryLabels[category],
     percentage: scores.categoryScores[category]?.percentage ?? 0,
   }));
-  const strongestCategories = [...categoryResults].sort((a, b) => b.percentage - a.percentage).slice(0, 3);
   const improvementCategories = [...categoryResults].sort((a, b) => a.percentage - b.percentage).slice(0, 3);
-  const nextStepActions = actionPlan.priorityAreas
-    .slice(0, 3)
-    .map((area) => ({
-      category: area.title,
-      action: area.actions[0],
-    }));
 
   return (
     <section className="bg-cream py-10 sm:py-14">
@@ -105,51 +92,24 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
         </div>
 
         <section className="mt-7 rounded-lg border border-navy/10 bg-white p-6 shadow-soft sm:p-8">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Category breakdown</p>
-              <h2 className="mt-2 text-3xl font-black text-navy">How your score breaks down</h2>
-            </div>
-            <p className="max-w-xl text-base leading-7 text-navy/68">
-              Each category shows how confident your answers were in that money area.
-            </p>
-          </div>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {categoryResults.map((result) => (
-              <CategoryScoreBar key={result.category} name={result.name} percentage={result.percentage} />
-            ))}
-          </div>
-        </section>
-
-        <section className="mt-7 grid gap-5 lg:grid-cols-2">
-          <InsightPanel title="Your strongest areas" eyebrow="Strengths" items={strongestCategories} tone="strong" />
-          <InsightPanel title="Areas to improve" eyebrow="Priorities" items={improvementCategories} tone="priority" />
-        </section>
-
-        <section className="mt-7 rounded-lg border border-sea/15 bg-mint/30 p-6 shadow-soft sm:p-8">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Your next steps</p>
-          <h2 className="mt-2 max-w-3xl text-3xl font-black text-navy">
-            Three practical actions to build confidence
-          </h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            {nextStepActions.map((step, index) => (
-              <article key={step.category} className="rounded-md border border-white/80 bg-white p-5 shadow-[0_16px_40px_rgba(7,29,43,0.06)]">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-sm font-black text-white">
+          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Your Top Priority Areas</p>
+          <h2 className="mt-2 text-3xl font-black text-navy">Your Top Priority Areas</h2>
+          <p className="mt-3 max-w-3xl text-base leading-7 text-navy/68">
+            These are the money areas your answers suggest would make the biggest difference to work on first.
+          </p>
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {improvementCategories.map((area, index) => (
+              <article key={area.category} className="rounded-md border border-navy/10 bg-cream p-5">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy text-sm font-black text-white">
                     {index + 1}
                   </span>
-                  <p className="text-sm font-black uppercase tracking-[0.1em] text-sea">{step.category}</p>
+                  <h3 className="text-xl font-black leading-7 text-navy">{area.name}</h3>
                 </div>
-                <p className="mt-4 text-base font-bold leading-7 text-navy/75">{step.action}</p>
               </article>
             ))}
           </div>
         </section>
-
-        <p className="mx-auto mt-5 max-w-3xl text-center text-lg font-black leading-8 text-navy">
-          Your score tells you where you are today. Your Money Ready Plan shows you exactly how to improve.
-        </p>
 
         <section className="relative mt-3 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-9 lg:p-11">
           <div className="flex flex-wrap items-center gap-3">
@@ -161,30 +121,15 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           </div>
 
           <h2 className="mt-5 max-w-3xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
-            Unlock Your Personal Cashbrite Money Ready Plan
+            Unlock Your Personal Money Ready Plan
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
-            Your personalised roadmap to financial confidence, built from your Money Readiness Assessment results.
+            Get a personalised roadmap built from your quiz answers.
           </p>
 
           <div className="mt-7 grid gap-9 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
             <div className="order-2 xl:order-1">
               <div>
-                <p className="text-sm font-black uppercase tracking-[0.12em] text-mint">Built around your results</p>
-                <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                  {premiumPreview.priorityAreas.map((area, index) => (
-                    <div key={area.category} className="rounded-md border border-white/15 bg-white/10 p-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-xs font-black text-mint">Priority 0{index + 1}</span>
-                        <span className="text-sm font-black text-white/65">{area.score}%</span>
-                      </div>
-                      <p className="mt-3 font-black leading-6 text-white">{area.title}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-9">
                 <p className="text-sm font-black uppercase tracking-[0.12em] text-mint">What&apos;s included</p>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   {premiumBenefits.map((benefit) => (
@@ -242,7 +187,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
               </div>
 
               <div className="order-1 rounded-lg border border-mint/25 bg-white p-6 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.18)] sm:p-7">
-                <p className="text-sm font-black uppercase tracking-[0.12em] text-sea">Launch Offer</p>
+                <p className="text-sm font-black uppercase tracking-[0.12em] text-sea">£19 Launch Offer</p>
                 <div className="mt-3 flex items-end gap-3">
                   <p className="text-6xl font-black leading-none text-navy">£19</p>
                   <p className="pb-1 text-sm font-bold text-navy/60">
@@ -274,66 +219,6 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           </div>
         </section>
 
-        <section className="mt-7 rounded-lg bg-navy px-6 py-8 text-center text-white shadow-soft sm:px-8 sm:py-10">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Your next move</p>
-          <h2 className="mt-2 text-3xl font-black">Ready to become more confident with money?</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-white/70">
-            Unlock your personalised roadmap with one secure payment and no subscription.
-          </p>
-          <div className="mx-auto mt-5 max-w-md">
-            <UnlockPlanButton assessmentId={assessment.id} />
-          </div>
-        </section>
-      </div>
-    </section>
-  );
-}
-
-function CategoryScoreBar({ name, percentage }: { name: string; percentage: number }) {
-  return (
-    <article className="rounded-md border border-navy/10 bg-cream p-4">
-      <div className="flex items-center justify-between gap-4">
-        <h3 className="text-base font-black leading-6 text-navy">{name}</h3>
-        <p className="text-lg font-black text-sea">{percentage}%</p>
-      </div>
-      <div className="mt-3 h-3 overflow-hidden rounded-full bg-white">
-        <div className="h-full rounded-full bg-sea" style={{ width: `${percentage}%` }} />
-      </div>
-    </article>
-  );
-}
-
-function InsightPanel({
-  title,
-  eyebrow,
-  items,
-  tone,
-}: {
-  title: string;
-  eyebrow: string;
-  items: Array<{ category: QuizCategory; name: string; percentage: number }>;
-  tone: "strong" | "priority";
-}) {
-  return (
-    <section className="rounded-lg border border-navy/10 bg-white p-6 shadow-soft sm:p-8">
-      <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">{eyebrow}</p>
-      <h2 className="mt-2 text-3xl font-black text-navy">{title}</h2>
-      <div className="mt-5 grid gap-3">
-        {items.map((item, index) => (
-          <article key={item.category} className="flex items-center justify-between gap-4 rounded-md bg-cream p-4">
-            <div className="flex items-center gap-4">
-              <span
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-black ${
-                  tone === "strong" ? "bg-mint text-navy" : "bg-navy text-white"
-                }`}
-              >
-                {index + 1}
-              </span>
-              <h3 className="font-black leading-6 text-navy">{item.name}</h3>
-            </div>
-            <p className="text-lg font-black text-sea">{item.percentage}%</p>
-          </article>
-        ))}
       </div>
     </section>
   );

@@ -53,12 +53,12 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "budgeting-1",
     category: "budgetingSpending",
-    prompt: "You receive £100 for your birthday. What do you do with it?",
+    prompt: "You receive £100 for your birthday. What would you most likely do?",
     answers: [
-      { id: "a", label: "Spend it all on shopping or going out", points: 0 },
-      { id: "b", label: "Keep it until I decide what I want it for", points: 2 },
-      { id: "c", label: "Split it between spending, saving and future plans", points: 3 },
-      { id: "d", label: "Spend some and save whatever is left later", points: 1 },
+      { id: "a", label: "Spend most of it straight away", points: 0 },
+      { id: "b", label: "Keep it for now while I decide what to do", points: 2 },
+      { id: "c", label: "Choose some to spend, save some, and keep some aside", points: 3 },
+      { id: "d", label: "Spend some now and save whatever is left", points: 1 },
     ],
   },
   {

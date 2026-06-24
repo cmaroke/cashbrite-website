@@ -78,7 +78,7 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You have £30 left until your next money comes in, and something you want costs £25. What would you most likely do?",
     answers: [
       { id: "a", label: "Buy it now and sort the rest later", points: 0 },
-      { id: "b", label: "Keep enough aside before deciding", points: 3 },
+      { id: "b", label: "Check what money I still need for essentials before deciding", points: 3 },
       { id: "c", label: "Wait and see if I still want it", points: 2 },
       { id: "d", label: "Use credit or BNPL instead", points: 1 },
     ],
@@ -108,12 +108,12 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "saving-4",
     category: "savingHabits",
-    prompt: "You are saving for something important. What would help most?",
+    prompt: "You want to save £500 for something important. What would you most likely do?",
     answers: [
-      { id: "a", label: "Keep it in my usual account", points: 1 },
-      { id: "b", label: "Move it to a separate savings pot", points: 3 },
-      { id: "c", label: "Separate it and check sometimes", points: 2 },
-      { id: "d", label: "Spend it and replace it later", points: 0 },
+      { id: "a", label: "Keep it in my account and try not to spend it", points: 1 },
+      { id: "b", label: "Put money regularly into a separate savings pot", points: 3 },
+      { id: "c", label: "Save whatever I have left over", points: 2 },
+      { id: "d", label: "Wait until closer to the time to start saving", points: 0 },
     ],
   },
   {
@@ -174,7 +174,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "banking-4",
     category: "bankAccountsOverdrafts",
-    prompt: "You use your arranged overdraft. What would you most likely do next?",
+    prompt: "You are in your overdraft. What would you most likely do next?",
     answers: [
       { id: "a", label: "Check the cost and make a plan to repay it", points: 3 },
       { id: "b", label: "Wait for my next payment to reduce it", points: 1 },
@@ -199,7 +199,7 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You receive your monthly credit card statement. What is usually the best way to manage it?",
     answers: [
       { id: "a", label: "Pay the full statement balance when possible", points: 3 },
-      { id: "b", label: "Pay the minimum and assume that is enough", points: 1 },
+      { id: "b", label: "Pay the minimum payment only", points: 1 },
       { id: "c", label: "Leave it unpaid while I am within my limit", points: 0 },
       { id: "d", label: "Assume automatic payment will clear it without checking", points: 2 },
     ],
@@ -309,9 +309,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "Which deductions might appear on a payslip?",
     answers: [
       { id: "a", label: "Tax, National Insurance and pension contributions", points: 3 },
-      { id: "b", label: "Mainly deductions chosen by my employer", points: 1 },
+      { id: "b", label: "Whatever my employer decides to take", points: 1 },
       { id: "c", label: "Tax and National Insurance, but I am unsure", points: 2 },
-      { id: "d", label: "Spending, bills and subscriptions", points: 0 },
+      { id: "d", label: "Rent, phone bills and subscriptions", points: 0 },
     ],
   },
   {

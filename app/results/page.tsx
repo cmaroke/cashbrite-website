@@ -72,46 +72,45 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
   const improvementCategories = [...categoryResults].sort((a, b) => a.percentage - b.percentage).slice(0, 3);
 
   return (
-    <section className="bg-cream py-10 sm:py-14">
+    <section className="bg-cream py-8 sm:py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-6 rounded-lg bg-navy p-6 text-white shadow-soft sm:p-8 md:grid-cols-[0.72fr_1fr] md:items-center">
-          <div className="rounded-lg border border-white/10 bg-white/8 p-6 text-center">
-            <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Money Readiness Score</p>
-            <p className="mt-3 text-6xl font-black leading-none text-white">{scores.readinessScore}</p>
-            <p className="mt-2 text-lg font-black text-mint">out of 100</p>
+        <section className="grid gap-5 rounded-lg bg-navy p-5 text-white shadow-soft sm:p-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
+          <div className="grid gap-5 sm:grid-cols-[0.55fr_1fr] sm:items-center">
+            <div className="rounded-lg border border-white/10 bg-white/8 p-5 text-center">
+              <p className="text-xs font-black uppercase tracking-[0.14em] text-mint">Money Readiness Score</p>
+              <p className="mt-3 text-6xl font-black leading-none text-white">{scores.readinessScore}</p>
+              <p className="mt-2 text-base font-black text-mint">out of 100</p>
+            </div>
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.14em] text-mint">Your money confidence band</p>
+              <h1 className="mt-2 text-3xl font-black leading-tight sm:text-4xl">{scores.band}</h1>
+              <p className="mt-3 text-base leading-7 text-white/78">{actionPlan.summary}</p>
+              <p className="mt-2 text-xs leading-5 text-white/58">
+                A copy has been sent to {assessment.registration.email} if email delivery is configured.
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Your Cashbrite report</p>
-            <h1 className="mt-3 text-4xl font-black sm:text-5xl">{scores.band}</h1>
-            <p className="mt-2 text-base font-black text-mint">Your money confidence band</p>
-            <p className="mt-4 text-lg leading-8 text-white/78">{actionPlan.summary}</p>
-            <p className="mt-3 text-sm leading-6 text-white/62">
-              A copy has been sent to {assessment.registration.email} if email delivery is configured.
-            </p>
-          </div>
-        </div>
 
-        <section className="mt-7 rounded-lg border border-navy/10 bg-white p-6 shadow-soft sm:p-8">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Your Top Priority Areas</p>
-          <h2 className="mt-2 text-3xl font-black text-navy">Your Top Priority Areas</h2>
-          <p className="mt-3 max-w-3xl text-base leading-7 text-navy/68">
-            These are the money areas your answers suggest would make the biggest difference to work on first.
-          </p>
-          <div className="mt-5 grid gap-4 md:grid-cols-3">
-            {improvementCategories.map((area, index) => (
-              <article key={area.category} className="rounded-md border border-navy/10 bg-cream p-5">
-                <div className="flex items-center gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy text-sm font-black text-white">
+          <div className="rounded-lg border border-white/12 bg-white p-5 text-navy sm:p-6">
+            <p className="text-xs font-black uppercase tracking-[0.14em] text-sea">Your Top Priority Areas</p>
+            <h2 className="mt-2 text-2xl font-black text-navy">Focus here first</h2>
+            <p className="mt-2 text-sm leading-6 text-navy/68">
+              These are the money areas your answers suggest would make the biggest difference to work on first.
+            </p>
+            <div className="mt-4 grid gap-3">
+              {improvementCategories.map((area, index) => (
+                <article key={area.category} className="flex items-center gap-3 rounded-md bg-cream p-3">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-navy text-xs font-black text-white">
                     {index + 1}
                   </span>
-                  <h3 className="text-xl font-black leading-7 text-navy">{area.name}</h3>
-                </div>
-              </article>
-            ))}
+                  <h3 className="text-base font-black leading-6 text-navy">{area.name}</h3>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="relative mt-3 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-9 lg:p-11">
+        <section className="relative mt-4 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-8 lg:p-9">
           <div className="flex flex-wrap items-center gap-3">
             <Image src="/brand/cashbrite-icon.svg" alt="" width={24} height={24} aria-hidden="true" />
             <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Cashbrite Money Ready Plan</p>

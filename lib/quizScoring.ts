@@ -18,7 +18,7 @@ export type QuizScores = {
 };
 
 const categories = Object.keys(categoryLabels) as QuizCategory[];
-const scoreCurveExponent = 1.15;
+const scoreCurveExponent = 1.5;
 
 const categoryNextSteps: Record<QuizCategory, string> = {
   budgetingSpending: "Create a simple weekly spending plan with essentials first, then set a realistic limit for flexible spending.",
@@ -97,8 +97,8 @@ export function scoreQuiz(selectedAnswers: Record<string, string>): QuizScores {
 
 export function getResultBand(readinessScore: number): ResultBand {
   if (readinessScore >= 85) return "Money Ready";
-  if (readinessScore >= 70) return "Building Money Confidence";
-  if (readinessScore >= 50) return "Developing Money Skills";
+  if (readinessScore >= 65) return "Building Money Confidence";
+  if (readinessScore >= 40) return "Developing Money Skills";
   return "Starting Your Money Journey";
 }
 

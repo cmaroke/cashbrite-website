@@ -105,9 +105,9 @@ Each answer has a `points` value. The scoring helper in `lib/quizScoring.ts` cal
 Each question uses a consistent `3 / 2 / 1 / 0` progression from the strongest answer to the weakest. The raw maximum is 90 points. A light calibration curve keeps weaker answer patterns from producing inflated scores while preserving a score of 100 for all-best answers. Result bands are:
 
 - `Money Ready`: 85-100
-- `Building Money Confidence`: 70-84
-- `Developing Money Skills`: 50-69
-- `Starting Your Money Journey`: below 50
+- `Building Money Confidence`: 65-84
+- `Developing Money Skills`: 40-64
+- `Starting Your Money Journey`: below 40
 
 ## Assessment Registration And Data Storage
 

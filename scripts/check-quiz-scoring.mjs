@@ -56,11 +56,14 @@ if (maxRawScore !== 90) throw new Error(`Maximum raw score is ${maxRawScore}; ex
 
 const scenarios = {
   allBest: { pattern: [3], min: 100, max: 100 },
-  mostlyBest: { pattern: [3, 3, 3, 3, 2], min: 85, max: 95 },
-  allSecondBest: { pattern: [2], min: 55, max: 65 },
-  mixed: { pattern: [2, 1], min: 45, max: 65 },
-  mostlyWeak: { pattern: [1], min: 25, max: 40 },
-  mostlyPoor: { pattern: [0, 0, 0, 0, 1], min: 0, max: 24 },
+  mostlyBest: { pattern: [3, 3, 3, 3, 2], min: 88, max: 95 },
+  sensibleInconsistentTeenager: { pattern: [2, 2, 2, 3, 1], min: 50, max: 58 },
+  averageInexperiencedTeenager: { pattern: [1, 2], min: 35, max: 45 },
+  riskyMoneyHabits: { pattern: [0, 1, 1, 0, 2], min: 0, max: 29 },
+  allWeakest: { pattern: [0], min: 0, max: 10 },
+  mostlySecondBest: { pattern: [2], min: 50, max: 55 },
+  mixOfTwosAndThrees: { pattern: [2, 3], min: 70, max: 78 },
+  mostlyOnePointAnswers: { pattern: [1], min: 0, max: 25 },
 };
 
 const results = Object.fromEntries(

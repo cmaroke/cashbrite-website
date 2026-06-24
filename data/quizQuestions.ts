@@ -56,9 +56,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You receive £100 for your birthday. What would you most likely do?",
     answers: [
       { id: "a", label: "Spend most of it straight away", points: 0 },
-      { id: "b", label: "Keep it for now while I decide what to do", points: 2 },
-      { id: "c", label: "Choose some to spend, save some, and keep some aside", points: 3 },
-      { id: "d", label: "Spend some now and save whatever is left", points: 1 },
+      { id: "b", label: "Keep it while I decide what to do", points: 2 },
+      { id: "c", label: "Spend some, save some and keep some aside", points: 3 },
+      { id: "d", label: "Spend some and save what is left", points: 1 },
     ],
   },
   {
@@ -89,9 +89,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You know you need money for a birthday, travel or course item next month. What do you do?",
     answers: [
       { id: "a", label: "Save a set amount each week", points: 3 },
-      { id: "b", label: "Use whatever money I have when the cost arrives", points: 0 },
-      { id: "c", label: "Wait until closer, then cut back", points: 1 },
-      { id: "d", label: "Save whatever is left each week", points: 2 },
+      { id: "b", label: "Use what I have when it comes up", points: 0 },
+      { id: "c", label: "Wait, then cut back nearer the time", points: 1 },
+      { id: "d", label: "Save what is left each week", points: 2 },
     ],
   },
   {
@@ -100,9 +100,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "What is the main purpose of an emergency fund?",
     answers: [
       { id: "a", label: "To cover an unexpected essential cost", points: 3 },
-      { id: "b", label: "To cover planned spending when my usual money runs out", points: 0 },
-      { id: "c", label: "To build savings for future costs", points: 2 },
-      { id: "d", label: "To cover overspending at the end of the month", points: 1 },
+      { id: "b", label: "To use when my usual money runs out", points: 0 },
+      { id: "c", label: "To save for future planned costs", points: 2 },
+      { id: "d", label: "To cover overspending before I next get money", points: 1 },
     ],
   },
   {
@@ -110,9 +110,9 @@ export const quizQuestions: QuizQuestion[] = [
     category: "savingHabits",
     prompt: "You want to save money for something important. What is the best way to stop yourself spending it?",
     answers: [
-      { id: "a", label: "Leave it in my usual account and rely on self-control", points: 1 },
+      { id: "a", label: "Keep it in my usual account", points: 1 },
       { id: "b", label: "Move it to a separate savings pot or account", points: 3 },
-      { id: "c", label: "Keep it separate without tracking my goal", points: 2 },
+      { id: "c", label: "Separate it but do not track progress", points: 2 },
       { id: "d", label: "Spend it and replace it later", points: 0 },
     ],
   },
@@ -287,9 +287,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "You get your first payslip from a job. Why should you check it?",
     answers: [
       { id: "a", label: "To check my pay, deductions and take-home amount", points: 3 },
-      { id: "b", label: "To compare the final amount with my bank account", points: 1 },
-      { id: "c", label: "Only if the total looks clearly wrong", points: 0 },
-      { id: "d", label: "To check my hours and rate, but not deductions", points: 2 },
+      { id: "b", label: "To compare it with what reaches my bank", points: 1 },
+      { id: "c", label: "Only check it if something looks wrong", points: 0 },
+      { id: "d", label: "To check hours and rate, but not deductions", points: 2 },
     ],
   },
   {
@@ -297,8 +297,8 @@ export const quizQuestions: QuizQuestion[] = [
     category: "payslipsTaxNi",
     prompt: "When you receive your pay, what does 'take-home pay' mean?",
     answers: [
-      { id: "a", label: "Pay after deductions such as tax or National Insurance", points: 3 },
-      { id: "b", label: "The amount that reaches my bank account", points: 2 },
+      { id: "a", label: "Pay after tax, NI and other deductions", points: 3 },
+      { id: "b", label: "The amount paid into my bank", points: 2 },
       { id: "c", label: "My basic pay before overtime or bonuses", points: 1 },
       { id: "d", label: "Money left after spending and bills", points: 0 },
     ],
@@ -309,9 +309,9 @@ export const quizQuestions: QuizQuestion[] = [
     prompt: "When you start a new job, what should you check before your first payday?",
     answers: [
       { id: "a", label: "My hourly pay, expected hours and payday", points: 3 },
-      { id: "b", label: "Roughly what I expect to receive", points: 1 },
+      { id: "b", label: "Roughly what I think I will get", points: 1 },
       { id: "c", label: "My job details and roughly when I will be paid", points: 2 },
-      { id: "d", label: "The payday, without checking my rate or hours", points: 0 },
+      { id: "d", label: "My payday, but not my rate or hours", points: 0 },
     ],
   },
   {
@@ -321,8 +321,8 @@ export const quizQuestions: QuizQuestion[] = [
     answers: [
       { id: "a", label: "Deposit, first rent, basic items and setup costs", points: 3 },
       { id: "b", label: "Deposit and first rent, then plan the remaining costs", points: 2 },
-      { id: "c", label: "First rent and furniture, then arrange the deposit", points: 0 },
-      { id: "d", label: "Plan the monthly rent and deal with extras later", points: 1 },
+      { id: "c", label: "Rent and furniture, then sort the deposit", points: 0 },
+      { id: "d", label: "Budget for rent, then handle extras later", points: 1 },
     ],
   },
   {
@@ -330,10 +330,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "movingOutRentBills",
     prompt: "Why should you read a tenancy agreement before signing?",
     answers: [
-      { id: "a", label: "To understand the rent, deposit, rules and responsibilities", points: 3 },
-      { id: "b", label: "To check the rent and move-in date only", points: 1 },
-      { id: "c", label: "To rely on what was agreed verbally", points: 0 },
-      { id: "d", label: "To check the main terms and ask about anything unclear", points: 2 },
+      { id: "a", label: "Rent, deposit, rules and responsibilities", points: 3 },
+      { id: "b", label: "Rent and move-in date only", points: 1 },
+      { id: "c", label: "What was agreed verbally should be enough", points: 0 },
+      { id: "d", label: "Main terms, then ask about unclear points", points: 2 },
     ],
   },
   {
@@ -341,10 +341,10 @@ export const quizQuestions: QuizQuestion[] = [
     category: "movingOutRentBills",
     prompt: "Which household bill can change depending on how much you use and who supplies it?",
     answers: [
-      { id: "a", label: "Energy, because usage and the tariff affect the cost", points: 3 },
-      { id: "b", label: "Council Tax, because the amount varies by property", points: 1 },
-      { id: "c", label: "Rent, because the amount changes with household use", points: 0 },
-      { id: "d", label: "I know bills vary, but I am unsure which ones", points: 2 },
+      { id: "a", label: "Energy, because use and tariff affect cost", points: 3 },
+      { id: "b", label: "Council Tax, because properties can differ", points: 1 },
+      { id: "c", label: "Rent, because household use changes it", points: 0 },
+      { id: "d", label: "Some bills vary, but I am unsure which", points: 2 },
     ],
   },
   {

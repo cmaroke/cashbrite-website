@@ -38,6 +38,9 @@ export const metadata: Metadata = {
     description: defaultDescription,
     images: ["/brand/cashbrite-logo.png"],
   },
+  verification: {
+    google: "BYtvsmubG5ED1Fc85lBFkoWjt4wHqUQ62oNn7PBm6_M",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

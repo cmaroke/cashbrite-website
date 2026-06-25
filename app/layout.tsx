@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Logo } from "@/components/Logo";
 import { defaultDescription, JsonLd, siteName, siteUrl } from "@/lib/seo";
 import "./globals.css";
@@ -164,6 +165,7 @@ export default function RootLayout({
           </div>
         </footer>
         <Analytics />
+        <GoogleAnalytics />
       </body>
     </html>
   );

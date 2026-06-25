@@ -16,8 +16,6 @@ const premiumBenefits = [
   "Instant PDF Download",
 ];
 
-const workbookPreviewCards = ["Personal Money Profile", "Priority Area Action Plan", "30-Day Challenge"];
-
 const categoryOrder = Object.keys(categoryLabels) as QuizCategory[];
 
 type ResultsPageProps = {
@@ -131,46 +129,8 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
               </p>
             </div>
 
-            <div className="order-1 grid gap-5 sm:grid-cols-2 xl:order-2 xl:grid-cols-1">
-              <div className="order-2 rounded-lg bg-cream p-4 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.22)] sm:p-5">
-                <div className="overflow-hidden rounded-md border border-navy/10 bg-white">
-                  <div className="bg-navy p-5">
-                    <Image
-                      src="/brand/cashbrite-logo-white.svg"
-                      alt="Cashbrite"
-                      width={150}
-                      height={38}
-                      className="h-auto w-32"
-                    />
-                    <p className="mt-8 text-xs font-black uppercase tracking-[0.12em] text-mint">Prepared for</p>
-                    <p className="mt-1 text-xl font-black text-white">{assessment.registration.firstName}</p>
-                    <h3 className="mt-6 text-2xl font-black leading-tight text-white">Your Money Ready Plan</h3>
-                    <div className="mt-5 inline-flex items-end gap-2 rounded-md bg-mint px-4 py-3 text-navy">
-                      <span className="text-3xl font-black leading-none">{scores.readinessScore}</span>
-                      <span className="pb-0.5 text-sm font-black">/100</span>
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <p className="text-xs font-black uppercase tracking-[0.12em] text-sea">Money Smart Tip</p>
-                    <p className="mt-2 text-sm font-bold leading-6 text-navy">
-                      Small, consistent money habits can make a bigger difference than one perfect decision.
-                    </p>
-                    <div className="relative mt-5 overflow-hidden rounded-md bg-cream p-4">
-                      <div className="space-y-2 opacity-25 blur-[2px]" aria-hidden="true">
-                        <div className="h-2 w-4/5 rounded-full bg-navy" />
-                        <div className="h-2 w-full rounded-full bg-sea" />
-                        <div className="h-2 w-3/5 rounded-full bg-navy" />
-                      </div>
-                      <p className="absolute inset-0 flex items-center justify-center px-4 text-center text-xs font-black text-navy">
-                        Unlock to access your full personalised plan
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <p className="mt-3 text-center text-xs font-bold text-navy/60">A practical workbook built from your answers</p>
-              </div>
-
-              <div className="order-1 rounded-lg border border-mint/25 bg-white p-6 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.18)] sm:p-7">
+            <div className="order-1 xl:order-2">
+              <div className="rounded-lg border border-mint/25 bg-white p-6 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.18)] sm:p-7">
                 <p className="text-sm font-black uppercase tracking-[0.12em] text-sea">£19 Launch Offer</p>
                 <div className="mt-3 flex items-end gap-3">
                   <p className="text-6xl font-black leading-none text-navy">£19</p>
@@ -181,25 +141,8 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                 <p className="mt-4 border-t border-navy/10 pt-4 text-sm font-bold text-navy/70">
                   One-off payment. No subscription.
                 </p>
-                <div className="mt-5 border-t border-navy/10 pt-5">
-                  <p className="text-sm font-black uppercase tracking-[0.12em] text-sea">Workbook Preview</p>
-                  <div className="mt-3 grid gap-3">
-                    {workbookPreviewCards.map((card) => (
-                      <div key={card} className="rounded-md border border-navy/10 bg-cream p-4">
-                        <div className="flex items-center gap-3">
-                          <Image src="/brand/cashbrite-icon.svg" alt="" width={18} height={18} aria-hidden="true" />
-                          <p className="font-black leading-6 text-navy">{card}</p>
-                        </div>
-                        <div className="mt-3 space-y-2 opacity-35" aria-hidden="true">
-                          <div className="h-2 w-4/5 rounded-full bg-navy" />
-                          <div className="h-2 w-3/5 rounded-full bg-sea" />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
                 <div className="mt-5">
-                  <UnlockPlanButton assessmentId={assessment.id} />
+                  <UnlockPlanButton assessmentId={assessment.id} label="Buy My £19 Money Workbook" />
                 </div>
               </div>
             </div>

@@ -57,7 +57,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
         <section className="grid gap-5 rounded-lg bg-navy p-5 text-white shadow-soft sm:p-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
           <div className="grid gap-5 sm:grid-cols-[0.55fr_1fr] sm:items-center">
             <div className="rounded-lg border border-white/10 bg-white/8 p-5 text-center">
-              <p className="text-xs font-black uppercase tracking-[0.14em] text-mint">Money Readiness Score</p>
+              <p className="text-xs font-black uppercase tracking-[0.14em] text-mint">Cashbrite Score</p>
               <p className="mt-3 text-6xl font-black leading-none text-white">{scores.readinessScore}</p>
               <p className="mt-2 text-base font-black text-mint">out of 100</p>
             </div>
@@ -65,9 +65,6 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
               <p className="text-xs font-black uppercase tracking-[0.14em] text-mint">Your money confidence band</p>
               <h1 className="mt-2 text-3xl font-black leading-tight sm:text-4xl">{scores.band}</h1>
               <p className="mt-3 text-base leading-7 text-white/78">{actionPlan.summary}</p>
-              <p className="mt-2 text-xs leading-5 text-white/58">
-                A copy has been sent to {assessment.registration.email} if email delivery is configured.
-              </p>
             </div>
           </div>
 
@@ -108,28 +105,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           </p>
 
           <div className="mt-7 grid gap-9 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
-            <div className="order-2 xl:order-1">
-              <div>
-                <p className="text-sm font-black uppercase tracking-[0.12em] text-mint">What&apos;s included</p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                  {premiumBenefits.map((benefit) => (
-                    <article key={benefit} className="flex items-center gap-4 rounded-md border border-white/15 bg-white/10 p-4">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-mint/15" aria-hidden="true">
-                        <span className="text-sm font-black text-mint">&#10003;</span>
-                      </span>
-                      <h3 className="font-black leading-6 text-white">{benefit}</h3>
-                    </article>
-                  ))}
-                </div>
-              </div>
-
-              <p className="mt-7 rounded-md border border-white/15 bg-white/10 p-5 text-base font-bold leading-7 text-white/75">
-                The financial habits you build now can influence everything from managing your first pay cheque to moving
-                out, university and future borrowing decisions.
-              </p>
-            </div>
-
-            <div className="order-1 xl:order-2">
+            <div>
               <div className="rounded-lg border border-mint/25 bg-white p-6 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.18)] sm:p-7">
                 <p className="text-sm font-black uppercase tracking-[0.12em] text-sea">£19 Launch Offer</p>
                 <div className="mt-3 flex items-end gap-3">
@@ -145,6 +121,25 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                   <UnlockPlanButton assessmentId={assessment.id} label="Buy My £19 Money Workbook" />
                 </div>
               </div>
+            </div>
+
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.12em] text-mint">What&apos;s included</p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {premiumBenefits.map((benefit) => (
+                  <article key={benefit} className="flex items-center gap-4 rounded-md border border-white/15 bg-white/10 p-4">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-mint/15" aria-hidden="true">
+                      <span className="text-sm font-black text-mint">&#10003;</span>
+                    </span>
+                    <h3 className="font-black leading-6 text-white">{benefit}</h3>
+                  </article>
+                ))}
+              </div>
+
+              <p className="mt-7 rounded-md border border-white/15 bg-white/10 p-5 text-base font-bold leading-7 text-white/75">
+                The financial habits you build now can influence everything from managing your first pay cheque to moving
+                out, university and future borrowing decisions.
+              </p>
             </div>
           </div>
         </section>

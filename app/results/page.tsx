@@ -7,13 +7,10 @@ import { getAssessment } from "@/lib/assessmentDb";
 export const dynamic = "force-dynamic";
 
 const premiumBenefits = [
-  "Your Money Confidence Profile",
-  "Your Top 3 Priority Areas",
-  "Your Step-by-Step Action Plan",
-  "30-Day Money Confidence Challenge",
-  "Parent Money Conversation Guide",
-  "90-Day Progress Tracker",
-  "Instant PDF Download",
+  "Personal Money Confidence Profile",
+  "Your Top 3 Priority Areas & Action Plan",
+  "30-Day Challenge + 90-Day Progress Tracker",
+  "Bonus Cashbrite Budget Tracker (Excel)",
 ];
 
 const categoryOrder = Object.keys(categoryLabels) as QuizCategory[];

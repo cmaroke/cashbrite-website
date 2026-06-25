@@ -65,6 +65,7 @@ export default async function PremiumPlanPreviewPage({ searchParams }: PremiumPl
           <span />
         )}
         <PremiumPlanPrintControls
+          budgetTrackerUrl={downloadSessionId ? "/downloads/cashbrite-budget-tracker.xlsx" : undefined}
           downloadUrl={
             downloadSessionId
               ? `/api/money-ready-plan/pdf?session_id=${encodeURIComponent(downloadSessionId)}`

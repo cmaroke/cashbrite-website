@@ -98,11 +98,11 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                 </span>
               </div>
               <h2 className="mt-5 max-w-3xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
-                Your Personalised Action Plan
+                Get Your Personalised Action Plan
               </h2>
               <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
-                Built from your Cashbrite Score and priority areas, this personalised action plan shows you what to
-                improve first, the mistakes to avoid and the steps to take over the next 30 days.
+                Built from your Cashbrite Score and priority areas, this action plan shows you exactly what to focus on,
+                what mistakes to avoid and the steps to take over the next 30 days.
               </p>
               <p className="mt-5 rounded-md border border-white/15 bg-white/10 p-5 text-base font-bold leading-7 text-white/75">
                 The financial habits you build now can influence everything from managing your first pay cheque to moving

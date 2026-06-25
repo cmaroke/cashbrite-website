@@ -1,8 +1,13 @@
 "use client";
 
-export function PremiumPlanPrintControls({ downloadUrl }: { downloadUrl?: string }) {
+type PremiumPlanPrintControlsProps = {
+  budgetTrackerUrl?: string;
+  downloadUrl?: string;
+};
+
+export function PremiumPlanPrintControls({ budgetTrackerUrl, downloadUrl }: PremiumPlanPrintControlsProps) {
   return (
-    <div className="no-print flex flex-col gap-3 sm:flex-row">
+    <div className="no-print flex flex-col gap-3 sm:flex-row sm:flex-wrap">
       <button
         type="button"
         onClick={() => window.print()}
@@ -26,6 +31,15 @@ export function PremiumPlanPrintControls({ downloadUrl }: { downloadUrl?: string
           Download available after purchase
         </button>
       )}
+      {budgetTrackerUrl ? (
+        <a
+          href={budgetTrackerUrl}
+          download
+          className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full border border-sea/25 bg-white px-6 py-3 font-black text-navy transition hover:border-sea hover:bg-mint/30"
+        >
+          Download Budget Tracker
+        </a>
+      ) : null}
     </div>
   );
 }

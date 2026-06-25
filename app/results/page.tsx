@@ -10,7 +10,7 @@ const premiumBenefits = [
   "Personal Money Confidence Profile",
   "Your Top 3 Priority Areas & Action Plan",
   "30-Day Challenge + 90-Day Progress Tracker",
-  "Bonus Cashbrite Budget Tracker (Excel)",
+  "Bonus Cashbrite Budget Tracker",
 ];
 
 const categoryOrder = Object.keys(categoryLabels) as QuizCategory[];

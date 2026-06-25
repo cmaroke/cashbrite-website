@@ -7,34 +7,16 @@ import { getAssessment } from "@/lib/assessmentDb";
 export const dynamic = "force-dynamic";
 
 const premiumBenefits = [
-  {
-    title: "What to improve first",
-    description: "A clear order of focus based on your quiz answers.",
-  },
-  {
-    title: "Mistakes to avoid",
-    description: "The biggest money traps linked to your weakest areas.",
-  },
-  {
-    title: "Tailored action steps",
-    description: "Practical next moves built around your results.",
-  },
-  {
-    title: "30-day confidence plan",
-    description: "A simple roadmap to build stronger money habits.",
-  },
-  {
-    title: "Matched resources",
-    description: "Guidance connected to the areas that need most work.",
-  },
+  "Personal Money Profile",
+  "Your Top 3 Priority Areas",
+  "Personalised Action Plan",
+  "30-Day Money Confidence Challenge",
+  "Parent Conversation Guide",
+  "90-Day Progress Tracker",
+  "Instant PDF Download",
 ];
 
-const premiumTrustSignals = [
-  "Created by a banking professional",
-  "Designed for UK young people preparing for adult life",
-  "Practical real-world money situations",
-  "No subscription. One simple payment",
-];
+const workbookPreviewCards = ["Personal Money Profile", "Priority Area Action Plan", "30-Day Challenge"];
 
 const categoryOrder = Object.keys(categoryLabels) as QuizCategory[];
 
@@ -120,10 +102,11 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           </div>
 
           <h2 className="mt-5 max-w-3xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
-            Unlock Your Personal Money Ready Plan
+            Your Personalised Money Confidence Workbook
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
-            Get a personalised roadmap built from your quiz answers.
+            Built from your quiz answers, this personalised workbook shows exactly what to improve, what mistakes to avoid
+            and the steps to take over the next 30 days.
           </p>
 
           <div className="mt-7 grid gap-9 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
@@ -132,18 +115,20 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                 <p className="text-sm font-black uppercase tracking-[0.12em] text-mint">What&apos;s included</p>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   {premiumBenefits.map((benefit) => (
-                    <article key={benefit.title} className="flex gap-4 rounded-md border border-white/15 bg-white/10 p-4">
+                    <article key={benefit} className="flex items-center gap-4 rounded-md border border-white/15 bg-white/10 p-4">
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-mint/15" aria-hidden="true">
-                        <Image src="/brand/cashbrite-icon.svg" alt="" width={18} height={18} />
+                        <span className="text-sm font-black text-mint">&#10003;</span>
                       </span>
-                      <div>
-                        <h3 className="font-black leading-6 text-white">{benefit.title}</h3>
-                        <p className="mt-1 text-sm leading-6 text-white/65">{benefit.description}</p>
-                      </div>
+                      <h3 className="font-black leading-6 text-white">{benefit}</h3>
                     </article>
                   ))}
                 </div>
               </div>
+
+              <p className="mt-7 rounded-md border border-white/15 bg-white/10 p-5 text-base font-bold leading-7 text-white/75">
+                The financial habits you build now can influence everything from managing your first pay cheque to moving
+                out, university and future borrowing decisions.
+              </p>
             </div>
 
             <div className="order-1 grid gap-5 sm:grid-cols-2 xl:order-2 xl:grid-cols-1">
@@ -196,24 +181,27 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                 <p className="mt-4 border-t border-navy/10 pt-4 text-sm font-bold text-navy/70">
                   One-off payment. No subscription.
                 </p>
+                <div className="mt-5 border-t border-navy/10 pt-5">
+                  <p className="text-sm font-black uppercase tracking-[0.12em] text-sea">Workbook Preview</p>
+                  <div className="mt-3 grid gap-3">
+                    {workbookPreviewCards.map((card) => (
+                      <div key={card} className="rounded-md border border-navy/10 bg-cream p-4">
+                        <div className="flex items-center gap-3">
+                          <Image src="/brand/cashbrite-icon.svg" alt="" width={18} height={18} aria-hidden="true" />
+                          <p className="font-black leading-6 text-navy">{card}</p>
+                        </div>
+                        <div className="mt-3 space-y-2 opacity-35" aria-hidden="true">
+                          <div className="h-2 w-4/5 rounded-full bg-navy" />
+                          <div className="h-2 w-3/5 rounded-full bg-sea" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <div className="mt-5">
                   <UnlockPlanButton assessmentId={assessment.id} />
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="mt-9 border-t border-white/15 pt-6">
-            <p className="text-xs font-black uppercase tracking-[0.12em] text-mint">Made to build real confidence</p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              {premiumTrustSignals.map((signal) => (
-                <div key={signal} className="flex items-center gap-3 rounded-md bg-white/10 px-4 py-3">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-mint" aria-hidden="true">
-                    <span className="text-sm font-black text-navy">&#10003;</span>
-                  </span>
-                  <p className="text-sm font-bold leading-5 text-white/80">{signal}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>

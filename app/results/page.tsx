@@ -97,7 +97,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           </div>
 
           <h2 className="mt-5 max-w-3xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
-            Your Personalised Money Confidence Workbook
+            Your Personalised Action Plan
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
             Built from your quiz answers, this personalised workbook shows exactly what to improve, what mistakes to avoid
@@ -118,7 +118,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                   One-off payment. No subscription.
                 </p>
                 <div className="mt-5">
-                  <UnlockPlanButton assessmentId={assessment.id} label="Buy My £19 Money Workbook" />
+                  <UnlockPlanButton assessmentId={assessment.id} label="Get My Action Plan" />
                 </div>
               </div>
             </div>

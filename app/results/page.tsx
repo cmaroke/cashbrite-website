@@ -1,10 +1,20 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { UnlockPlanButton } from "@/components/PremiumPlanCtas";
 import { categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import { getAssessment } from "@/lib/assessmentDb";
+import { createSeoMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = createSeoMetadata({
+  title: "Your Cashbrite Score and Money Action Plan",
+  description:
+    "View your Cashbrite Money Readiness Score, top priority areas and personalised next step after completing the assessment.",
+  path: "/results",
+  noIndex: true,
+});
 
 const premiumBenefits = [
   "Personal Money Confidence Profile",

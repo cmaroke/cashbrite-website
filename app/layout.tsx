@@ -2,12 +2,42 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/next";
 import { Logo } from "@/components/Logo";
+import { defaultDescription, JsonLd, siteName, siteUrl } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Cashbrite | Money confidence for life after school",
-  description:
-    "Cashbrite helps UK students understand budgeting, credit, student finance, scams and real-world money decisions.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Cashbrite | Money Confidence for Life After School",
+    template: "%s | Cashbrite",
+  },
+  description: defaultDescription,
+  applicationName: siteName,
+  alternates: {
+    canonical: siteUrl,
+  },
+  openGraph: {
+    title: "Cashbrite | Money Confidence for Life After School",
+    description: defaultDescription,
+    url: siteUrl,
+    siteName,
+    images: [
+      {
+        url: "/brand/cashbrite-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Cashbrite",
+      },
+    ],
+    locale: "en_GB",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cashbrite | Money Confidence for Life After School",
+    description: defaultDescription,
+    images: ["/brand/cashbrite-logo.png"],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -20,6 +50,31 @@ export const metadata: Metadata = {
       { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
+  },
+};
+
+const organisationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Cashbrite",
+  url: siteUrl,
+  logo: `${siteUrl}/brand/cashbrite-logo.png`,
+  email: "cmaroke@me.com",
+  areaServed: "GB",
+  description: defaultDescription,
+  sameAs: [],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Cashbrite",
+  url: siteUrl,
+  inLanguage: "en-GB",
+  description: defaultDescription,
+  publisher: {
+    "@type": "Organization",
+    name: "Cashbrite",
   },
 };
 
@@ -40,6 +95,8 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <body className="min-h-screen font-sans antialiased">
+        <JsonLd data={organisationSchema} />
+        <JsonLd data={websiteSchema} />
         <header className="sticky top-0 z-30 border-b border-navy/10 bg-cream/92 shadow-[0_8px_30px_rgba(7,29,43,0.04)] backdrop-blur">
           <nav
             className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 md:py-4 lg:px-8"

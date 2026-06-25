@@ -1,6 +1,16 @@
+import type { Metadata } from "next";
+import { ButtonLink } from "@/components/ButtonLink";
 import { ContactForm } from "@/components/ContactForm";
 import { InfoCard } from "@/components/InfoCard";
 import { SectionHeader } from "@/components/SectionHeader";
+import { createSeoMetadata, JsonLd, siteUrl } from "@/lib/seo";
+
+export const metadata: Metadata = createSeoMetadata({
+  title: "Financial Education Workshops for Schools and Colleges",
+  description:
+    "Cashbrite provides practical UK money education for Year 11, Sixth Form and college students, covering budgeting, student finance, credit and scams.",
+  path: "/schools",
+});
 
 export default function SchoolsPage() {
   const credibilityPoints = [
@@ -11,10 +21,32 @@ export default function SchoolsPage() {
 
   return (
     <section className="bg-cream py-16 sm:py-20">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: "Cashbrite Financial Education Workshops",
+          url: `${siteUrl}/schools`,
+          description:
+            "Practical money confidence workshops and resources for UK Year 11, Sixth Form and college students.",
+          provider: {
+            "@type": "Organization",
+            name: "Cashbrite",
+            url: siteUrl,
+          },
+          audience: {
+            "@type": "EducationalAudience",
+            educationalRole: "student",
+          },
+          teaches: ["budgeting", "student finance", "credit awareness", "fraud and scam awareness", "life after school money skills"],
+          inLanguage: "en-GB",
+        }}
+      />
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.82fr] lg:px-8">
         <div>
           <SectionHeader
             eyebrow="For schools and colleges"
+            headingLevel="h1"
             title="Practical money education for Year 11, Sixth Form and college students"
             body="Cashbrite supports PSHE, enrichment, transition days and employability programmes with clear sessions on the money decisions young people face next."
           />
@@ -42,6 +74,14 @@ export default function SchoolsPage() {
               Practical money confidence for sixth forms, colleges and schools, shaped by banking experience and made
               accessible for 16-18 year olds.
             </InfoCard>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <ButtonLink href="/quiz" variant="secondary">
+              Try the free assessment
+            </ButtonLink>
+            <ButtonLink href="/resources" variant="secondary">
+              View free resources
+            </ButtonLink>
           </div>
         </div>
         <aside className="lg:sticky lg:top-28 lg:self-start">

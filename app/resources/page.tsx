@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
+import { createSeoMetadata, JsonLd, siteUrl } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Free Money Resources | Cashbrite",
-  description: "Free Cashbrite guides and checklists for young people building confidence with money.",
-};
+export const metadata: Metadata = createSeoMetadata({
+  title: "Free Money Resources for Young People",
+  description:
+    "Free UK money resources from Cashbrite, including practical guides for payslips, budgeting, saving and first paycheck confidence.",
+  path: "/resources",
+});
 
 const checklistBenefits = [
   "Understand your payslip",
@@ -35,6 +38,30 @@ const futureResources = [
 export default function ResourcesPage() {
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Free Money Resources",
+          url: `${siteUrl}/resources`,
+          description:
+            "Practical UK financial education guides and checklists for young people preparing for work, study and independent money decisions.",
+          hasPart: [
+            {
+              "@type": "LearningResource",
+              name: "Your First Paycheck Checklist",
+              url: `${siteUrl}/api/resources/first-paycheck-checklist`,
+              learningResourceType: "Checklist",
+              teaches: ["payslips", "budgeting", "saving habits", "first pay cheque money skills"],
+              audience: {
+                "@type": "EducationalAudience",
+                educationalRole: "student",
+              },
+              inLanguage: "en-GB",
+            },
+          ],
+        }}
+      />
       <section className="overflow-hidden bg-navy text-white">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-18 lg:grid-cols-[1fr_0.72fr] lg:px-8 lg:py-20">
           <div>
@@ -153,8 +180,11 @@ export default function ResourcesPage() {
             Your first paycheck is just the beginning. Discover your Money Readiness Score and get personalised
             guidance based on your biggest opportunities.
           </p>
-          <div className="mt-7">
+          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <ButtonLink href="/quiz">Take the Free Money Assessment</ButtonLink>
+            <ButtonLink href="/students" variant="secondary">
+              Learn money skills
+            </ButtonLink>
           </div>
         </div>
       </section>

@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
 import { InfoCard } from "@/components/InfoCard";
 import { SectionHeader } from "@/components/SectionHeader";
+import { createSeoMetadata, JsonLd, siteUrl } from "@/lib/seo";
+
+export const metadata: Metadata = createSeoMetadata({
+  title: "Financial Education for Students and School Leavers",
+  description:
+    "Cashbrite helps UK young people build money confidence for life after school with a free Money Readiness Assessment, resources and school workshops.",
+  path: "/",
+});
 
 export default function Home() {
   const trustItems = [
@@ -12,6 +21,22 @@ export default function Home() {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "Financial Education for Students and School Leavers",
+          url: siteUrl,
+          description:
+            "Cashbrite helps UK young people build money confidence for life after school with a free Money Readiness Assessment, resources and school workshops.",
+          about: [
+            "financial education for students",
+            "money confidence for school leavers",
+            "budgeting for teenagers",
+            "student money skills",
+          ],
+        }}
+      />
       <section className="overflow-hidden bg-cream">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:py-14">
           <div className="py-1 sm:py-2 lg:py-0">
@@ -170,6 +195,14 @@ export default function Home() {
             <InfoCard title="Scam awareness">
               Learn how fraudsters create urgency, what to check, and where to get help before money moves.
             </InfoCard>
+          </div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <ButtonLink href="/students" variant="secondary">
+              Money skills for students
+            </ButtonLink>
+            <ButtonLink href="/resources" variant="secondary">
+              Explore free resources
+            </ButtonLink>
           </div>
         </div>
       </section>

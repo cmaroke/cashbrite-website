@@ -104,6 +104,10 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                 Built from your Cashbrite Score and priority areas, this personalised action plan shows you what to
                 improve first, the mistakes to avoid and the steps to take over the next 30 days.
               </p>
+              <p className="mt-5 rounded-md border border-white/15 bg-white/10 p-5 text-base font-bold leading-7 text-white/75">
+                The financial habits you build now can influence everything from managing your first pay cheque to moving
+                out, university and future borrowing decisions.
+              </p>
             </div>
 
             <div className="rounded-lg border border-mint/25 bg-white p-6 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.18)] sm:p-7">
@@ -114,15 +118,13 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                   Future price: <span className="line-through">£39</span>
                 </p>
               </div>
-              <p className="mt-4 border-t border-navy/10 pt-4 text-sm font-bold text-navy/70">
-                One-off payment. No subscription.
-              </p>
-              <p className="mt-4 text-sm font-bold leading-6 text-navy/70">
+              <p className="mt-4 border-t border-navy/10 pt-4 text-sm font-bold leading-6 text-navy/70">
                 Instant PDF download. One payment. No subscription.
               </p>
-              <div className="mt-5">
+              <div className="mt-5 [&_p]:hidden">
                 <UnlockPlanButton assessmentId={assessment.id} label="Get My £19 Action Plan" />
               </div>
+              <p className="mt-3 text-sm font-semibold leading-6 text-navy/70">Secure payment powered by Stripe.</p>
             </div>
           </div>
 
@@ -138,11 +140,6 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                 </article>
               ))}
             </div>
-
-            <p className="mt-7 rounded-md border border-white/15 bg-white/10 p-5 text-base font-bold leading-7 text-white/75">
-              The financial habits you build now can influence everything from managing your first pay cheque to moving
-              out, university and future borrowing decisions.
-            </p>
           </div>
         </section>
 

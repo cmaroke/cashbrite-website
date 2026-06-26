@@ -86,6 +86,7 @@ const navItems = [
   { href: "/", label: "Home" },
   { href: "/students", label: "Students" },
   { href: "/schools", label: "Schools" },
+  { href: "/calculators", label: "Calculators" },
   { href: "/resources", label: "Resources" },
   { href: "/quiz", label: "Quiz" },
   { href: "/contact", label: "Contact" },
@@ -151,6 +152,9 @@ export default function RootLayout({
               </Link>
               <Link href="/resources" className="focus-ring rounded-sm hover:text-navy">
                 Resources
+              </Link>
+              <Link href="/calculators" className="focus-ring rounded-sm hover:text-navy">
+                Calculators
               </Link>
               <Link href="/privacy-policy" className="focus-ring rounded-sm hover:text-navy">
                 Privacy Policy

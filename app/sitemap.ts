@@ -5,6 +5,7 @@ const publicRoutes = [
   "",
   "/students",
   "/schools",
+  "/calculators",
   "/resources",
   "/student-budget-calculator",
   "/quiz",

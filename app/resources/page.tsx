@@ -147,31 +147,17 @@ export default function ResourcesPage() {
 
       <section className="bg-white py-14 sm:py-18 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <article className="mb-12 grid overflow-hidden rounded-lg border border-navy/10 bg-cream shadow-[0_18px_50px_rgba(7,29,43,0.08)] lg:grid-cols-[1fr_0.7fr]">
-            <div className="p-6 sm:p-8">
-              <span className="inline-flex rounded-full bg-mint px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-navy">
-                Free tool
-              </span>
-              <h2 className="mt-5 text-3xl font-black leading-tight text-navy sm:text-4xl">
-                Student Budget Calculator
-              </h2>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-navy/70">
-                Estimate monthly income, essential costs, flexible spending and savings to see whether your budget has
-                enough breathing room.
-              </p>
-              <div className="mt-7">
-                <ButtonLink href="/student-budget-calculator" variant="secondary">
-                  Use the free calculator
-                </ButtonLink>
+          <article className="mb-12 rounded-lg border border-navy/10 bg-cream p-6 shadow-[0_18px_50px_rgba(7,29,43,0.08)] sm:p-8">
+            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
+              <div>
+                <h2 className="text-2xl font-black text-navy sm:text-3xl">Looking for calculators?</h2>
+                <p className="mt-3 max-w-2xl text-lg leading-8 text-navy/70">
+                  Try our free Cashbrite calculators to plan your student budget and build money confidence.
+                </p>
               </div>
-            </div>
-            <div className="grid content-center gap-3 bg-white p-6 sm:p-8">
-              {["Income", "Spending", "Savings", "Money left over"].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-lg bg-cream px-4 py-3 text-sm font-black text-navy">
-                  <span className="h-2.5 w-2.5 rounded-full bg-sea" aria-hidden="true" />
-                  {item}
-                </div>
-              ))}
+              <ButtonLink href="/calculators" variant="secondary">
+                View calculators
+              </ButtonLink>
             </div>
           </article>
 

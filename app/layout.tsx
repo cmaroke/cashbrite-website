@@ -84,11 +84,11 @@ const websiteSchema = {
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/students", label: "Students" },
-  { href: "/schools", label: "Schools" },
+  { href: "/quiz", label: "Quiz" },
   { href: "/calculators", label: "Calculators" },
   { href: "/resources", label: "Resources" },
-  { href: "/quiz", label: "Quiz" },
+  { href: "/students", label: "Students" },
+  { href: "/schools", label: "Schools" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -144,17 +144,26 @@ export default function RootLayout({
               <p>Built for UK students preparing for life after school.</p>
             </div>
             <div className="flex flex-wrap gap-x-5 gap-y-3 font-semibold">
-              <Link href="/schools" className="focus-ring rounded-sm hover:text-navy">
-                For schools
+              <Link href="/" className="focus-ring rounded-sm hover:text-navy">
+                Home
               </Link>
-              <Link href="/contact" className="focus-ring rounded-sm hover:text-navy">
-                Contact
+              <Link href="/quiz" className="focus-ring rounded-sm hover:text-navy">
+                Quiz
+              </Link>
+              <Link href="/calculators" className="focus-ring rounded-sm hover:text-navy">
+                Calculators
               </Link>
               <Link href="/resources" className="focus-ring rounded-sm hover:text-navy">
                 Resources
               </Link>
-              <Link href="/calculators" className="focus-ring rounded-sm hover:text-navy">
-                Calculators
+              <Link href="/students" className="focus-ring rounded-sm hover:text-navy">
+                Students
+              </Link>
+              <Link href="/schools" className="focus-ring rounded-sm hover:text-navy">
+                Schools
+              </Link>
+              <Link href="/contact" className="focus-ring rounded-sm hover:text-navy">
+                Contact
               </Link>
               <Link href="/privacy-policy" className="focus-ring rounded-sm hover:text-navy">
                 Privacy Policy

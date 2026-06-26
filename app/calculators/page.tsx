@@ -45,25 +45,26 @@ export default function CalculatorsPage() {
         }}
       />
 
-      <section className="bg-cream py-10 sm:py-12 lg:py-14">
+      <section className="bg-cream py-7 sm:py-9 lg:py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 max-w-4xl">
+          <div className="mb-5 max-w-4xl">
             <div className="flex items-center gap-3">
               <Image src="/brand/cashbrite-icon.svg" alt="" width={24} height={24} aria-hidden="true" />
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Cashbrite tools</p>
+              <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Cashbrite calculators</p>
             </div>
-            <h1 className="mt-5 text-4xl font-black leading-tight text-navy sm:text-5xl lg:text-6xl">
-              Free Money Calculators
+            <h1 className="mt-4 text-3xl font-black leading-tight text-navy sm:text-4xl lg:text-5xl">
+              Money Calculators
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-navy/72 sm:text-xl sm:leading-9">
-              Free money tools to help UK students, apprentices and school leavers make confident financial decisions.
+            <p className="mt-3 max-w-3xl text-base leading-7 text-navy/72 sm:text-lg sm:leading-8">
+              Simple tools to help UK students, apprentices and school leavers plan their money with more confidence.
             </p>
           </div>
+          <h2 className="mb-4 text-2xl font-black text-navy sm:text-3xl">Free Student Budget Calculator</h2>
           <StudentBudgetCalculator />
         </div>
       </section>
 
-      <section className="bg-white py-14 sm:py-18 lg:py-20">
+      <section className="bg-white py-10 sm:py-12 lg:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Coming soon</p>

@@ -60,6 +60,18 @@ export default function StudentsPage() {
             <ButtonLink href="/quiz">Take the quiz</ButtonLink>
           </div>
         </div>
+        <div className="mt-6 rounded-lg border border-navy/10 bg-mint/35 p-6">
+          <h2 className="text-2xl font-black text-navy">Plan a monthly student budget</h2>
+          <p className="mt-3 max-w-3xl text-lg leading-8 text-navy/72">
+            Use the free Student Budget Calculator to estimate income, rent, travel, spending, savings and money left
+            over each month.
+          </p>
+          <div className="mt-6">
+            <ButtonLink href="/student-budget-calculator" variant="secondary">
+              Use the budget calculator
+            </ButtonLink>
+          </div>
+        </div>
         <div className="mt-6 flex flex-wrap gap-3 text-sm font-bold text-navy/70">
           <ButtonLink href="/resources" variant="secondary">
             Browse free resources

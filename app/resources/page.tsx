@@ -147,6 +147,34 @@ export default function ResourcesPage() {
 
       <section className="bg-white py-14 sm:py-18 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <article className="mb-12 grid overflow-hidden rounded-lg border border-navy/10 bg-cream shadow-[0_18px_50px_rgba(7,29,43,0.08)] lg:grid-cols-[1fr_0.7fr]">
+            <div className="p-6 sm:p-8">
+              <span className="inline-flex rounded-full bg-mint px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-navy">
+                Free tool
+              </span>
+              <h2 className="mt-5 text-3xl font-black leading-tight text-navy sm:text-4xl">
+                Student Budget Calculator
+              </h2>
+              <p className="mt-4 max-w-2xl text-lg leading-8 text-navy/70">
+                Estimate monthly income, essential costs, flexible spending and savings to see whether your budget has
+                enough breathing room.
+              </p>
+              <div className="mt-7">
+                <ButtonLink href="/student-budget-calculator" variant="secondary">
+                  Use the free calculator
+                </ButtonLink>
+              </div>
+            </div>
+            <div className="grid content-center gap-3 bg-white p-6 sm:p-8">
+              {["Income", "Spending", "Savings", "Money left over"].map((item) => (
+                <div key={item} className="flex items-center gap-3 rounded-lg bg-cream px-4 py-3 text-sm font-black text-navy">
+                  <span className="h-2.5 w-2.5 rounded-full bg-sea" aria-hidden="true" />
+                  {item}
+                </div>
+              ))}
+            </div>
+          </article>
+
           <div className="max-w-3xl">
             <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">The resource library</p>
             <h2 className="mt-3 text-3xl font-black text-navy sm:text-4xl">More resources coming soon</h2>

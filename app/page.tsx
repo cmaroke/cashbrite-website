@@ -203,6 +203,9 @@ export default function Home() {
             <ButtonLink href="/resources" variant="secondary">
               Explore free resources
             </ButtonLink>
+            <ButtonLink href="/student-budget-calculator" variant="light">
+              Try the budget calculator
+            </ButtonLink>
           </div>
         </div>
       </section>

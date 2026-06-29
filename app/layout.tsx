@@ -102,19 +102,19 @@ export default function RootLayout({
       <body className="min-h-screen font-sans antialiased">
         <JsonLd data={organisationSchema} />
         <JsonLd data={websiteSchema} />
-        <header className="sticky top-0 z-30 border-b border-white/10 bg-[#001B2A]/95 backdrop-blur">
+        <header className="sticky top-0 z-30 border-b border-navy/10 bg-white/92 shadow-[0_8px_30px_rgba(7,29,43,0.04)] backdrop-blur">
           <nav
             className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 md:py-4 lg:px-8"
             aria-label="Main navigation"
           >
             <div className="flex w-full items-center justify-between gap-4">
-              <Logo compact light />
+              <Logo compact />
               <div className="hidden items-center gap-5 md:flex lg:gap-6">
                 {navItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="focus-ring rounded-sm text-sm font-semibold text-white/76 transition hover:text-white"
+                    className="focus-ring rounded-sm text-sm font-semibold text-navy/75 transition hover:text-navy"
                   >
                     {item.label}
                   </Link>
@@ -122,14 +122,14 @@ export default function RootLayout({
               </div>
               <Link
                 href="/quiz"
-                className="focus-ring shrink-0 rounded-md bg-mint px-4 py-2 text-sm font-bold text-navy transition hover:bg-[#a7dfcd]"
+                className="focus-ring shrink-0 rounded-full bg-navy px-4 py-2 text-sm font-bold text-white transition hover:bg-ink"
               >
                 Start quiz
               </Link>
             </div>
-            <div className="flex w-full items-center gap-5 overflow-x-auto border-t border-white/10 pt-3 text-sm font-semibold text-white/74 md:hidden">
+            <div className="flex w-full items-center gap-5 overflow-x-auto border-t border-navy/10 pt-3 text-sm font-semibold text-navy/72 md:hidden">
               {navItems.map((item) => (
-                <Link key={item.href} href={item.href} className="focus-ring shrink-0 rounded-sm hover:text-white">
+                <Link key={item.href} href={item.href} className="focus-ring shrink-0 rounded-sm hover:text-navy">
                   {item.label}
                 </Link>
               ))}

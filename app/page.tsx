@@ -38,33 +38,33 @@ export default function Home() {
           ],
         }}
       />
-      <section className="overflow-hidden bg-[#001B2A] lg:min-h-[90vh]">
-        <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 py-14 sm:px-8 sm:py-18 lg:min-h-[calc(90vh-5rem)] lg:grid-cols-[0.82fr_1.18fr] lg:gap-24 lg:px-12 lg:py-20">
+      <section className="overflow-hidden bg-cream lg:min-h-[90vh]">
+        <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 py-14 sm:px-8 sm:py-18 lg:min-h-[calc(90vh-5rem)] lg:grid-cols-[0.82fr_1.18fr] lg:gap-28 lg:px-12 lg:py-20">
             <div className="py-1 sm:py-2 lg:py-0">
-              <h1 className="max-w-[34rem] text-4xl font-semibold leading-[1.16] tracking-normal text-white sm:text-5xl lg:text-[3.35rem]">
+              <h1 className="max-w-[34rem] text-4xl font-semibold leading-[1.16] tracking-normal text-navy sm:text-5xl lg:text-[3.35rem]">
                 Money readiness before adult life starts.
               </h1>
-              <p className="mt-8 max-w-[32rem] text-lg leading-9 text-white/74">
+              <p className="mt-8 max-w-[32rem] text-lg leading-9 text-navy/78">
                 Cashbrite helps students and school leavers understand their money habits, identify knowledge gaps and
                 build confidence before university, work and independent life.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/quiz"
-                  className="focus-ring inline-flex items-center justify-center rounded-md bg-mint px-5 py-2.5 text-sm font-black text-navy shadow-[0_10px_24px_rgba(185,234,216,0.12)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#a7dfcd] sm:text-base"
+                  className="focus-ring inline-flex items-center justify-center rounded-md bg-navy px-5 py-2.5 text-sm font-black text-white shadow-[0_10px_24px_rgba(7,29,43,0.14)] transition duration-200 hover:-translate-y-0.5 hover:bg-ink sm:text-base"
                 >
                   Take the Quiz
                 </Link>
                 <Link
                   href="/calculators"
-                  className="focus-ring inline-flex items-center justify-center rounded-md border border-white/18 bg-white/8 px-5 py-2.5 text-sm font-black text-white shadow-[0_10px_24px_rgba(0,0,0,0.12)] transition duration-200 hover:-translate-y-0.5 hover:border-mint/45 hover:bg-white/12 sm:text-base"
+                  className="focus-ring inline-flex items-center justify-center rounded-md border border-navy/15 bg-cream px-5 py-2.5 text-sm font-black text-navy shadow-[0_10px_24px_rgba(7,29,43,0.05)] transition duration-200 hover:-translate-y-0.5 hover:border-sea/40 hover:bg-white sm:text-base"
                 >
                   Explore Tools
                 </Link>
               </div>
             </div>
 
-            <div className="relative min-h-[530px] overflow-hidden rounded-lg border border-white/12 bg-white p-4 shadow-[0_20px_60px_rgba(0,0,0,0.16)] sm:min-h-[510px] sm:p-7">
+            <div className="relative min-h-[530px] overflow-hidden rounded-lg border border-navy/10 bg-white p-4 shadow-[0_16px_44px_rgba(7,29,43,0.07)] sm:min-h-[510px] sm:p-7">
               <div
                 className="relative flex min-h-[488px] flex-col justify-center gap-4 sm:min-h-[452px] sm:gap-5"
                 aria-label="Cashbrite product preview showing a sample score, action plan and budget tracker"

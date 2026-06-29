@@ -161,7 +161,7 @@ export default function Home() {
                   alt="Chandni Josson, founder of Cashbrite"
                   fill
                   sizes="(min-width: 640px) 145px, 90px"
-                  className="scale-[1.34] object-cover object-[50%_25%] saturate-[0.72] contrast-[1.04]"
+                  className="scale-[1.34] object-cover object-[50%_25%] grayscale brightness-[1.08] contrast-[1.03]"
                 />
               </div>
               <div>

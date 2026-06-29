@@ -57,6 +57,23 @@ export default function SchoolsPage() {
               </div>
             ))}
           </div>
+          <div className="mt-8 rounded-lg border border-navy/10 bg-white p-6 shadow-[0_18px_50px_rgba(7,29,43,0.06)]">
+            <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Workshop snapshot</p>
+            <h2 className="mt-3 text-2xl font-black text-navy">A practical session for life after school</h2>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {[
+                ["Audience", "Year 11, Sixth Form and college students"],
+                ["Format", "PSHE, enrichment, transition or employability sessions"],
+                ["Topics", "Budgeting, payslips, student finance, credit and scams"],
+                ["Outcome", "Students leave with clearer next steps and practical language"],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-md bg-cream p-4">
+                  <p className="text-xs font-black uppercase tracking-[0.12em] text-sea">{label}</p>
+                  <p className="mt-2 text-sm font-bold leading-6 text-navy/75">{value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
           <div className="mt-10 grid gap-5">
             <InfoCard title="Relevant to next steps">
               Workshops focus on budgeting, student finance, credit, fraud awareness and confidence before students

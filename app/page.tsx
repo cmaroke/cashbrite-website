@@ -188,6 +188,13 @@ export default function Home() {
                 after school begins.&quot;
               </p>
             </div>
+            <div className="mt-6 rounded-lg border border-navy/10 bg-cream p-5 shadow-[0_14px_36px_rgba(7,29,43,0.05)]">
+              <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Founder credibility</p>
+              <p className="mt-3 text-base font-bold leading-7 text-navy/72">
+                Cashbrite combines professional banking experience with plain-English financial education, helping
+                students, parents and schools turn everyday money topics into practical confidence.
+              </p>
+            </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
               {["Banking Professional", "Parent Perspective", "Practical Financial Education"].map((badge) => (
                 <div

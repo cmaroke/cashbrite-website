@@ -94,6 +94,10 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
           </div>
         </section>
 
+        <p className="mt-4 rounded-lg border border-navy/10 bg-white px-5 py-4 text-base font-black leading-7 text-navy shadow-sm">
+          Your free score shows where you are today. Your paid Action Plan shows what to do next.
+        </p>
+
         <section className="relative mt-4 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-8 lg:p-9">
           <div className="grid gap-6 md:grid-cols-[1fr_0.78fr] md:items-start">
             <div>
@@ -115,6 +119,21 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
                 The financial habits you build now can influence everything from managing your first pay cheque to moving
                 out, university and future borrowing decisions.
               </p>
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                {[
+                  ["PDF Action Plan", "Your personalised report"],
+                  ["30-Day Challenge", "Simple weekly actions"],
+                  ["Budget Tracker", "Bonus Excel download"],
+                ].map(([title, description]) => (
+                  <article key={title} className="rounded-md border border-white/15 bg-white/10 p-4">
+                    <span className="text-xl font-black text-mint" aria-hidden="true">
+                      ✦
+                    </span>
+                    <h3 className="mt-3 text-base font-black leading-6 text-white">{title}</h3>
+                    <p className="mt-1 text-sm font-semibold leading-5 text-white/65">{description}</p>
+                  </article>
+                ))}
+              </div>
             </div>
 
             <div className="rounded-lg border border-mint/25 bg-white p-6 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.18)] sm:p-7">

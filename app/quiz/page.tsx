@@ -177,6 +177,21 @@ export default function QuizPage() {
               </p>
             </div>
 
+            <div className="mb-6 grid gap-3 rounded-lg border border-sea/15 bg-mint/30 p-4 text-sm font-bold leading-6 text-navy/75 sm:grid-cols-3">
+              <div>
+                <p className="font-black text-navy">Private by design</p>
+                <p className="mt-1">Your details are used to create your result and action plan.</p>
+              </div>
+              <div>
+                <p className="font-black text-navy">Educational only</p>
+                <p className="mt-1">Cashbrite gives learning guidance, not regulated financial advice.</p>
+              </div>
+              <div>
+                <p className="font-black text-navy">No pressure</p>
+                <p className="mt-1">The assessment is supportive, practical and not a school test.</p>
+              </div>
+            </div>
+
             <div className="grid gap-5 sm:grid-cols-2">
               <label className="grid gap-2 text-sm font-bold text-navy">
                 First name

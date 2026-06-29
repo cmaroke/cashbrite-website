@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
 import { InfoCard } from "@/components/InfoCard";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -153,10 +154,15 @@ export default function Home() {
       <section className="bg-white py-20 sm:py-24">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
           <div className="flex justify-center lg:justify-start">
-            <div className="relative flex aspect-square w-full max-w-[18rem] items-center justify-center rounded-full border border-sea/15 bg-cream shadow-[0_24px_70px_rgba(7,29,43,0.08)] sm:max-w-[22rem]">
-              <div className="absolute inset-6 rounded-full border border-white bg-mint/45" aria-hidden="true" />
-              <div className="relative flex h-36 w-36 items-center justify-center rounded-full bg-white text-center text-sm font-black uppercase tracking-[0.14em] text-sea shadow-sm sm:h-44 sm:w-44">
-                Founder Photo
+            <div className="relative aspect-square w-full max-w-[18rem] rounded-full border border-sea/20 bg-mint/35 p-3 shadow-[0_24px_70px_rgba(7,29,43,0.1)] sm:max-w-[22rem] sm:p-4">
+              <div className="relative h-full w-full overflow-hidden rounded-full border-4 border-mint bg-cream shadow-[0_18px_55px_rgba(7,29,43,0.16)]">
+                <Image
+                  src="/images/chandni-founder.jpg"
+                  alt="Chandni Josson, founder of Cashbrite"
+                  fill
+                  sizes="(min-width: 1024px) 22rem, 18rem"
+                  className="scale-110 object-cover object-[50%_32%]"
+                />
               </div>
             </div>
           </div>

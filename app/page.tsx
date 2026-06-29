@@ -39,40 +39,31 @@ export default function Home() {
         }}
       />
       <section className="overflow-hidden bg-cream lg:min-h-[90vh]">
-        <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-14 sm:px-6 sm:py-18 lg:min-h-[calc(90vh-5rem)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-20 lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 py-16 sm:px-8 sm:py-20 lg:min-h-[calc(90vh-5rem)] lg:grid-cols-[0.82fr_1.18fr] lg:gap-28 lg:px-12 lg:py-24">
           <div className="py-1 sm:py-2 lg:py-0">
-            <h1 className="max-w-4xl text-4xl font-bold leading-[1.06] tracking-normal text-navy sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-[34rem] text-4xl font-semibold leading-[1.16] tracking-normal text-navy sm:text-5xl lg:text-[3.35rem]">
               Money readiness before adult life starts.
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-navy/75 sm:text-xl sm:leading-9">
+            <p className="mt-8 max-w-[32rem] text-lg leading-9 text-navy/72">
               Cashbrite helps students and school leavers understand their money habits, identify knowledge gaps and
               build confidence before university, work and independent life.
             </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/quiz"
-                className="focus-ring inline-flex items-center justify-center rounded-full bg-navy px-5 py-3 text-sm font-black text-white shadow-[0_14px_30px_rgba(7,29,43,0.22)] transition duration-200 hover:-translate-y-0.5 hover:bg-ink sm:text-base"
+                className="focus-ring inline-flex items-center justify-center rounded-md bg-navy px-5 py-2.5 text-sm font-black text-white shadow-[0_10px_24px_rgba(7,29,43,0.14)] transition duration-200 hover:-translate-y-0.5 hover:bg-ink sm:text-base"
               >
                 Take the Quiz
               </Link>
               <Link
                 href="/calculators"
-                className="focus-ring inline-flex items-center justify-center rounded-full bg-mint px-5 py-3 text-sm font-black text-navy shadow-[0_12px_24px_rgba(35,133,111,0.18)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#a7dfcd] sm:text-base"
-            >
+                className="focus-ring inline-flex items-center justify-center rounded-md border border-navy/15 bg-white px-5 py-2.5 text-sm font-black text-navy shadow-[0_10px_24px_rgba(7,29,43,0.06)] transition duration-200 hover:-translate-y-0.5 hover:border-sea/40 hover:bg-mint/25 sm:text-base"
+              >
                 Explore Tools
               </Link>
             </div>
           </div>
-          <div className="relative min-h-[520px] overflow-hidden rounded-lg border border-white/70 bg-white p-4 shadow-soft sm:min-h-[500px] sm:p-6">
-            <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-mint/45" aria-hidden="true" />
-            <div className="absolute -bottom-12 -left-12 h-52 w-52 rounded-full bg-cream" aria-hidden="true" />
-            <div className="absolute right-8 top-10 text-5xl font-black text-mint/80" aria-hidden="true">
-              ✦
-            </div>
-            <div className="absolute bottom-16 right-12 text-3xl font-black text-sea/35" aria-hidden="true">
-              ✦
-            </div>
-
+          <div className="relative min-h-[530px] overflow-hidden rounded-lg border border-navy/10 bg-white p-4 shadow-[0_18px_55px_rgba(7,29,43,0.08)] sm:min-h-[510px] sm:p-7">
             <div
               className="relative flex min-h-[488px] flex-col justify-center gap-4 sm:min-h-[452px] sm:gap-5"
               aria-label="Cashbrite product preview showing a sample score, action plan and budget tracker"

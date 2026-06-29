@@ -155,13 +155,13 @@ export default function Home() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div>
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-              <div className="relative h-[90px] w-[90px] shrink-0 overflow-hidden rounded-full border-2 border-mint bg-cream shadow-[0_10px_28px_rgba(7,29,43,0.12)] sm:h-[116px] sm:w-[116px]">
+              <div className="relative h-[90px] w-[90px] shrink-0 overflow-hidden rounded-full border-2 border-mint bg-cream shadow-[0_10px_28px_rgba(7,29,43,0.12)] sm:h-[145px] sm:w-[145px]">
                 <Image
                   src="/images/chandni-founder.jpg"
                   alt="Chandni Josson, founder of Cashbrite"
                   fill
-                  sizes="(min-width: 640px) 116px, 90px"
-                  className="scale-125 object-cover object-[50%_30%]"
+                  sizes="(min-width: 640px) 145px, 90px"
+                  className="scale-[1.34] object-cover object-[50%_25%] saturate-[0.72] contrast-[1.04]"
                 />
               </div>
               <div>

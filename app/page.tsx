@@ -42,7 +42,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 py-14 sm:px-8 sm:py-18 lg:min-h-[calc(90vh-5rem)] lg:grid-cols-[0.82fr_1.18fr] lg:gap-28 lg:px-12 lg:py-20">
             <div className="py-1 sm:py-2 lg:py-0">
               <h1 className="max-w-[34rem] text-4xl font-semibold leading-[1.16] tracking-normal text-navy sm:text-5xl lg:text-[3.35rem]">
-                Money readiness before adult life starts.
+                Practical money confidence for life after school.
               </h1>
               <p className="mt-8 max-w-[32rem] text-lg leading-9 text-navy/78">
                 Cashbrite helps students and school leavers understand their money habits, identify knowledge gaps and

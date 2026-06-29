@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { ButtonLink } from "@/components/ButtonLink";
 import { InfoCard } from "@/components/InfoCard";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -37,23 +38,34 @@ export default function Home() {
           ],
         }}
       />
-      <section className="overflow-hidden bg-cream">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:py-14">
+      <section className="overflow-hidden bg-cream lg:min-h-[90vh]">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:min-h-[calc(90vh-5rem)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-16 lg:px-8 lg:py-20">
           <div className="py-1 sm:py-2 lg:py-0">
-            <h1 className="max-w-4xl text-4xl font-black leading-[1.03] tracking-normal text-navy sm:text-6xl lg:text-7xl">
-              Money confidence for life after school.
-            </h1>
-            <p className="mt-6 max-w-2xl text-xl leading-9 text-navy/75">
-              From first payslips and student finance to budgeting, borrowing and everyday money decisions, Cashbrite
-              helps young people build the confidence they need for the next chapter.
+            <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">
+              Money confidence for life after school
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/quiz">Take the Free Money Assessment</ButtonLink>
-              <ButtonLink href="/schools" variant="secondary">
-                For Schools
-              </ButtonLink>
+            <h1 className="mt-5 max-w-4xl text-4xl font-black leading-[1.06] tracking-normal text-navy sm:text-5xl lg:text-6xl">
+              Money readiness before adult life starts.
+            </h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-navy/75 sm:text-xl sm:leading-9">
+              Cashbrite helps students and school leavers understand their money habits, identify knowledge gaps and
+              build confidence before university, work and independent life.
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/quiz"
+                className="focus-ring inline-flex items-center justify-center rounded-full bg-navy px-5 py-3 text-sm font-black text-white shadow-[0_14px_30px_rgba(7,29,43,0.22)] transition duration-200 hover:-translate-y-0.5 hover:bg-ink sm:text-base"
+              >
+                Take the Quiz
+              </Link>
+              <Link
+                href="/calculators"
+                className="focus-ring inline-flex items-center justify-center rounded-full bg-mint px-5 py-3 text-sm font-black text-navy shadow-[0_12px_24px_rgba(35,133,111,0.18)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#a7dfcd] sm:text-base"
+              >
+                Explore Tools
+              </Link>
             </div>
-            <div className="mt-8 grid gap-3 text-sm font-bold text-navy/72">
+            <div className="mt-10 grid gap-3 text-sm font-bold text-navy/72">
               {trustItems.map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <span className="mt-1.5 h-2 w-2 rounded-full bg-sea" aria-hidden="true" />

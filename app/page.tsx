@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
 import { InfoCard } from "@/components/InfoCard";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -62,53 +61,88 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="relative min-h-[520px] overflow-hidden rounded-lg border border-white/70 bg-white shadow-soft sm:min-h-[500px]">
-            <Image
-              src="/images/cashbrite-hero.png"
-              alt="Student planning at a desk with a laptop, phone and notebook"
-              fill
-              priority
-              className="object-cover"
-              sizes="(min-width: 1024px) 50vw, 100vw"
-            />
-            <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/75 bg-white/94 p-4 shadow-[0_22px_55px_rgba(7,29,43,0.18)] backdrop-blur sm:inset-x-auto sm:bottom-5 sm:left-5 sm:w-[22rem] sm:p-5">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-xs font-black uppercase tracking-[0.14em] text-sea">
-                    Cashbrite Money Readiness Score
-                  </p>
-                  <p className="mt-2 text-4xl font-black leading-none text-navy">
-                    72<span className="text-xl text-navy/50">/100</span>
-                  </p>
+          <div className="relative min-h-[520px] overflow-hidden rounded-lg border border-white/70 bg-white p-4 shadow-soft sm:min-h-[500px] sm:p-6">
+            <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-mint/45" aria-hidden="true" />
+            <div className="absolute -bottom-12 -left-12 h-52 w-52 rounded-full bg-cream" aria-hidden="true" />
+            <div className="absolute right-8 top-10 text-5xl font-black text-mint/80" aria-hidden="true">
+              ✦
+            </div>
+            <div className="absolute bottom-16 right-12 text-3xl font-black text-sea/35" aria-hidden="true">
+              ✦
+            </div>
+
+            <div
+              className="relative flex min-h-[488px] flex-col justify-center gap-4 sm:min-h-[452px] sm:gap-5"
+              aria-label="Cashbrite product preview showing a sample score, action plan and budget tracker"
+            >
+              <div className="rounded-2xl border border-navy/10 bg-navy p-5 text-white shadow-[0_24px_70px_rgba(7,29,43,0.24)] sm:p-7">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-[0.14em] text-mint">Cashbrite Score</p>
+                    <p className="mt-3 text-6xl font-black leading-none">
+                      72<span className="text-2xl text-white/50">/100</span>
+                    </p>
+                  </div>
+                  <div className="w-fit rounded-full bg-mint px-3 py-1.5 text-xs font-black text-navy">
+                    Building Confidence
+                  </div>
                 </div>
-                <div className="rounded-full bg-mint px-3 py-1 text-xs font-black text-navy">Building confidence</div>
+
+                <div className="mt-7 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-lg border border-white/10 bg-white/8 p-4">
+                    <p className="text-xs font-black uppercase tracking-[0.12em] text-white/55">Strengths</p>
+                    <ul className="mt-3 grid gap-2 text-sm font-bold text-white">
+                      {["Budgeting basics", "Saving habits"].map((item) => (
+                        <li key={item} className="flex items-center gap-2">
+                          <span
+                            className="flex h-5 w-5 items-center justify-center rounded-full bg-mint text-xs text-navy"
+                            aria-hidden="true"
+                          >
+                            ✓
+                          </span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="rounded-lg border border-white/10 bg-white/8 p-4">
+                    <p className="text-xs font-black uppercase tracking-[0.12em] text-white/55">Areas to improve</p>
+                    <ul className="mt-3 grid gap-2 text-sm font-bold text-white/78">
+                      {["Credit scores", "Student finance"].map((item) => (
+                        <li key={item} className="flex items-center gap-2">
+                          <span className="h-2 w-2 rounded-full bg-mint" aria-hidden="true" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                <div>
-                  <p className="text-xs font-black uppercase tracking-[0.12em] text-navy/55">Strengths</p>
-                  <ul className="mt-2 grid gap-2 text-sm font-bold text-navy">
-                    <li className="flex items-center gap-2">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-mint text-xs">✓</span>
-                      Budgeting basics
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-mint text-xs">✓</span>
-                      Saving habits
-                    </li>
-                  </ul>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl border border-navy/10 bg-cream/95 p-5 shadow-[0_18px_50px_rgba(7,29,43,0.1)]">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-sm font-black text-navy">Personalised Action Plan</p>
+                    <span className="text-2xl font-black text-sea" aria-hidden="true">
+                      ✦
+                    </span>
+                  </div>
+                  <div className="mt-5 grid gap-2" aria-hidden="true">
+                    <span className="h-2 rounded-full bg-navy/18" />
+                    <span className="h-2 w-4/5 rounded-full bg-sea/35" />
+                    <span className="h-2 w-3/5 rounded-full bg-mint" />
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs font-black uppercase tracking-[0.12em] text-navy/55">Areas to improve</p>
-                  <ul className="mt-2 grid gap-2 text-sm font-bold text-navy/75">
-                    <li className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-sea" aria-hidden="true" />
-                      Credit scores
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-sea" aria-hidden="true" />
-                      Student finance
-                    </li>
-                  </ul>
+                <div className="rounded-2xl border border-navy/10 bg-mint p-5 shadow-[0_18px_50px_rgba(35,133,111,0.12)]">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-sm font-black text-navy">Bonus Budget Tracker</p>
+                    <span className="rounded-full bg-white px-2.5 py-1 text-xs font-black text-navy">Excel</span>
+                  </div>
+                  <div className="mt-5 grid grid-cols-3 gap-2" aria-hidden="true">
+                    <span className="h-10 rounded-md bg-white/70" />
+                    <span className="h-10 rounded-md bg-white/55" />
+                    <span className="h-10 rounded-md bg-white/70" />
+                  </div>
                 </div>
               </div>
             </div>

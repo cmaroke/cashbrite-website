@@ -39,12 +39,9 @@ export default function Home() {
         }}
       />
       <section className="overflow-hidden bg-cream lg:min-h-[90vh]">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:min-h-[calc(90vh-5rem)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-16 lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-14 sm:px-6 sm:py-18 lg:min-h-[calc(90vh-5rem)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-20 lg:px-8 lg:py-20">
           <div className="py-1 sm:py-2 lg:py-0">
-            <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">
-              Money confidence for life after school
-            </p>
-            <h1 className="mt-5 max-w-4xl text-4xl font-black leading-[1.06] tracking-normal text-navy sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-4xl text-4xl font-bold leading-[1.06] tracking-normal text-navy sm:text-5xl lg:text-6xl">
               Money readiness before adult life starts.
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-navy/75 sm:text-xl sm:leading-9">
@@ -61,17 +58,9 @@ export default function Home() {
               <Link
                 href="/calculators"
                 className="focus-ring inline-flex items-center justify-center rounded-full bg-mint px-5 py-3 text-sm font-black text-navy shadow-[0_12px_24px_rgba(35,133,111,0.18)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#a7dfcd] sm:text-base"
-              >
+            >
                 Explore Tools
               </Link>
-            </div>
-            <div className="mt-10 grid gap-3 text-sm font-bold text-navy/72">
-              {trustItems.map((item) => (
-                <div key={item} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-2 w-2 rounded-full bg-sea" aria-hidden="true" />
-                  <span>{item}</span>
-                </div>
-              ))}
             </div>
           </div>
           <div className="relative min-h-[520px] overflow-hidden rounded-lg border border-white/70 bg-white p-4 shadow-soft sm:min-h-[500px] sm:p-6">

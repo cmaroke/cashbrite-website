@@ -215,6 +215,67 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-cream py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <article className="relative overflow-hidden rounded-lg border border-navy/10 bg-white p-6 shadow-[0_24px_70px_rgba(7,29,43,0.08)] sm:p-8 lg:p-10">
+            <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-mint/45" aria-hidden="true" />
+            <div className="absolute bottom-8 right-10 hidden text-5xl font-black text-mint/45 sm:block" aria-hidden="true">
+              ✦
+            </div>
+            <div className="relative grid gap-8 lg:grid-cols-[1fr_0.82fr] lg:items-center">
+              <div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Coming Soon</p>
+                  <span className="rounded-full bg-mint px-3 py-1 text-xs font-black uppercase tracking-[0.1em] text-navy">
+                    Coming 2027
+                  </span>
+                </div>
+                <h2 className="mt-4 max-w-3xl text-3xl font-black leading-tight text-navy sm:text-4xl lg:text-5xl">
+                  The Cashbrite Student Money Confidence Index
+                </h2>
+                <div className="mt-5 grid max-w-3xl gap-4 text-lg leading-8 text-navy/72">
+                  <p>
+                    Cashbrite is building a picture of how prepared young people really feel about money before adult
+                    life starts.
+                  </p>
+                  <p>
+                    Using anonymised assessment data, the Student Money Confidence Index will highlight common
+                    confidence gaps, money habits and emerging trends among students and school leavers across the UK.
+                  </p>
+                </div>
+                <p className="mt-6 rounded-md border border-sea/15 bg-mint/25 px-4 py-3 text-sm font-black leading-6 text-navy">
+                  Launching after our first 1,000 assessments.
+                </p>
+              </div>
+
+              <div className="rounded-lg border border-navy/10 bg-cream p-5 shadow-[0_18px_50px_rgba(7,29,43,0.06)]">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-[0.12em] text-sea">Insights preview</p>
+                    <p className="mt-2 text-xl font-black text-navy">Future report dashboard</p>
+                  </div>
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-navy text-2xl font-black text-mint" aria-hidden="true">
+                    ↗
+                  </span>
+                </div>
+                <div className="mt-6 grid gap-3">
+                  {[
+                    "Average Money Confidence Score",
+                    "Top Student Knowledge Gaps",
+                    "Assessment Insights",
+                  ].map((stat) => (
+                    <div key={stat} className="rounded-md border border-navy/10 bg-white p-4">
+                      <p className="text-sm font-black text-navy">{stat}</p>
+                      <p className="mt-2 text-sm font-semibold text-sea">— Coming Soon</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section className="border-y border-navy/10 bg-white py-8">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:px-6 md:grid-cols-3 lg:px-8">
           {trustItems.map((item) => (

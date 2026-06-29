@@ -133,23 +133,23 @@ export default function QuizPage() {
   }
 
   return (
-    <section className="bg-cream py-16 sm:py-20">
+    <section className="bg-cream py-10 sm:py-14">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 rounded-lg border border-navy/10 bg-white p-6 shadow-soft sm:p-8">
+        <div className="mb-6 rounded-lg border border-navy/10 bg-white p-6 shadow-[0_18px_50px_rgba(7,29,43,0.06)] sm:p-8">
           <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Money Readiness Assessment</p>
-          <h1 className="mt-3 max-w-4xl text-4xl font-black leading-tight text-navy sm:text-5xl">
-            Build a clearer picture of your money confidence
+          <h1 className="mt-3 max-w-4xl text-4xl font-semibold leading-tight text-navy sm:text-5xl">
+            Discover your Money Confidence Score
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-navy/72">
-            Register first so Cashbrite can generate your free personalised Money Action Plan. Then complete the
-            5-minute Money Readiness Assessment by choosing the answers that feel closest to you right now. This is a
-            helpful confidence assessment, not a school test.
+            Find out where you&apos;re already doing well and identify the areas to improve before university, work and
+            independent life.
           </p>
-          <div className="mt-6 grid gap-3 text-sm font-bold text-navy/70 sm:grid-cols-2 lg:grid-cols-4">
-            <span className="rounded-full bg-mint/45 px-4 py-2">{quizQuestions.length} practical questions</span>
-            <span className="rounded-full bg-mint/45 px-4 py-2">About 5 minutes</span>
-            <span className="rounded-full bg-mint/45 px-4 py-2">10 real-life money areas</span>
-            <span className="rounded-full bg-mint/45 px-4 py-2">Free action plan</span>
+          <div className="mt-6 grid gap-3 text-sm font-bold text-navy/72 sm:grid-cols-2 lg:grid-cols-4">
+            {["Takes 5 minutes", "Educational only", "Personalised recommendations", "No spam"].map((benefit) => (
+              <span key={benefit} className="rounded-md border border-sea/15 bg-mint/30 px-4 py-2">
+                {benefit}
+              </span>
+            ))}
           </div>
           {registrationComplete ? (
             <>
@@ -166,30 +166,23 @@ export default function QuizPage() {
         {!registrationComplete ? (
           <form
             onSubmit={handleRegistrationSubmit}
-            className="rounded-lg border border-navy/10 bg-white p-6 shadow-[0_18px_50px_rgba(7,29,43,0.06)] sm:p-7"
+            className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_18px_50px_rgba(7,29,43,0.06)] sm:p-7"
           >
             <div className="mb-6">
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Step 1</p>
-              <h2 className="mt-2 text-2xl font-black text-navy">Get your free personalised action plan</h2>
+              <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Start your assessment</p>
+              <h2 className="mt-2 text-2xl font-black text-navy">Create your Cashbrite result</h2>
               <p className="mt-2 text-base leading-7 text-navy/68">
-                Your details are used to create and email your Cashbrite Money Action Plan. Required fields must be
-                completed before the assessment starts.
+                A few details help us generate your personalised result and send your Money Action Plan securely.
               </p>
             </div>
 
-            <div className="mb-6 grid gap-3 rounded-lg border border-sea/15 bg-mint/30 p-4 text-sm font-bold leading-6 text-navy/75 sm:grid-cols-3">
-              <div>
-                <p className="font-black text-navy">Private by design</p>
-                <p className="mt-1">Your details are used to create your result and action plan.</p>
-              </div>
-              <div>
-                <p className="font-black text-navy">Educational only</p>
-                <p className="mt-1">Cashbrite gives learning guidance, not regulated financial advice.</p>
-              </div>
-              <div>
-                <p className="font-black text-navy">No pressure</p>
-                <p className="mt-1">The assessment is supportive, practical and not a school test.</p>
-              </div>
+            <div className="mb-6 grid gap-2 rounded-lg border border-sea/15 bg-mint/20 p-3 text-sm font-black text-navy/75 sm:grid-cols-4">
+              {["Private", "Educational", "Guidance only", "No financial advice"].map((item) => (
+                <div key={item} className="flex items-center gap-2 rounded-md bg-white/70 px-3 py-2">
+                  <span className="h-2 w-2 rounded-full bg-sea" aria-hidden="true" />
+                  {item}
+                </div>
+              ))}
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
@@ -273,10 +266,10 @@ export default function QuizPage() {
               </label>
             </div>
 
-            <div className="mt-6 grid gap-3">
-              <label className="flex gap-3 rounded-md border border-navy/12 bg-cream/55 p-4 text-base leading-7 text-navy/78">
+            <div className="mt-5 grid gap-2">
+              <label className="flex gap-3 rounded-md border border-navy/10 bg-cream/35 p-3 text-sm leading-6 text-navy/72">
                 <input
-                  className="mt-1 h-5 w-5 accent-sea"
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-sea"
                   type="checkbox"
                   checked={registration.reportConsent}
                   onChange={(event) => setRegistrationValue("reportConsent", event.target.checked)}
@@ -291,9 +284,9 @@ export default function QuizPage() {
                   .
                 </span>
               </label>
-              <label className="flex gap-3 rounded-md border border-navy/12 bg-cream/55 p-4 text-base leading-7 text-navy/78">
+              <label className="flex gap-3 rounded-md border border-navy/10 bg-cream/35 p-3 text-sm leading-6 text-navy/72">
                 <input
-                  className="mt-1 h-5 w-5 accent-sea"
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-sea"
                   type="checkbox"
                   checked={registration.marketingConsent}
                   onChange={(event) => setRegistrationValue("marketingConsent", event.target.checked)}

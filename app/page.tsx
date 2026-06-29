@@ -152,25 +152,25 @@ export default function Home() {
       </section>
 
       <section className="bg-white py-20 sm:py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
-          <div className="flex justify-center lg:justify-start">
-            <div className="relative aspect-square w-full max-w-[18rem] rounded-full border border-sea/20 bg-mint/35 p-3 shadow-[0_24px_70px_rgba(7,29,43,0.1)] sm:max-w-[22rem] sm:p-4">
-              <div className="relative h-full w-full overflow-hidden rounded-full border-4 border-mint bg-cream shadow-[0_18px_55px_rgba(7,29,43,0.16)]">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div>
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+              <div className="relative h-[90px] w-[90px] shrink-0 overflow-hidden rounded-full border-2 border-mint bg-cream shadow-[0_10px_28px_rgba(7,29,43,0.12)] sm:h-[116px] sm:w-[116px]">
                 <Image
                   src="/images/chandni-founder.jpg"
                   alt="Chandni Josson, founder of Cashbrite"
                   fill
-                  sizes="(min-width: 1024px) 22rem, 18rem"
-                  className="scale-110 object-cover object-[50%_32%]"
+                  sizes="(min-width: 640px) 116px, 90px"
+                  className="scale-125 object-cover object-[50%_30%]"
                 />
               </div>
+              <div>
+                <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Meet the Founder</p>
+                <h2 className="mt-3 max-w-3xl text-3xl font-black leading-tight text-navy sm:text-4xl lg:text-5xl">
+                  Helping the next generation feel confident with money.
+                </h2>
+              </div>
             </div>
-          </div>
-          <div>
-            <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Meet the Founder</p>
-            <h2 className="mt-3 max-w-3xl text-3xl font-black leading-tight text-navy sm:text-4xl lg:text-5xl">
-              Helping the next generation feel confident with money.
-            </h2>
             <div className="mt-6 grid max-w-3xl gap-5 text-lg leading-8 text-navy/72">
               <p>Hi, I&apos;m Chandni, the founder of Cashbrite.</p>
               <p>

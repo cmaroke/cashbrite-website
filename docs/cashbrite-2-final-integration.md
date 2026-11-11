@@ -79,3 +79,16 @@ Handwritten notes retain A3's system-font fallback; appearance varies by OS. Loc
 **GO for isolated visual preview and review. NO-GO for production release/payment activation until mandatory staging gates and explicit approval.**
 
 Do not push `main`, promote a deployment or change production aliases in this task. Preserve the baseline commit, complete private backup and candidate commit for rollback. If production migration is later approved, retain additive delivery fields/audit state on rollback and pause new checkout/old fulfilment until the matching safe code is running; blindly rolling back to old fulfilment is unsafe.
+
+## Preview deployment result
+
+- Implementation commit: `4bdb0b2ea7b43060b6f766e1e87b31b8e954c908` on `codex/cashbrite-2-release`; 134 files consolidate approved uncommitted work. No GitHub push or production deployment.
+- Preview: https://cashbrite-website-h3um3gl07-cmarokes-projects.vercel.app
+- Deployment ID: `dpl_CfkJbcXDurCeNni4Ld5ucx96xwty`; Vercel reported `READY`, environment `preview`, production URL `null`.
+- Protected by existing Vercel authentication. No protection setting was weakened and no bypass secret was generated. In-app browser requires its own sign-in; the existing signed-in Safari session can open it.
+- Deployment-only empty build/runtime overrides were supplied for all eight service/configuration variables listed above. Project-level values were not changed or revealed. Test-mode hosted purchases are intentionally unavailable here.
+- Hosted Safari smoke checks: homepage assets/typography rendered; expense insight opened; surprise toggle produced £90 and reset to £150; quiz entry displayed the approved registration/consent and product copy; Calculators rendered its actual inputs and initial result. No registration submitted, email sent or payment initiated on the hosted preview.
+- Full 1440/768/390px automated cross-route/interaction evidence is from the credential-free local **production build**, not an assertion of a complete hosted payment journey. Screenshots: `output/release-qa/homepage-{1440,768,390}-{full,viewport}.png`.
+- Deferred PDFs retain their original appearance and filename as required. All application/quiz/results/payment/email/database sources present before this task remained byte-identical except the intentionally replaced `app/page.tsx`; comparison covered 182 existing source/asset/prototype files. A1/A2/A3/B prototype sources remain intact and untracked locally, with the complete verified backup available.
+
+This final documentation update follows the implementation commit; it changes no deployed application source. **Stop for review: no production promotion or activation is authorised by this preview.**

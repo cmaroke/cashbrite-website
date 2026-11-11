@@ -12,13 +12,13 @@ export const metadata: Metadata = createSeoMetadata({
 
 export default function ContactPage() {
   return (
-    <section className="bg-cream py-16">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1fr] lg:px-8">
+    <section className="bg-cream section-space">
+      <div className="mx-auto grid max-w-site gap-10 px-5 sm:px-8 lg:grid-cols-[0.9fr_1fr] lg:px-8">
         <SectionHeader
           eyebrow="Contact"
           headingLevel="h1"
           title="Talk to Cashbrite"
-          body="Use this form for school enquiries, partnership ideas or questions about the first version of the platform."
+          body="Use this form for school enquiries, partnership ideas or questions about Cashbrite."
         />
         <ContactForm />
       </div>

@@ -4,6 +4,26 @@
 
 :root {
   color-scheme: light;
+  --brand-ink: #0F2A3A;
+  --brand-sage: #54806B;
+  --brand-lime: #C7F36B;
+  --brand-cream: #F7F4EC;
+  --brand-mist: #E8EAE6;
+  --brand-white: #FFFFFF;
+  --brand-radius: 6px;
+  --brand-border: 1px solid #0f2a3a26;
+  --brand-space: 24px;
+  --space-section-mobile: 3rem;
+  --space-section-desktop: 4rem;
+  --space-heading-copy: 1rem;
+  --space-content-action: 1.5rem;
+}
+
+@layer components {
+  .site-container { @apply mx-auto w-full max-w-site px-5 sm:px-8; }
+  .section-space { @apply py-section-mobile sm:py-section-desktop; }
+  /* Opt in for editorial titles; product headings retain Manrope. */
+  .editorial-heading { @apply font-editorial font-normal tracking-normal; line-height: 1.15; }
 }
 
 html {
@@ -11,17 +31,37 @@ html {
 }
 
 body {
-  background: #fbf7ec;
-  color: #071d2b;
+  background: var(--brand-cream);
+  color: var(--brand-ink);
+}
+
+/* Typography and control foundations; preserve each route's layout utilities. */
+@layer base {
+  h1, h2, h3, h4, h5, h6 { font-family: var(--font-manrope), sans-serif; }
+  input, select, textarea, button { font-family: var(--font-inter), sans-serif; }
+  input:not([type=checkbox]):not([type=radio]), select, textarea { border-radius: var(--brand-radius); }
 }
 
 ::selection {
-  background: #b9ead8;
-  color: #071d2b;
+  background: var(--brand-lime);
+  color: var(--brand-ink);
 }
 
 .focus-ring {
-  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sea;
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink focus-visible:ring-2 focus-visible:ring-white;
+}
+
+.mobile-menu summary { list-style: none; }
+.mobile-menu summary::-webkit-details-marker { display: none; }
+.mobile-menu[open] summary { background: var(--brand-lime); }
+.mobile-menu[open] summary span { transform: rotate(45deg); }
+.quiz-answer:has(input:checked) { background: #C7F36B40; border-color: var(--brand-ink); box-shadow: inset 3px 0 0 var(--brand-ink); }
+.quiz-answer:focus-within { outline: 2px solid var(--brand-ink); outline-offset: 2px; }
+@layer base {
+  input:not([type=checkbox]):not([type=radio]), select, textarea { border-color: #0F2A3A70; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 @media print {

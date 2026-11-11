@@ -24,7 +24,7 @@ app/
   globals.css            Tailwind and global styles
   layout.tsx             Shared navigation and footer
   page.tsx               Home page
-  premium-plan-preview/  Locked premium workbook preview
+  premium-plan-preview/  Synthetic demo only; paid access is separately verified
   money-ready-plan/success/ Verified premium plan access page
   checkout/money-ready-plan/ Assessment email checkout recovery page
   quiz/page.tsx          Money Readiness Questionnaire
@@ -149,7 +149,7 @@ For production, verify a sending domain in Resend and update `CONTACT_FROM_EMAIL
 
 ## Premium Money Ready Plan Preview
 
-The full paid workbook is available through a private, no-index test route. It is not linked from the free results page.
+The no-index preview route displays synthetic data only. Real customer reports require verified paid access; preview secrets in query strings are no longer supported.
 
 To review the design safely with synthetic data and no database lookup, open:
 
@@ -159,19 +159,7 @@ To review the design safely with synthetic data and no database lookup, open:
 
 The demo is visibly labelled and uses only a fictional profile. No environment variable is required for demo mode.
 
-1. Add a long random `PREMIUM_PLAN_PREVIEW_KEY` to `.env.local` and to Vercel when a deployed preview is needed.
-2. Copy an assessment ID from the `id` value in a completed results-page URL.
-3. Open:
-
-```text
-/premium-plan-preview?id=ASSESSMENT_ID&key=PREMIUM_PLAN_PREVIEW_KEY
-```
-
-Example preview-only environment variable:
-
-```text
-PREMIUM_PLAN_PREVIEW_KEY=use-a-long-random-preview-key
-```
+`PREMIUM_PLAN_PREVIEW_KEY` is not required or used for customer access. Never put a Stripe secret or operator credential into a URL.
 
 The preview includes a print button, and paid plans also provide a server-generated branded PDF download.
 
@@ -223,6 +211,8 @@ Subscribe it to:
 
 ```text
 checkout.session.completed
+checkout.session.async_payment_succeeded
+checkout.session.async_payment_failed
 checkout.session.expired
 payment_intent.payment_failed
 ```
@@ -231,25 +221,22 @@ Reveal the endpoint signing secret beginning with `whsec_` and save it as `STRIP
 
 ### Test locally
 
-1. Put test-mode keys and the test Price ID in `.env.local`.
-2. Set `NEXT_PUBLIC_SITE_URL=http://localhost:3000`.
-3. Run `pnpm dev`.
-4. Use the Stripe CLI to forward events:
+Run the offline suite first; it uses a disposable local database and mocked Stripe/Resend, without customer records or live service calls:
 
-```bash
-stripe listen --forward-to localhost:3000/api/stripe/webhook
+```sh
+npm install --prefix /tmp/cashbrite-pg-test --no-save --ignore-scripts --package-lock=false @electric-sql/pglite@0.5.15
+node scripts/check-purchase-reliability.mjs
+node scripts/check-product-messaging.mjs
+node scripts/check-quiz-scoring.mjs
 ```
 
-5. Use the `whsec_` value printed by the CLI as the local `STRIPE_WEBHOOK_SECRET`.
-6. Complete an assessment and click **Unlock My £19 Money Ready Plan**.
-7. In Stripe Checkout, use test card `4242 4242 4242 4242`, any future expiry date, and any CVC/postcode.
-8. Confirm that Checkout returns to `/money-ready-plan/success`, the workbook is visible, `premium_purchases.payment_status` is `paid`, and the confirmation email arrives.
-
-Use Stripe's documented declined or authentication test cards to check failed-payment behaviour. Do not use real card details in test mode.
+Real provider test-mode/UI and deliverability checks require a separately authorised staging environment. They were not run as part of Phase 3C.2. Do not use production records, send real email or initiate payment during offline testing.
 
 ### Purchase data and access
 
-The app creates the `premium_purchases` table automatically when Checkout is first used. `db/schema.sql` also contains the schema for manual setup. The table records the assessment reference, Stripe session and PaymentIntent IDs, amount, currency and payment state.
+Purchase schema setup is explicit, not automatic. For an existing database, review `db/migrations/003_premium_delivery.sql`; it adds durable delivery state and leaves historical paid delivery outcomes as `needs_review`. Do not automatically resend those rows. For a new database, use `db/schema.sql` instead.
+
+See [Phase 3C.2 implementation, migration, rollback and trusted recovery CLI](docs/cashbrite-phase-3c2-implementation.md) before any release. No production migration/deployment is authorised by these instructions alone.
 
 The email access link contains a Stripe Checkout Session ID. Each visit is verified server-side with Stripe and must belong to the Cashbrite product with a completed, paid status. Invalid, incomplete or unrelated sessions do not unlock a workbook.
 
@@ -262,10 +249,10 @@ The email access link contains a Stripe Checkout Session ID. Each visit is verif
 5. Add the Resend environment variables in Vercel Project Settings.
 6. Create the Stripe product and £19 one-off price, then add all five Stripe environment variables.
 7. Set `NEXT_PUBLIC_SITE_URL` to the production origin, for example `https://cashbrite.co.uk`, with no trailing path.
-8. Deploy once so the webhook route is live.
+8. Follow the approved maintenance/migration cutover in the Phase 3C.2 report before deploying the matching app. Do not mix old fulfilment code with the new delivery state during cutover.
 9. Add the production webhook destination in Stripe and save its signing secret as `STRIPE_WEBHOOK_SECRET` in Vercel.
 10. Redeploy after changing environment variables.
-11. Add `PREMIUM_PLAN_PREVIEW_KEY` if the private workbook preview is required on that deployment.
+11. Verify sensitive-route analytics exclusions, disable conflicting GA4 automatic history/form/outbound measurement, and confirm private/no-referrer response headers in authorised staging.
 
 Use Stripe test keys and a test Price ID for Vercel Preview environments. For Production, replace all Stripe values with live-mode keys, a live £19 Price ID and the signing secret from the live webhook destination. Never put `STRIPE_SECRET_KEY` or `STRIPE_WEBHOOK_SECRET` in a `NEXT_PUBLIC_` variable.
 

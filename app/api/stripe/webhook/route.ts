@@ -1,80 +1,42 @@
-import type Stripe from "stripe";
 import { NextResponse } from "next/server";
-import { sendPremiumPurchaseConfirmation } from "@/lib/assessmentEmail";
-import { getAssessment } from "@/lib/assessmentDb";
-import { generateMoneyReadyPlanPdf } from "@/lib/moneyReadyPlanPdf";
-import { markCheckoutExpired, markPaymentFailed, markPurchasePaid } from "@/lib/premiumPurchaseDb";
-import { getSiteUrl, getStripe, moneyReadyPlanProduct } from "@/lib/stripe";
+import type Stripe from "stripe";
+import { getStripe, moneyReadyPlanProduct } from "@/lib/stripe";
+import { recordVerifiedPayment, fulfilPurchase } from "@/lib/purchaseDelivery";
+import { markCheckoutExpired, markCheckoutFailed, markPaymentFailed } from "@/lib/premiumPurchaseDb";
+import { privateHeaders, purchaseLog, PurchaseError } from "@/lib/purchaseSafety";
 
 export const runtime = "nodejs";
-
 export async function POST(request: Request) {
-  const signature = request.headers.get("stripe-signature");
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-  if (!signature || !webhookSecret) {
-    return NextResponse.json({ error: "Stripe webhook is not configured." }, { status: 400 });
-  }
-
   let event: Stripe.Event;
   try {
-    const rawBody = await request.text();
-    event = getStripe().webhooks.constructEvent(rawBody, signature, webhookSecret);
-  } catch {
-    return NextResponse.json({ error: "Invalid webhook signature." }, { status: 400 });
-  }
-
+    const signature = request.headers.get("stripe-signature");
+    if (!signature || !process.env.STRIPE_WEBHOOK_SECRET) throw new Error("unconfigured");
+    event = getStripe().webhooks.constructEvent(await request.text(), signature, process.env.STRIPE_WEBHOOK_SECRET);
+  } catch { return NextResponse.json({ error: "Webhook signature could not be verified." }, { status: 400, headers: privateHeaders }); }
   try {
-    if (event.type === "checkout.session.completed") {
-      await handleCompletedCheckout(event.data.object as Stripe.Checkout.Session);
+    if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
+      const session = event.data.object as Stripe.Checkout.Session;
+      if (session.metadata?.product && session.metadata.product !== moneyReadyPlanProduct) return NextResponse.json({ received: true }, { headers: privateHeaders });
+      if (session.payment_status !== "paid") return NextResponse.json({ received: true }, { headers: privateHeaders });
+      const { purchase } = await recordVerifiedPayment(session.id);
+      const outcome = await fulfilPurchase(purchase.id);
+      if (outcome === "deferred") return NextResponse.json({ error: "Delivery retry pending." }, { status: 503, headers: privateHeaders });
+      if (outcome === "needs_review") purchaseLog("delivery_needs_review", purchase.id);
     } else if (event.type === "checkout.session.expired") {
       const session = event.data.object as Stripe.Checkout.Session;
-      await markCheckoutExpired(session.id);
+      if (session.metadata?.product === moneyReadyPlanProduct) await markCheckoutExpired(session.id);
     } else if (event.type === "payment_intent.payment_failed") {
-      const paymentIntent = event.data.object as Stripe.PaymentIntent;
-      const assessmentId = paymentIntent.metadata.assessment_id;
-      if (assessmentId) {
-        await markPaymentFailed({ assessmentId, paymentIntentId: paymentIntent.id });
+      const intent = event.data.object as Stripe.PaymentIntent;
+      if (intent.metadata.product === moneyReadyPlanProduct && intent.metadata.assessment_id) {
+        await markPaymentFailed({ assessmentId: intent.metadata.assessment_id, paymentIntentId: intent.id });
       }
+    } else if (event.type === "checkout.session.async_payment_failed") {
+      const session = event.data.object as Stripe.Checkout.Session;
+      if (session.metadata?.product === moneyReadyPlanProduct) await markCheckoutFailed(session.id);
     }
-
-    return NextResponse.json({ received: true });
-  } catch {
-    return NextResponse.json({ error: "Webhook processing failed." }, { status: 500 });
+    return NextResponse.json({ received: true }, { headers: privateHeaders });
+  } catch (error) {
+    purchaseLog(error instanceof PurchaseError ? error.code : "webhook_processing_failed", event.id);
+    return NextResponse.json({ error: "Purchase processing requires retry." }, { status: 500, headers: privateHeaders });
   }
-}
-
-async function handleCompletedCheckout(session: Stripe.Checkout.Session) {
-  const assessmentId = session.metadata?.assessment_id;
-  const product = session.metadata?.product;
-  const email = session.metadata?.email ?? session.customer_details?.email;
-
-  if (!assessmentId || !email || product !== moneyReadyPlanProduct || session.payment_status !== "paid") {
-    return;
-  }
-
-  const assessment = await getAssessment(assessmentId);
-  if (!assessment) return;
-
-  // Generate before marking the purchase paid so Stripe can retry if PDF creation fails.
-  const pdfAttachment = await generateMoneyReadyPlanPdf(assessment);
-  const newlyPaid = await markPurchasePaid({
-    assessmentId,
-    email,
-    checkoutSessionId: session.id,
-    paymentIntentId: typeof session.payment_intent === "string" ? session.payment_intent : null,
-    amount: session.amount_total ?? 1900,
-    currency: session.currency ?? "gbp",
-  });
-
-  if (!newlyPaid) return;
-
-  const accessUrl = `${getSiteUrl()}/money-ready-plan/success?session_id=${encodeURIComponent(session.id)}`;
-  await sendPremiumPurchaseConfirmation({
-    registration: assessment.registration,
-    amount: session.amount_total ?? 1900,
-    currency: session.currency ?? "gbp",
-    accessUrl,
-    pdfAttachment,
-  });
 }

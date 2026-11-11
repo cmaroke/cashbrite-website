@@ -3,7 +3,9 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { categoryDescriptions, categoryLabels, quizQuestions, type QuizAnswer } from "@/data/quizQuestions";
+import { quizQuestions, type QuizAnswer } from "@/data/quizQuestions";
+import { MoneyReadinessAssessment } from "@/components/assessment/MoneyReadinessAssessment";
+import { clearAssessmentDraft, initialAssessmentPosition, readAssessmentDraft, saveAssessmentDraft } from "@/lib/assessmentDraft";
 import {
   educationStages,
   referralSources,
@@ -38,29 +40,21 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function QuizPage() {
   const router = useRouter();
-  const quizStartRef = useRef<HTMLFormElement>(null);
+  const submissionInFlight = useRef(false);
+  const draftCleared = useRef(false);
   const [registration, setRegistration] = useState<RegistrationFormState>(initialRegistration);
   const [registrationComplete, setRegistrationComplete] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [position, setPosition] = useState(initialAssessmentPosition);
+  const [draftReady, setDraftReady] = useState(false);
+  const [storageAvailable, setStorageAvailable] = useState(true);
+  const [recoveredAnswers, setRecoveredAnswers] = useState(false);
 
   const answeredCount = Object.keys(selectedAnswers).length;
   const isComplete = answeredCount === quizQuestions.length;
-  const progress = Math.round((answeredCount / quizQuestions.length) * 100);
-
-  const groupedQuestions = useMemo(
-    () =>
-      quizQuestions.reduce(
-        (groups, question) => {
-          groups[question.category] = [...(groups[question.category] ?? []), question];
-          return groups;
-        },
-        {} as Record<string, typeof quizQuestions>,
-      ),
-    [],
-  );
 
   const shuffledAnswersByQuestion = useMemo(
     () =>
@@ -71,25 +65,33 @@ export default function QuizPage() {
   );
 
   useEffect(() => {
-    if (!registrationComplete) return;
-
-    let secondFrame: number | undefined;
-    const firstFrame = window.requestAnimationFrame(() => {
-      secondFrame = window.requestAnimationFrame(() => {
-        const quizStart = quizStartRef.current;
-        if (!quizStart) return;
-
-        const headerHeight = document.querySelector<HTMLElement>("body > header")?.offsetHeight ?? 0;
-        const quizTop = window.scrollY + quizStart.getBoundingClientRect().top;
-        window.scrollTo({ top: Math.max(0, quizTop - headerHeight - 16), behavior: "auto" });
-      });
+    const frame = requestAnimationFrame(() => {
+      const saved = readAssessmentDraft();
+      setSelectedAnswers(saved.answers);
+      setPosition(saved.position);
+      setStorageAvailable(saved.available);
+      setRecoveredAnswers(Object.keys(saved.answers).length > 0);
+      setDraftReady(true);
     });
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
-    return () => {
-      window.cancelAnimationFrame(firstFrame);
-      if (secondFrame !== undefined) window.cancelAnimationFrame(secondFrame);
-    };
-  }, [registrationComplete]);
+  useEffect(() => {
+    if (!draftReady || draftCleared.current) return;
+    try {
+      saveAssessmentDraft(selectedAnswers, position);
+    } catch {
+      const frame = requestAnimationFrame(() => setStorageAvailable(false));
+      return () => cancelAnimationFrame(frame);
+    }
+  }, [selectedAnswers, position, draftReady]);
+
+  useEffect(() => {
+    if (!isSubmitting && (storageAvailable || !answeredCount)) return;
+    const warn = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ""; };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [isSubmitting, storageAvailable, answeredCount]);
 
   function handleRegistrationSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -105,8 +107,9 @@ export default function QuizPage() {
 
   async function handleAssessmentSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!isComplete || isSubmitting) return;
+    if (!isComplete || submissionInFlight.current) return;
 
+    submissionInFlight.current = true;
     setIsSubmitting(true);
     setSubmitError("");
 
@@ -125,60 +128,67 @@ export default function QuizPage() {
         throw new Error(result.error ?? "Your assessment could not be saved. Please try again.");
       }
 
+      draftCleared.current = true;
+      clearAssessmentDraft();
       router.push(`/results?id=${result.id}`);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "Your assessment could not be saved. Please try again.");
+      submissionInFlight.current = false;
       setIsSubmitting(false);
     }
   }
 
   return (
-    <section className="bg-cream py-10 sm:py-14">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-6 rounded-lg border border-navy/10 bg-white p-6 shadow-[0_18px_50px_rgba(7,29,43,0.06)] sm:p-8">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Money Readiness Assessment</p>
-          <h1 className="mt-3 max-w-4xl text-4xl font-semibold leading-tight text-navy sm:text-5xl">
+    <section className="bg-cream py-8 sm:py-10">
+      <div className="mx-auto max-w-workflow px-5 sm:px-8">
+        {!registrationComplete && <div className="mb-6 border-b border-ink/20 pb-6">
+          <p className="text-sm font-bold uppercase tracking-[0.14em] text-sea">Money Readiness Assessment</p>
+          <h1 className="editorial-heading mt-3 max-w-4xl text-4xl text-navy md:text-5xl">
             Discover your Money Confidence Score
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-navy/72">
-            Find out where you&apos;re already doing well and identify the areas to improve before university, work and
-            independent life.
+            Take the free assessment to receive your Cashbrite Money Confidence Snapshot: your score, score band,
+            short interpretation and three priority areas.
           </p>
-          <div className="mt-6 grid gap-3 text-sm font-bold text-navy/72 sm:grid-cols-2 lg:grid-cols-4">
-            {["Takes 5 minutes", "Educational only", "Personalised recommendations", "No spam"].map((benefit) => (
-              <span key={benefit} className="rounded-md border border-sea/15 bg-mint/30 px-4 py-2">
+          <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-ink/80">
+            {["Takes 5 minutes", "Educational only", "Free Snapshot", "No spam"].map((benefit) => (
+              <span key={benefit} className="border-l border-sage/40 pl-3 first:border-0 first:pl-0">
                 {benefit}
               </span>
             ))}
           </div>
-          {registrationComplete ? (
-            <>
-              <div className="mt-7 h-3 overflow-hidden rounded-full bg-cream">
-                <div className="h-full rounded-full bg-sea transition-all" style={{ width: `${progress}%` }} />
-              </div>
-              <p className="mt-2 text-sm font-semibold text-navy/65">
-                {answeredCount} of {quizQuestions.length} answered
-              </p>
-            </>
-          ) : null}
-        </div>
+
+        </div>}
 
         {!registrationComplete ? (
           <form
             onSubmit={handleRegistrationSubmit}
-            className="rounded-lg border border-navy/10 bg-white p-5 shadow-[0_18px_50px_rgba(7,29,43,0.06)] sm:p-7"
+            className="rounded-md border border-ink/20 bg-white p-5 sm:p-6"
           >
+            {recoveredAnswers && <div className="mb-6 border-l-2 border-sage bg-mist/50 p-4 text-sm leading-6">
+              <p>Your saved answers are ready in this tab. Re-enter your details and consent to resume; personal details are not stored in the draft.</p>
+              <button type="button" className="focus-ring mt-2 min-h-11 underline underline-offset-4" onClick={() => {
+                if (!window.confirm("Discard the saved answers and start a new assessment?")) return;
+                clearAssessmentDraft();
+                setSelectedAnswers({});
+                setPosition(initialAssessmentPosition());
+                setRecoveredAnswers(false);
+              }}>Discard saved answers</button>
+            </div>}
             <div className="mb-6">
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Start your assessment</p>
-              <h2 className="mt-2 text-2xl font-black text-navy">Create your Cashbrite result</h2>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-sea">Start your assessment</p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-navy">Create your Cashbrite result</h2>
               <p className="mt-2 text-base leading-7 text-navy/68">
-                A few details help us generate your personalised result and send your Money Action Plan securely.
+                Register for the free assessment to view your Cashbrite Money Confidence Snapshot after completing
+                it. We attempt to email a copy when email delivery is configured; your Snapshot remains available online
+                if it cannot be delivered. No purchase is required to view your free results.
+                The Cashbrite Personalised Money Action Plan is an optional £19 one-off purchase.
               </p>
             </div>
 
-            <div className="mb-6 grid gap-2 rounded-lg border border-sea/15 bg-mint/20 p-3 text-sm font-black text-navy/75 sm:grid-cols-4">
+            <div className="mb-6 flex flex-wrap gap-x-5 gap-y-2 border-y border-ink/15 py-3 text-xs font-medium text-ink/80">
               {["Private", "Educational", "Guidance only", "No financial advice"].map((item) => (
-                <div key={item} className="flex items-center gap-2 rounded-md bg-white/70 px-3 py-2">
+                <div key={item} className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-sea" aria-hidden="true" />
                   {item}
                 </div>
@@ -189,7 +199,7 @@ export default function QuizPage() {
               <label className="grid gap-2 text-sm font-bold text-navy">
                 First name
                 <input
-                  className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+                  className="focus-ring rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
                   value={registration.firstName}
                   onChange={(event) => setRegistrationValue("firstName", event.target.value)}
                   required
@@ -198,7 +208,7 @@ export default function QuizPage() {
               <label className="grid gap-2 text-sm font-bold text-navy">
                 Last name
                 <input
-                  className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+                  className="focus-ring rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
                   value={registration.lastName}
                   onChange={(event) => setRegistrationValue("lastName", event.target.value)}
                   required
@@ -207,7 +217,7 @@ export default function QuizPage() {
               <label className="grid gap-2 text-sm font-bold text-navy">
                 Age
                 <input
-                  className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+                  className="focus-ring rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
                   type="number"
                   min="13"
                   max="100"
@@ -219,7 +229,7 @@ export default function QuizPage() {
               <label className="grid gap-2 text-sm font-bold text-navy">
                 Email address
                 <input
-                  className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+                  className="focus-ring rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
                   type="email"
                   value={registration.email}
                   onChange={(event) => setRegistrationValue("email", event.target.value)}
@@ -229,7 +239,7 @@ export default function QuizPage() {
               <label className="grid gap-2 text-sm font-bold text-navy sm:col-span-2">
                 Which best describes your current stage?
                 <select
-                  className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+                  className="focus-ring rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
                   value={registration.educationStage}
                   onChange={(event) =>
                     setRegistrationValue(
@@ -250,7 +260,7 @@ export default function QuizPage() {
               <label className="grid gap-2 text-sm font-bold text-navy sm:col-span-2">
                 How did you hear about Cashbrite? (Optional)
                 <select
-                  className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+                  className="focus-ring rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
                   value={registration.referralSource}
                   onChange={(event) =>
                     setRegistrationValue("referralSource", event.target.value as RegistrationFormState["referralSource"])
@@ -276,9 +286,9 @@ export default function QuizPage() {
                   required
                 />
                 <span>
-                  I agree to receive my personalised Cashbrite Money Action Plan by email and understand how Cashbrite
+                  I agree to receive my free Cashbrite Money Confidence Snapshot by email and understand how Cashbrite
                   uses my data as explained in the{" "}
-                  <Link href="/privacy-policy" className="font-black text-sea underline underline-offset-4">
+                  <Link href="/privacy-policy" className="font-semibold text-sea underline underline-offset-4">
                     Privacy Policy
                   </Link>
                   .
@@ -294,7 +304,7 @@ export default function QuizPage() {
                 <span>
                   I would like to receive occasional Cashbrite updates, resources and offers. I can unsubscribe at any
                   time. See the{" "}
-                  <Link href="/privacy-policy" className="font-black text-sea underline underline-offset-4">
+                  <Link href="/privacy-policy" className="font-semibold text-sea underline underline-offset-4">
                     Privacy Policy
                   </Link>
                   .
@@ -309,78 +319,24 @@ export default function QuizPage() {
             ) : null}
 
             <button
-              className="focus-ring mt-6 rounded-full bg-navy px-6 py-4 text-base font-black text-white shadow-[0_14px_30px_rgba(7,29,43,0.22)] transition hover:-translate-y-0.5 hover:bg-ink"
+              className="focus-ring mt-6 min-h-12 rounded-md bg-lime px-6 py-3 text-base font-semibold text-ink transition hover:bg-lime/85"
               type="submit"
             >
               Start the 5-minute assessment
             </button>
           </form>
         ) : (
-          <form
-            ref={quizStartRef}
+          <MoneyReadinessAssessment
+            answers={selectedAnswers}
+            answerOrder={shuffledAnswersByQuestion}
+            position={position}
+            onNavigate={setPosition}
+            onAnswer={(questionId, answerId) => setSelectedAnswers((current) => ({ ...current, [questionId]: answerId }))}
             onSubmit={handleAssessmentSubmit}
-            className="grid gap-8"
-          >
-            {Object.entries(groupedQuestions).map(([category, questions]) => (
-              <fieldset
-                key={category}
-                className="rounded-lg border border-navy/10 bg-white p-6 shadow-[0_18px_50px_rgba(7,29,43,0.06)] sm:p-7"
-              >
-                <legend className="px-1 text-xl font-black text-navy">
-                  {categoryLabels[category as keyof typeof categoryLabels]}
-                </legend>
-                <p className="mt-2 text-base leading-7 text-navy/65">
-                  {categoryDescriptions[category as keyof typeof categoryDescriptions]}
-                </p>
-                <div className="mt-4 grid gap-6">
-                  {questions.map((question) => (
-                    <div key={question.id}>
-                      <p className="text-lg font-bold leading-7 text-navy">{question.prompt}</p>
-                      <div className="mt-3 grid gap-3">
-                        {shuffledAnswersByQuestion[question.id].map((answer) => (
-                          <label
-                            key={answer.id}
-                            className="flex cursor-pointer gap-3 rounded-md border border-navy/12 bg-cream/55 p-4 text-base leading-7 transition hover:-translate-y-0.5 hover:border-sea hover:bg-mint/25"
-                          >
-                            <input
-                              className="mt-1 h-5 w-5 accent-sea"
-                              type="radio"
-                              name={question.id}
-                              value={answer.id}
-                              checked={selectedAnswers[question.id] === answer.id}
-                              onChange={() =>
-                                setSelectedAnswers((current) => ({
-                                  ...current,
-                                  [question.id]: answer.id,
-                                }))
-                              }
-                              required
-                              disabled={isSubmitting}
-                            />
-                            <span>{answer.label}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </fieldset>
-            ))}
-
-            {submitError ? (
-              <p className="rounded-md border border-[#e9c36b]/35 bg-[#fff3d9] p-4 text-sm font-semibold leading-6 text-navy" role="alert">
-                {submitError}
-              </p>
-            ) : null}
-
-            <button
-              className="focus-ring rounded-full bg-navy px-6 py-4 text-base font-black text-white shadow-[0_14px_30px_rgba(7,29,43,0.22)] transition enabled:hover:-translate-y-0.5 enabled:hover:bg-ink disabled:cursor-not-allowed disabled:opacity-50"
-              type="submit"
-              disabled={!isComplete || isSubmitting}
-            >
-              {isSubmitting ? "Generating your Money Action Plan..." : "Generate my Money Action Plan"}
-            </button>
-          </form>
+            isSubmitting={isSubmitting}
+            submitError={submitError}
+            storageAvailable={storageAvailable}
+          />
         )}
       </div>
     </section>
@@ -403,7 +359,7 @@ function validateRegistration(registration: RegistrationFormState) {
   if (!emailPattern.test(registration.email.trim())) return "Please enter a valid email address.";
   if (!registration.educationStage) return "Please choose your current stage.";
   if (!registration.reportConsent) {
-    return "Please confirm that you agree to receive your personalised Cashbrite Money Action Plan by email.";
+    return "Please confirm that you agree to receive your free Cashbrite Money Confidence Snapshot by email.";
   }
 
   return "";

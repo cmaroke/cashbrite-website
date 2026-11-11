@@ -28,7 +28,7 @@ export function createSeoMetadata({ description, noIndex = false, path, title }:
       siteName,
       images: [
         {
-          url: new URL("/brand/cashbrite-logo.png", siteUrl).toString(),
+          url: new URL("/brand/v2/social.png", siteUrl).toString(),
           width: 1200,
           height: 630,
           alt: "Cashbrite",
@@ -41,7 +41,7 @@ export function createSeoMetadata({ description, noIndex = false, path, title }:
       card: "summary_large_image",
       title,
       description,
-      images: [new URL("/brand/cashbrite-logo.png", siteUrl).toString()],
+      images: [new URL("/brand/v2/social.png", siteUrl).toString()],
     },
     robots: noIndex ? { index: false, follow: false } : undefined,
   };

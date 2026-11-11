@@ -80,12 +80,12 @@ export function ContactForm({ context = "general" }: ContactFormProps) {
   const isSubmitting = status === "submitting";
 
   return (
-    <form className="rounded-lg border border-navy/10 bg-white p-6 shadow-soft" onSubmit={handleSubmit}>
+    <form className="rounded-md border border-ink/20 bg-white p-5 sm:p-6" onSubmit={handleSubmit}>
       <div className="grid gap-5">
         <label className="grid gap-2 text-sm font-bold text-navy">
           Name
           <input
-            className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+            className="focus-ring rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
             name="name"
             type="text"
             autoComplete="name"
@@ -96,7 +96,7 @@ export function ContactForm({ context = "general" }: ContactFormProps) {
         <label className="grid gap-2 text-sm font-bold text-navy">
           Email
           <input
-            className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+            className="focus-ring rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
             name="email"
             type="email"
             autoComplete="email"
@@ -107,7 +107,7 @@ export function ContactForm({ context = "general" }: ContactFormProps) {
         <label className="grid gap-2 text-sm font-bold text-navy">
           School/organisation
           <input
-            className="focus-ring rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+            className="focus-ring rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
             name="organisation"
             type="text"
             autoComplete="organization"
@@ -121,7 +121,7 @@ export function ContactForm({ context = "general" }: ContactFormProps) {
         <label className="grid gap-2 text-sm font-bold text-navy">
           Message
           <textarea
-            className="focus-ring min-h-36 rounded-md border border-navy/15 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
+            className="focus-ring min-h-36 rounded-md border border-ink/55 bg-cream/35 px-4 py-3 text-base font-normal transition focus:bg-white"
             name="message"
             value={message}
             onChange={(event) => setMessage(event.target.value)}
@@ -130,7 +130,7 @@ export function ContactForm({ context = "general" }: ContactFormProps) {
           />
         </label>
         <button
-          className="focus-ring rounded-full bg-navy px-5 py-3.5 text-base font-black text-white shadow-[0_14px_30px_rgba(7,29,43,0.18)] transition hover:-translate-y-0.5 hover:bg-ink disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+          className="focus-ring min-h-12 rounded-md bg-lime px-5 py-3 text-base font-semibold text-ink transition hover:bg-lime/85 disabled:cursor-not-allowed disabled:opacity-60"
           type="submit"
           disabled={isSubmitting}
         >

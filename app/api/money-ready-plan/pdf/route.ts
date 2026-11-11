@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
-import { getAssessment } from "@/lib/assessmentDb";
 import { generateMoneyReadyPlanPdf } from "@/lib/moneyReadyPlanPdf";
 import { demoPremiumAssessment } from "@/lib/premiumPlanDemo";
-import { getStripe, moneyReadyPlanProduct } from "@/lib/stripe";
+import { verifyPaidPurchase } from "@/lib/verifiedPurchase";
+import { privateHeaders, purchaseLog, PurchaseError } from "@/lib/purchaseSafety";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const sessionPattern = /^cs_(test|live)_[A-Za-z0-9]+$/;
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -16,7 +15,7 @@ export async function GET(request: Request) {
   try {
     const assessment = isDevelopmentDemo
       ? demoPremiumAssessment
-      : await getPaidAssessment(url.searchParams.get("session_id"));
+      : (await verifyPaidPurchase(url.searchParams.get("session_id") ?? "")).assessment;
 
     if (!assessment) {
       return NextResponse.json({ error: "A confirmed purchase is required to download this plan." }, { status: 403 });
@@ -27,6 +26,7 @@ export async function GET(request: Request) {
 
     return new Response(pdf, {
       headers: {
+        ...privateHeaders,
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="Cashbrite-Money-Ready-Plan-${firstName}.pdf"`,
         "Content-Length": String(pdf.length),
@@ -35,26 +35,8 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error("Money Ready Plan PDF generation failed", {
-      error: error instanceof Error ? error.message : "Unknown PDF error",
-    });
-    return NextResponse.json({ error: "Your PDF could not be generated. Please try again." }, { status: 500 });
+    const denied = error instanceof PurchaseError;
+    purchaseLog(denied ? "pdf_access_denied" : "pdf_unavailable");
+    return NextResponse.json({ error: denied ? "A confirmed purchase is required. Use your original access link." : "Your PDF is temporarily unavailable. Try again or contact Cashbrite; do not pay again." }, { status: denied ? 403 : 503, headers: privateHeaders });
   }
-}
-
-async function getPaidAssessment(sessionId: string | null) {
-  if (!sessionId || !sessionPattern.test(sessionId)) return null;
-
-  const session = await getStripe().checkout.sessions.retrieve(sessionId);
-  const assessmentId = session.metadata?.assessment_id;
-  if (
-    session.status !== "complete" ||
-    session.payment_status !== "paid" ||
-    session.metadata?.product !== moneyReadyPlanProduct ||
-    !assessmentId
-  ) {
-    return null;
-  }
-
-  return getAssessment(assessmentId);
 }

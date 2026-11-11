@@ -10,6 +10,7 @@ import {
 } from "pdf-lib";
 import { generatePremiumActionPlan, type PremiumPriorityArea } from "@/lib/premiumActionPlan";
 import type { PremiumPlanAssessment } from "@/lib/premiumPlanDemo";
+import { priorityTieExplanation } from "@/lib/assessmentPriorities";
 
 const PAGE_WIDTH = 595.28;
 const PAGE_HEIGHT = 841.89;
@@ -73,6 +74,7 @@ export async function generateMoneyReadyPlanPdf(assessment: PremiumPlanAssessmen
   plan.opportunities.forEach((opportunity, index) => {
     composer.numberedCard(index + 1, opportunity.title, `${opportunity.score}% confidence score`);
   });
+  composer.paragraph(priorityTieExplanation);
   composer.sectionTitle("Your complete category picture");
   plan.categoryScores.forEach((category) => composer.progress(category.title, category.score));
 
@@ -257,7 +259,8 @@ class PdfComposer {
   }
 
   sectionTitle(title: string) {
-    this.ensure(34);
+    // Leave room for the heading and the start of its explanation.
+    this.ensure(74);
     this.y -= 5;
     this.drawText(sanitise(title), MARGIN, this.y, 15, this.bold, NAVY);
     this.page.drawRectangle({ x: MARGIN, y: this.y - 9, width: 42, height: 3, color: MINT });
@@ -270,7 +273,7 @@ class PdfComposer {
       .split("\n")
       .flatMap((line) => this.wrap(line, this.regular, 10, CONTENT_WIDTH - 32));
     const height = 24 + titleLines.length * 15 + bodyLines.length * 15 + 16;
-    this.ensure(Math.min(height, 250));
+    this.ensure(height);
     const startY = this.y;
     this.page.drawRectangle({
       x: MARGIN,
@@ -376,7 +379,12 @@ class PdfComposer {
   }
 
   weekCard(number: number, week: string, focus: string, actions: string[]) {
-    this.ensure(68);
+    const actionHeight = actions.reduce((total, action) => {
+      const lines = this.wrap(action, this.regular, 9, CONTENT_WIDTH - 58);
+      return total + Math.max(38, 12 + lines.length * 12.5) + 4;
+    }, 0);
+    // Keep each week and its tasks together instead of orphaning a week heading.
+    this.ensure(64 + actionHeight + 5);
     this.page.drawCircle({ x: MARGIN + 18, y: this.y - 19, size: 18, color: NAVY });
     this.drawCentred(String(number), MARGIN + 18, this.y - 23, 9, this.bold, WHITE);
     this.drawText(week.toUpperCase(), MARGIN + 48, this.y - 9, 8, this.bold, SEA);

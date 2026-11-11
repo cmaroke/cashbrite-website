@@ -52,14 +52,14 @@ export default function StudentBudgetCalculatorPage() {
         }}
       />
 
-      <section className="bg-cream py-10 sm:py-12 lg:py-14">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="bg-cream py-8 sm:py-10">
+        <div className="mx-auto max-w-site px-5 sm:px-8">
           <div className="mb-8 max-w-4xl">
             <div className="flex items-center gap-3">
-              <Image src="/brand/cashbrite-icon.svg" alt="" width={24} height={24} aria-hidden="true" />
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Free Cashbrite tool</p>
+              <Image src="/brand/v2/mark.svg" alt="" width={24} height={24} aria-hidden="true" />
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-sea">Free Cashbrite tool</p>
             </div>
-            <h1 className="mt-5 text-4xl font-black leading-tight text-navy sm:text-5xl lg:text-6xl">
+            <h1 className="editorial-heading mt-5 text-4xl text-navy md:text-5xl">
               Student Budget Calculator
             </h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-navy/72 sm:text-xl sm:leading-9">
@@ -74,10 +74,12 @@ export default function StudentBudgetCalculatorPage() {
         </div>
       </section>
 
-      <section className="bg-mint/35 py-14 sm:py-18 lg:py-20">
-        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-          <Image src="/brand/cashbrite-icon.svg" alt="" width={38} height={38} className="mx-auto" aria-hidden="true" />
-          <h2 className="mt-5 text-3xl font-black text-navy sm:text-4xl">Want to understand your money confidence?</h2>
+      <section className="bg-mint/35 section-space">
+        <div className="mx-auto max-w-5xl px-5 text-center sm:px-8 lg:px-8">
+          <Image src="/brand/v2/mark.svg" alt="" width={38} height={38} className="mx-auto" aria-hidden="true" />
+          <h2 className="editorial-heading mt-5 text-2xl text-navy md:text-3xl">
+            Want to understand your money confidence?
+          </h2>
           <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-navy/70">
             Your budget is one part of the picture. Take the free Cashbrite Money Readiness Quiz to get your Cashbrite
             Score and see your top money priority areas.

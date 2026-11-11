@@ -35,7 +35,7 @@ export function validateAssessmentRequest(body: AssessmentRequestBody) {
     return "Please choose a valid referral source.";
   }
   if (registration.reportConsent !== true) {
-    return "Please confirm that you agree to receive your personalised Cashbrite Money Action Plan by email.";
+    return "Please confirm that you agree to receive your free Cashbrite Money Confidence Snapshot by email.";
   }
 
   const selectedAnswers = body.selectedAnswers ?? {};

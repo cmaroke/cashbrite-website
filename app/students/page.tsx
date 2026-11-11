@@ -13,7 +13,7 @@ export const metadata: Metadata = createSeoMetadata({
 
 export default function StudentsPage() {
   return (
-    <section className="bg-cream py-16">
+    <section className="bg-cream section-space">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -32,14 +32,14 @@ export default function StudentsPage() {
           inLanguage: "en-GB",
         }}
       />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-site px-5 sm:px-8">
         <SectionHeader
           eyebrow="For students"
           headingLevel="h1"
           title="Feel clearer about money before the big choices arrive"
           body="Cashbrite explains budgeting, student money skills and everyday money choices in plain language, with examples that match life after school."
         />
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
           <InfoCard title="Know what your money needs to cover">
             Learn how to split money across essentials, travel, study costs, savings and flexible spending.
           </InfoCard>
@@ -50,8 +50,8 @@ export default function StudentsPage() {
             Get used to asking good questions and checking information before making decisions.
           </InfoCard>
         </div>
-        <div className="mt-10 rounded-lg bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-black text-navy">Start with your Money Readiness score</h2>
+        <div className="mt-8 border-t border-ink/20 py-6">
+          <h2 className="text-2xl font-semibold tracking-tight text-navy">Start with your Money Readiness score</h2>
           <p className="mt-3 max-w-3xl text-lg leading-8 text-navy/72">
             The 5-minute Money Readiness Assessment uses 30 practical questions to show where you are already strong,
             plus where a bit more guidance could help.
@@ -60,8 +60,8 @@ export default function StudentsPage() {
             <ButtonLink href="/quiz">Take the quiz</ButtonLink>
           </div>
         </div>
-        <div className="mt-6 rounded-lg border border-navy/10 bg-mint/35 p-6">
-          <h2 className="text-2xl font-black text-navy">Plan a monthly student budget</h2>
+        <div className="mt-4 border-t border-ink/20 py-6">
+          <h2 className="text-2xl font-semibold tracking-tight text-navy">Plan a monthly student budget</h2>
           <p className="mt-3 max-w-3xl text-lg leading-8 text-navy/72">
             Use the free Student Budget Calculator to estimate income, rent, travel, spending, savings and money left
             over each month.

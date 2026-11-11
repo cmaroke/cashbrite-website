@@ -19,9 +19,13 @@ export function getSiteUrl(fallbackUrl?: string) {
   if (configuredUrl) {
     try {
       const siteUrl = new URL(configuredUrl);
-      return siteUrl.toString().replace(/\/$/, "");
+      if (siteUrl.pathname !== "/" || siteUrl.search || siteUrl.hash || siteUrl.username || siteUrl.password ||
+          (siteUrl.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && siteUrl.hostname === "localhost"))) {
+        throw new Error("invalid_origin");
+      }
+      return siteUrl.origin;
     } catch {
-      console.error("NEXT_PUBLIC_SITE_URL is invalid. Falling back to the request origin.");
+      throw new Error("site_origin_invalid");
     }
   }
 

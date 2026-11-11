@@ -1,0 +1,24 @@
+.prototype{background:var(--brand-cream);color:var(--brand-ink);min-height:70vh}
+.screenHeading{font-family:var(--font-manrope),sans-serif;font-size:24px;font-weight:600;line-height:1.35;scroll-margin-top:180px;outline:none}
+.question{min-width:0;margin:0;padding:0;border:0;animation:arrive 130ms ease-out}
+.answers{display:grid;gap:10px}
+.answer{display:flex;align-items:flex-start;gap:14px;min-height:56px;border:1px solid #0F2A3A80;border-radius:6px;padding:14px 16px;background:white;cursor:pointer;font-size:16px;line-height:1.6;transition:background-color 120ms,border-color 120ms}
+.answer input{flex-shrink:0;width:20px;height:20px;margin-top:3px;accent-color:var(--brand-ink)}
+.answer:hover{border-color:var(--brand-ink);background:var(--brand-mist)}
+.answer:has(input:checked){background:#C7F36B40;border-color:var(--brand-ink);box-shadow:inset 3px 0 0 var(--brand-ink)}
+.answer:focus-within{outline:2px solid var(--brand-ink);outline-offset:3px}
+.navigation{display:flex;justify-content:space-between;gap:16px;margin-top:24px;padding-top:20px;border-top:1px solid #0F2A3A30}
+.primary,.secondary,.textButton{display:inline-flex;align-items:center;justify-content:center;min-height:48px;font-family:var(--font-inter),sans-serif;font-size:14px;font-weight:500;line-height:1.5;border-radius:6px;transition:background-color 120ms}
+.primary{background:var(--brand-lime);color:var(--brand-ink);padding:12px 20px;border:1px solid transparent}
+.secondary{background:transparent;border:1px solid #0F2A3A80;color:var(--brand-ink);padding:12px 20px}
+.textButton{padding:8px 4px;color:var(--brand-ink);text-decoration:underline;text-underline-offset:4px;flex-shrink:0}
+.primary:hover{background:#C7F36BD9}.secondary:hover{background:var(--brand-mist)}
+.prototype button:disabled{opacity:.45;cursor:not-allowed}
+.primary:focus-visible,.secondary:focus-visible,.textButton:focus-visible{outline:2px solid var(--brand-ink);outline-offset:4px}
+.reviewGroup summary{list-style:none}.reviewGroup summary::-webkit-details-marker{display:none}
+.dialog{width:min(480px,calc(100% - 40px));padding:28px;border:1px solid #0F2A3A40;border-radius:6px;background:var(--brand-cream);color:var(--brand-ink);margin:auto}
+.dialog::backdrop{background:#0F2A3A80}
+@keyframes arrive{from{opacity:.6;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:701px){.answers{grid-template-columns:repeat(2,minmax(0,1fr))}.answer{min-height:84px;padding:18px}}
+@media(max-width:420px){.navigation{gap:12px}.navigation .primary,.navigation .secondary{padding:12px 14px}}
+@media(prefers-reduced-motion:reduce){.question{animation:none}.answer,.primary,.secondary{transition:none}}

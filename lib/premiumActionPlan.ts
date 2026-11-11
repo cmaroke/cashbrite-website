@@ -1,6 +1,7 @@
 import { categoryDescriptions, categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import type { RegistrationData } from "@/lib/assessmentTypes";
 import { hasSeriousKnowledgeGaps, type QuizScores, type ResultBand } from "@/lib/quizScoring";
+import { selectPriorityCategories } from "@/lib/assessmentPriorities";
 
 export type CreditLearningGuide = {
   basics: { explanation: string };
@@ -271,11 +272,11 @@ const guidance: Record<QuizCategory, CategoryGuidance> = {
       rule: "A credit card bill is not asking, ‘What is the smallest amount I can pay?’ It is showing you the amount you have borrowed. If you can, aim to repay the full balance every month.",
     },
     actions: [
-      "Explain in your own words why a credit card balance is borrowed money rather than extra income.",
-      "Use a sample statement to find what was spent, the minimum payment, the full balance and the due date.",
-      "Use the £100 example to explain what happens when the full balance is paid by the due date.",
-      "Explain why paying only the minimum leaves some debt to carry into the next month.",
-      "Write the Cashbrite Rule somewhere you would see it before making a credit card purchase.",
+      "Mark the amount spent, minimum payment, full balance and due date on the sample trainers statement.",
+      "Write two short outcomes for the £100 example: paying in full and paying £5, including the £95 left unpaid.",
+      "Using a fictional budget, identify where the £100 repayment would come from before making the purchase.",
+      "Add the sample due date to a practice payment calendar, with time to check the statement beforehand.",
+      "Write a personal borrowing rule covering what you could repay in full and what you would do if repayment became difficult.",
     ],
   },
   buyNowPayLater: {
@@ -399,6 +400,20 @@ const checklistCategories: Array<{ category: QuizCategory; topic: string; prompt
   { category: "movingOutRentBills", topic: "Bills", prompt: "I can plan for utilities, due dates and shared household responsibilities." },
 ];
 
+// Transfer the chapter learning to a fresh practical task rather than repeating its five actions.
+const challengePractice: Record<QuizCategory, string> = {
+  budgetingSpending: "Plan a different week using money you expect to have. After the week, compare planned and actual spending and adjust one amount.",
+  savingHabits: "Try a saving amount that fits your own budget, even if it is small. At the end of the week, record whether you kept it aside and what helped.",
+  studentFinance: "Build a practice term plan for a course or place you are considering. Check whether the weekly allowance would cover its likely living costs.",
+  bankAccountsOverdrafts: "Track a real or fictional account balance for seven days. Mark where it could go below £0 and plan how to avoid or repay that borrowing.",
+  creditBorrowing: "Create a second fictional credit-card purchase using an amount you choose. Make a statement and show how its full repayment would fit a budget; no application or borrowing is needed.",
+  buyNowPayLater: "Put two fictional instalment purchases on one calendar. Add your usual costs, then decide whether the combined due dates would leave enough money.",
+  fraudScamsOnlineSafety: "Practise responding to two suspicious-message examples. Write the independent verification route you would use without opening either message link.",
+  payslipsTaxNi: "Use a payslip you can access safely or a fictional one. Check hours, rate, deductions and take-home pay, then write one question you would ask payroll.",
+  movingOutRentBills: "Compare two example rooms using rent, bills and upfront costs. Record which costs are included and what you would still need to ask before deciding.",
+  moneyConfidence: "Apply your checking questions to a real upcoming decision or a fictional phone contract. Record one fact you verified and one question you still need answered.",
+};
+
 export function generatePremiumActionPlan(
   registration: Pick<RegistrationData, "firstName" | "age" | "educationStage">,
   scores: QuizScores,
@@ -434,38 +449,38 @@ export function generatePremiumActionPlan(
     roadmap: [
       {
         week: "Week 1",
-        focus: "Build your foundations",
+        focus: "Understand and prepare",
         actions: [
-          priorityAreas[0].actions[0],
-          priorityAreas[0].actions[1],
-          "Choose one regular day for a ten-minute money check-in.",
+          "Work through the examples in your three priority chapters, then explain one lesson from each in your own words.",
+          "Choose one task from each chapter's five actions to prepare for practice. Note any information or support you need first.",
+          "Record your starting habits and choose a regular ten-minute check-in. Use fictional figures if the topic is not part of your life yet.",
         ],
       },
       {
         week: "Week 2",
-        focus: "Understand your money",
+        focus: "Put your first priority into practice",
         actions: [
-          priorityAreas[1].actions[0],
-          priorityAreas[1].actions[1],
-          "Explain one new money term in your own words to a trusted person.",
+          challengePractice[priorityAreas[0].category],
+          "Record what you tried, what happened and one adjustment you would make next time.",
+          "Check your work against the first chapter's explanation. Ask a trusted person about any point that remains unclear.",
         ],
       },
       {
         week: "Week 3",
-        focus: "Become credit confident",
+        focus: "Build consistency",
         actions: [
-          "Compare the total cost, terms and consequences before using any form of borrowing.",
-          "Review how overdrafts, credit cards and Buy Now Pay Later create future payment commitments.",
-          priorityAreas[2].actions[0],
+          challengePractice[priorityAreas[1].category],
+          "Repeat or revisit last week's task using what you learned. Note whether the adjustment made the decision clearer.",
+          "Discuss one difficult choice with someone you trust, including what you checked rather than just the answer you chose.",
         ],
       },
       {
         week: "Week 4",
-        focus: "Prepare for adult life",
+        focus: "Apply and review",
         actions: [
-          priorityAreas[2].actions[1],
-          "Complete the Money Ready Checklist and mark the topics that still need support.",
-          "Choose one habit to continue for the next 90 days and share your goal with someone you trust.",
+          challengePractice[priorityAreas[2].category],
+          "Review your notes from the month and complete the checklist using examples of what you can now do, not just what you have read.",
+          "Choose one habit to continue, one topic needing support and a review date for your printable 90-day tracker. Progress does not require a particular score increase.",
         ],
       },
     ],
@@ -487,9 +502,7 @@ export function generatePremiumActionPlan(
 }
 
 export function getPremiumPriorityCategories(scores: QuizScores) {
-  return (Object.keys(scores.categoryScores) as QuizCategory[])
-    .sort((a, b) => scores.categoryScores[a].percentage - scores.categoryScores[b].percentage)
-    .slice(0, 3);
+  return selectPriorityCategories(scores);
 }
 
 function getPremiumStrengthCategories(scores: QuizScores) {

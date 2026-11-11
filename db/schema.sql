@@ -45,7 +45,17 @@ CREATE TABLE IF NOT EXISTS premium_purchases (
   currency TEXT NOT NULL,
   payment_status TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  delivery_status TEXT NOT NULL DEFAULT 'pending' CHECK (delivery_status IN ('pending','sending','failed','sent','needs_review')),
+  delivery_attempts INTEGER NOT NULL DEFAULT 0 CHECK (delivery_attempts >= 0),
+  delivery_lease_until TIMESTAMPTZ,
+  delivery_next_attempt_at TIMESTAMPTZ,
+  delivery_sent_at TIMESTAMPTZ,
+  delivery_provider_id TEXT,
+  delivery_error_code TEXT,
+  delivery_claim_token UUID,
+  delivery_provider_started_at TIMESTAMPTZ,
+  delivery_audit JSONB NOT NULL DEFAULT '[]'::jsonb
 );
 
 CREATE INDEX IF NOT EXISTS premium_purchases_assessment_idx
@@ -53,3 +63,6 @@ ON premium_purchases (assessment_id, created_at DESC);
 
 CREATE INDEX IF NOT EXISTS premium_purchases_payment_intent_idx
 ON premium_purchases (stripe_payment_intent_id);
+
+CREATE INDEX IF NOT EXISTS premium_delivery_retry_idx ON premium_purchases (delivery_next_attempt_at)
+WHERE payment_status = 'paid' AND delivery_status IN ('pending', 'failed');

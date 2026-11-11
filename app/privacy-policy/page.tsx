@@ -32,7 +32,7 @@ const sections = [
   {
     title: "4. Legal Basis For Processing",
     content: [
-      "Under UK GDPR, we rely on consent where you agree to receive your Money Action Plan by email or choose to receive marketing communications.",
+      "Under UK GDPR, we rely on consent where you agree to receive your free Cashbrite Money Confidence Snapshot by email or choose to receive marketing communications. The optional paid Cashbrite Personalised Money Action Plan is separate from the free assessment report.",
       "We may rely on legitimate interests to improve Cashbrite services, understand common learning needs and respond to enquiries in a proportionate way.",
       "Where Cashbrite provides services to a school, organisation or customer, we may process information where it is necessary for a contract or steps connected with a contract.",
     ],
@@ -84,11 +84,11 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   return (
-    <section className="bg-cream py-16 sm:py-20">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-lg bg-navy p-6 text-white shadow-soft sm:p-8">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Cashbrite privacy</p>
-          <h1 className="mt-3 text-4xl font-black sm:text-5xl">Privacy Policy</h1>
+    <section className="bg-cream section-space">
+      <div className="mx-auto max-w-5xl px-5 sm:px-8">
+        <div className="border-t-2 border-ink bg-ink p-6 text-white sm:p-8">
+          <p className="text-sm font-bold uppercase tracking-[0.14em] text-mint">Cashbrite privacy</p>
+          <h1 className="editorial-heading mt-3 text-4xl md:text-5xl">Privacy Policy</h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-white/76">
             This policy explains how Cashbrite collects, uses and protects personal information from students, parents,
             teachers, schools and other website visitors.
@@ -100,9 +100,9 @@ export default function PrivacyPolicyPage() {
           {sections.map((section) => (
             <article
               key={section.title}
-              className="rounded-lg border border-navy/10 bg-white p-6 shadow-[0_18px_50px_rgba(7,29,43,0.06)] sm:p-7"
+              className="border-b border-ink/20 py-6"
             >
-              <h2 className="text-2xl font-black text-navy">{section.title}</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-navy">{section.title}</h2>
               <div className="mt-4 grid gap-3 text-base leading-8 text-navy/74">
                 {section.content.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
@@ -113,13 +113,13 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div className="mt-8 rounded-lg border border-navy/10 bg-mint/35 p-6">
-          <h2 className="text-2xl font-black text-navy">Questions about your data?</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-navy">Questions about your data?</h2>
           <p className="mt-3 text-base leading-7 text-navy/72">
-            Email <span className="font-black text-navy">cmaroke@me.com</span> with any privacy request or concern.
+            Email <span className="font-semibold text-navy">cmaroke@me.com</span> with any privacy request or concern.
           </p>
           <Link
             href="/contact"
-            className="focus-ring mt-5 inline-flex rounded-full bg-navy px-5 py-3 font-black text-white"
+            className="focus-ring mt-5 inline-flex rounded-full bg-navy px-5 py-3 font-semibold text-white"
           >
             Contact Cashbrite
           </Link>

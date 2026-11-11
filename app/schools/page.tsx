@@ -20,7 +20,7 @@ export default function SchoolsPage() {
   ];
 
   return (
-    <section className="bg-cream py-16 sm:py-20">
+    <section className="bg-cream section-space">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -42,7 +42,7 @@ export default function SchoolsPage() {
           inLanguage: "en-GB",
         }}
       />
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.82fr] lg:px-8">
+      <div className="mx-auto grid max-w-site gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_0.82fr] lg:px-8">
         <div>
           <SectionHeader
             eyebrow="For schools and colleges"
@@ -52,14 +52,16 @@ export default function SchoolsPage() {
           />
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
             {credibilityPoints.map((point) => (
-              <div key={point} className="rounded-lg border border-navy/10 bg-white p-4 text-sm font-black leading-6 text-navy shadow-sm">
+              <div key={point} className="border-t border-ink/20 pt-3 text-sm font-medium leading-6 text-ink/80">
                 {point}
               </div>
             ))}
           </div>
-          <div className="mt-8 rounded-lg border border-navy/10 bg-white p-6 shadow-[0_18px_50px_rgba(7,29,43,0.06)]">
-            <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Workshop snapshot</p>
-            <h2 className="mt-3 text-2xl font-black text-navy">A practical session for life after school</h2>
+          <div className="mt-8 border-y border-ink/20 py-6">
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-sea">Workshop snapshot</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-navy">
+              A practical session for life after school
+            </h2>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {[
                 ["Audience", "Year 11, Sixth Form and college students"],
@@ -67,14 +69,14 @@ export default function SchoolsPage() {
                 ["Topics", "Budgeting, payslips, student finance, credit and scams"],
                 ["Outcome", "Students leave with clearer next steps and practical language"],
               ].map(([label, value]) => (
-                <div key={label} className="rounded-md bg-cream p-4">
-                  <p className="text-xs font-black uppercase tracking-[0.12em] text-sea">{label}</p>
+                <div key={label} className="border-l border-ink/20 pl-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sea">{label}</p>
                   <p className="mt-2 text-sm font-bold leading-6 text-navy/75">{value}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="mt-10 grid gap-5">
+          <div className="mt-8 grid gap-5">
             <InfoCard title="Relevant to next steps">
               Workshops focus on budgeting, student finance, credit, fraud awareness and confidence before students
               move into work, university or independent living.
@@ -102,10 +104,10 @@ export default function SchoolsPage() {
           </div>
         </div>
         <aside className="lg:sticky lg:top-28 lg:self-start">
-          <div className="mb-5 rounded-lg bg-navy p-6 text-white shadow-soft">
-            <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">School enquiry</p>
-            <h2 className="mt-3 text-2xl font-black">Book a practical Cashbrite session</h2>
-            <p className="mt-3 text-base leading-7 text-white/72">
+          <div className="mb-5 border-t-2 border-ink pb-5 pt-4 text-ink">
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-sea">School enquiry</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight">Book a practical Cashbrite session</h2>
+            <p className="mt-3 text-base leading-7 text-ink/80">
               Tell us about your year group, setting and goals. Your enquiry is sent securely to Cashbrite.
             </p>
           </div>

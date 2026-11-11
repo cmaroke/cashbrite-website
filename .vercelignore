@@ -1,0 +1,15 @@
+# Keep local experiments, private configuration and QA output out of preview uploads.
+.env*
+.git
+.pnpm-store
+node_modules
+.next
+tmp
+output
+prototypes
+docs
+public/brand/Cashbrite 2.0 Brand Identity Sheet.png
+public/brand/Screenshot 2026-11-03 at 11.02.51.png
+public/brand/a_detailed_brand_identity_board_for_cashbrite_2.png
+public/brand/v2/backup-pre-serif
+public/brand/v2/backup-site-icons

@@ -1,26 +1,27 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { UnlockPlanButton } from "@/components/PremiumPlanCtas";
 import { categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import { getAssessment } from "@/lib/assessmentDb";
 import { createSeoMetadata } from "@/lib/seo";
+import { priorityTieExplanation, selectPriorityCategories } from "@/lib/assessmentPriorities";
+import { generatePremiumActionPlan } from "@/lib/premiumActionPlan";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = createSeoMetadata({
-  title: "Your Cashbrite Score and Money Action Plan",
+  title: "Your Cashbrite Money Confidence Snapshot",
   description:
-    "View your Cashbrite Money Readiness Score, top priority areas and personalised next step after completing the assessment.",
+    "View your free Cashbrite Score, score band, short interpretation and three priority areas, with an optional £19 Personalised Money Action Plan.",
   path: "/results",
   noIndex: true,
 });
 
 const premiumBenefits = [
-  "Personal Money Confidence Profile",
-  "Your Top 3 Priority Areas & Action Plan",
-  "30-Day Challenge + 90-Day Progress Tracker",
-  "Bonus Cashbrite Budget Tracker",
+  ["Learn", "Three priority chapters with worked examples and fifteen practical actions."],
+  ["Put it into practice", "A four-week roadmap, conversation prompts and checklists."],
+  ["Keep building", "A printable progress tracker and companion budget spreadsheet."],
+  ["Make it yours", "Your PDF download and online report, ready to return to."],
 ];
 
 const categoryOrder = Object.keys(categoryLabels) as QuizCategory[];
@@ -35,7 +36,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
   const id = Array.isArray(idParam) ? idParam[0] : idParam;
 
   if (!id) {
-    return <ResultsUnavailable message="Start the assessment first so Cashbrite can generate your Money Action Plan." />;
+    return <ResultsUnavailable message="Start the free assessment to receive your Cashbrite Money Confidence Snapshot." />;
   }
 
   let assessment;
@@ -46,7 +47,7 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
   }
 
   if (!assessment) {
-    return <ResultsUnavailable message="We could not find that Money Action Plan. Please retake the assessment." />;
+    return <ResultsUnavailable message="We could not find that Cashbrite Money Confidence Snapshot. Please retake the assessment." />;
   }
 
   const scores = assessment.scores;
@@ -56,119 +57,120 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
     name: categoryLabels[category],
     percentage: scores.categoryScores[category]?.percentage ?? 0,
   }));
-  const improvementCategories = [...categoryResults].sort((a, b) => a.percentage - b.percentage).slice(0, 3);
+  const improvementCategories = selectPriorityCategories(scores).map((category) => categoryResults.find((area) => area.category === category)!);
+  const rankedStrengths = [...categoryResults].sort((a, b) => b.percentage - a.percentage || categoryOrder.indexOf(a.category) - categoryOrder.indexOf(b.category));
+  const hasStrengths = scores.strengths.length > 0;
+  const strengths = (hasStrengths ? rankedStrengths.filter((area) => scores.strengths.includes(area.category)) : rankedStrengths).slice(0, 3);
+  // Match the existing scoring engine's strength threshold; this is presentation, not new scoring.
+  const allAreasStrong = categoryResults.every((area) => area.percentage >= 75);
+  const sample = generatePremiumActionPlan(assessment.registration, scores).priorityAreas[0];
+  // Only this short excerpt is rendered. No full premium plan is passed to a client component.
+  const sampleExplanation = sample.whatToLearn;
+  const sampleAction = sample.actions[sample.creditLearningGuide ? 2 : 0];
 
   return (
-    <section className="bg-cream py-8 sm:py-10">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <section className="grid gap-5 rounded-lg bg-navy p-5 text-white shadow-soft sm:p-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
-          <div className="grid gap-5 sm:grid-cols-[0.55fr_1fr] sm:items-center">
-            <div className="rounded-lg border border-white/10 bg-white/8 p-5 text-center">
-              <p className="text-xs font-black uppercase tracking-[0.14em] text-mint">Cashbrite Score</p>
-              <p className="mt-3 text-6xl font-black leading-none text-white">{scores.readinessScore}</p>
-              <p className="mt-2 text-base font-black text-mint">out of 100</p>
+    <section className="bg-cream py-8 text-ink sm:py-12">
+      <div className="mx-auto max-w-report px-5 sm:px-8">
+        <section aria-labelledby="snapshot-title" className="border-b border-ink/20 pb-8 sm:pb-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sea">Your free personal report</p>
+          <h1 id="snapshot-title" className="editorial-heading mt-3 max-w-3xl text-3xl md:text-5xl">Your Money Confidence Snapshot</h1>
+          <div className="mt-7 grid gap-6 md:grid-cols-[0.7fr_1fr] md:items-center md:gap-14">
+            <div className="border-l-4 border-lime pl-5 sm:pl-7">
+              <p className="font-display text-sm font-semibold">Cashbrite Score</p>
+              <p className="mt-2 flex items-baseline gap-3 font-display tabular-nums" aria-label={`${scores.readinessScore} out of 100`}>
+                <span className="text-8xl font-semibold leading-none sm:text-9xl">{scores.readinessScore}</span>
+                <span className="text-xl text-ink/70" aria-hidden="true">/ 100</span>
+              </p>
+              <p className="mt-4 inline-block border-b-2 border-sage pb-1 font-display text-lg font-semibold">{scores.band}</p>
             </div>
-            <div>
-              <p className="text-xs font-black uppercase tracking-[0.14em] text-mint">Your money confidence band</p>
-              <h1 className="mt-2 text-3xl font-black leading-tight sm:text-4xl">{scores.band}</h1>
-              <p className="mt-3 text-base leading-7 text-white/78">{actionPlan.summary}</p>
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-white/12 bg-white p-5 text-navy sm:p-6">
-            <p className="text-xs font-black uppercase tracking-[0.14em] text-sea">Your Top Priority Areas</p>
-            <h2 className="mt-2 text-2xl font-black text-navy">Focus here first</h2>
-            <p className="mt-2 text-sm leading-6 text-navy/68">
-              These are the money areas your answers suggest would make the biggest difference to work on first.
-            </p>
-            <div className="mt-4 grid gap-3">
-              {improvementCategories.map((area, index) => (
-                <article key={area.category} className="flex items-center gap-3 rounded-md bg-cream p-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-navy text-xs font-black text-white">
-                    {index + 1}
-                  </span>
-                  <h3 className="text-base font-black leading-6 text-navy">{area.name}</h3>
-                </article>
-              ))}
+            <div className="min-w-0">
+              <h2 className="font-display text-xl font-semibold [overflow-wrap:anywhere]">{assessment.registration.firstName}, here&apos;s where you are today.</h2>
+              <p className="mt-3 max-w-reading text-base leading-7 text-ink/80">{actionPlan.summary}</p>
+              <p className="mt-4 text-sm leading-6 text-ink/70">A starting point for learning, based on your answers. Not a financial qualification, a prediction or personalised financial advice.</p>
             </div>
           </div>
         </section>
 
-        <p className="mt-4 rounded-lg border border-navy/10 bg-white px-5 py-4 text-base font-black leading-7 text-navy shadow-sm">
-          Your free score shows where you are today. Your paid Action Plan shows what to do next.
-        </p>
-
-        <section className="relative mt-4 overflow-hidden rounded-lg bg-navy p-6 text-white shadow-[0_24px_70px_rgba(7,29,43,0.2)] sm:p-8 lg:p-9">
-          <div className="grid gap-6 md:grid-cols-[1fr_0.78fr] md:items-start">
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <Image src="/brand/cashbrite-icon.svg" alt="" width={24} height={24} aria-hidden="true" />
-                <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Cashbrite Money Ready Plan</p>
-                <span className="rounded-full border border-mint/25 bg-white/10 px-3 py-1 text-xs font-black uppercase tracking-[0.1em] text-mint">
-                  Personalised
-                </span>
-              </div>
-              <h2 className="mt-5 max-w-3xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
-                Get Your Personalised Action Plan
-              </h2>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
-                Built from your Cashbrite Score and priority areas, this action plan shows you exactly what to focus on,
-                what mistakes to avoid and the steps to take over the next 30 days.
-              </p>
-              <p className="mt-5 rounded-md border border-white/15 bg-white/10 p-5 text-base font-bold leading-7 text-white/75">
-                The financial habits you build now can influence everything from managing your first pay cheque to moving
-                out, university and future borrowing decisions.
-              </p>
-              <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                {[
-                  ["PDF Action Plan", "Your personalised report"],
-                  ["30-Day Challenge", "Simple weekly actions"],
-                  ["Budget Tracker", "Bonus Excel download"],
-                ].map(([title, description]) => (
-                  <article key={title} className="rounded-md border border-white/15 bg-white/10 p-4">
-                    <span className="text-xl font-black text-mint" aria-hidden="true">
-                      ✦
-                    </span>
-                    <h3 className="mt-3 text-base font-black leading-6 text-white">{title}</h3>
-                    <p className="mt-1 text-sm font-semibold leading-5 text-white/65">{description}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-lg border border-mint/25 bg-white p-6 text-navy shadow-[0_22px_55px_rgba(0,0,0,0.18)] sm:p-7">
-              <p className="text-sm font-black uppercase tracking-[0.12em] text-sea">£19 Launch Offer</p>
-              <div className="mt-3 flex items-end gap-3">
-                <p className="text-6xl font-black leading-none text-navy">£19</p>
-                <p className="pb-1 text-sm font-bold text-navy/60">
-                  Future price: <span className="line-through">£39</span>
-                </p>
-              </div>
-              <p className="mt-4 border-t border-navy/10 pt-4 text-sm font-bold leading-6 text-navy/70">
-                Instant PDF download. One payment. No subscription.
-              </p>
-              <div className="mt-5 [&_p]:hidden">
-                <UnlockPlanButton assessmentId={assessment.id} label="Get My £19 Action Plan" />
-              </div>
-              <p className="mt-3 text-sm font-semibold leading-6 text-navy/70">Secure payment powered by Stripe.</p>
-            </div>
+        <section aria-label="Your strengths and priorities" className="grid gap-8 py-8 sm:py-10 md:grid-cols-2 md:gap-14">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sea">What to carry forward</p>
+            <h2 className="editorial-heading mt-2 text-2xl sm:text-3xl">{hasStrengths ? "Your strengths" : "Your strongest starting points"}</h2>
+            <p className="mt-3 text-sm leading-6 text-ink/75">{hasStrengths ? "These topics stood out in your assessment. Keep building on what you already understand." : "These are your strongest topics relative to your other answers, not a claim of mastery. There is something to build on."}</p>
+            <ul className="mt-4 divide-y divide-ink/15 border-y border-ink/15">
+              {strengths.map((area) => <li key={area.category} className="flex items-start gap-3 py-3.5 font-display text-base font-semibold leading-6"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-sage" aria-hidden="true" />{area.name}</li>)}
+            </ul>
           </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sea">Where to focus next</p>
+            <h2 className="editorial-heading mt-2 text-2xl sm:text-3xl">{allAreasStrong ? "Areas to build on" : "Your priorities"}</h2>
+            <p className="mt-3 text-sm leading-6 text-ink/75">{allAreasStrong ? "You showed strong awareness across every category. These three topics offer a focus for further practice." : "Your three lowest-scoring topics offer a useful focus for your next steps. They are opportunities to learn, not labels."}</p>
+            <ul className="mt-4 divide-y divide-ink/15 border-y border-ink/15">
+              {improvementCategories.map((area) => <li key={area.category} className="flex items-start gap-3 py-3.5 font-display text-base font-semibold leading-6"><span className="mt-2 h-2 w-2 shrink-0 bg-ink" aria-hidden="true" />{area.name}</li>)}
+            </ul>
+            <details className="mt-3 text-xs leading-5 text-ink/70">
+              <summary className="focus-ring w-fit cursor-pointer py-2 font-semibold underline underline-offset-2">How your priorities are selected</summary>
+              <p className="mt-1">{priorityTieExplanation}</p>
+            </details>
+          </div>
+        </section>
 
-          <div className="mt-8">
-            <p className="text-sm font-black uppercase tracking-[0.12em] text-mint">What&apos;s included</p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {premiumBenefits.map((benefit) => (
-                <article key={benefit} className="flex items-center gap-4 rounded-md border border-white/15 bg-white/10 p-4">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-mint/15" aria-hidden="true">
-                    <span className="text-sm font-black text-mint">&#10003;</span>
-                  </span>
-                  <h3 className="font-black leading-6 text-white">{benefit}</h3>
-                </article>
-              ))}
+        <section aria-labelledby="sample-heading" className="border-y border-ink/15 bg-white px-5 py-6 sm:px-8 sm:py-8">
+          <div className="grid gap-5 md:grid-cols-[0.7fr_1fr] md:gap-14">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sea">Inside the Action Plan</p>
+              <h2 id="sample-heading" className="editorial-heading mt-2 text-2xl sm:text-3xl">A little understanding.<br className="hidden sm:block" /> A practical next step.</h2>
+              <p className="mt-3 text-sm leading-6 text-ink/75">A sample from the {sample.title} chapter selected for your Action Plan.</p>
+              <p className="mt-3 text-xs leading-5 text-ink/70">Selected by category score, not an explanation of a particular answer.</p>
+            </div>
+            <div>
+              <h3 className="font-display text-lg font-semibold leading-7">{sample.title}</h3>
+              {sample.creditLearningGuide ? <p className="mt-3 text-sm leading-6 text-ink/75">{sample.realLifeExample.summary}</p> : null}
+              <p className="mt-3 text-base leading-7 text-ink/80">{sampleExplanation}</p>
+              <div className="mt-5 border-l-2 border-sage pl-4">
+                <p className="font-display text-sm font-semibold">One action to try</p>
+                <p className="mt-2 text-sm leading-6 text-ink/80">{sampleAction}</p>
+              </div>
             </div>
           </div>
         </section>
 
+        <section aria-labelledby="plan-heading" className="py-8 sm:py-10">
+          <div className="grid items-start gap-6 md:grid-cols-[1fr_0.8fr] md:gap-14">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sea">Cashbrite Personalised Money Action Plan</p>
+              <h2 id="plan-heading" className="editorial-heading mt-3 text-3xl sm:text-4xl">Your next step starts here.</h2>
+              <p className="mt-4 max-w-reading text-base leading-7 text-ink/80">Build on your three assessment priorities with clear explanations, real-life examples and a practical plan for the next four weeks. Personalised by category, with space to put the learning into practice.</p>
+              <p className="mt-4 text-sm leading-6 text-ink/75">Your free Cashbrite Money Confidence Snapshot is yours to use. The Action Plan is an optional way to take it further.</p>
+            </div>
+            <div className="rounded-md border border-ink/20 bg-white p-5 sm:p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sea">Personalised Money Action Plan</p>
+              <div className="mt-3 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                <p className="font-display text-6xl font-semibold leading-none tabular-nums">£19</p>
+              </div>
+              <p className="mt-3 text-sm leading-6 text-ink/80">One-off payment. No subscription.</p>
+              <div className="mt-4"><UnlockPlanButton assessmentId={assessment.id} label="Get My £19 Action Plan" showReassurance={false} /></div>
+              <p className="mt-3 text-xs leading-5 text-ink/70">Secure payment powered by Stripe. After payment, access your online report and download your PDF and budget spreadsheet.</p>
+              <Link href="/contact" className="focus-ring mt-2 inline-flex min-h-11 items-center text-sm font-semibold underline decoration-ink/40 underline-offset-4">Already paid or need help?</Link>
+            </div>
+          </div>
+          <div className="mt-7 border-t border-ink/20 pt-5">
+            <h3 className="font-display text-sm font-semibold">What&apos;s included</h3>
+            <dl className="mt-4 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+              {premiumBenefits.map(([title, description]) => <div key={title}><dt className="font-display text-base font-semibold">{title}</dt><dd className="mt-2 text-sm leading-6 text-ink/75">{description}</dd></div>)}
+            </dl>
+          </div>
+        </section>
+
+        <section aria-labelledby="free-tools-heading" className="border-t border-ink/20 py-7">
+          <div className="grid gap-4 md:grid-cols-[1fr_0.8fr] md:gap-14">
+            <div><h2 id="free-tools-heading" className="editorial-heading text-2xl sm:text-3xl">Keep learning, at your own pace.</h2><p className="mt-3 text-sm leading-6 text-ink/75">Start with a free tool or a practical guide. You do not need to buy a plan to keep building money confidence.</p></div>
+            <div className="flex flex-col items-start">
+              <Link className="focus-ring inline-flex min-h-11 items-center py-2 font-semibold underline decoration-sage underline-offset-4" href="/student-budget-calculator">Plan your monthly budget <span aria-hidden="true" className="ml-2">&rarr;</span></Link>
+              <Link className="focus-ring inline-flex min-h-11 items-center py-2 font-semibold underline decoration-sage underline-offset-4" href="/resources">Explore free money resources <span aria-hidden="true" className="ml-2">&rarr;</span></Link>
+            </div>
+          </div>
+          <p className="mt-6 max-w-reading text-xs leading-5 text-ink/70">Cashbrite provides financial education, not regulated financial, legal, tax or investment advice. <Link href="/financial-disclaimer" className="focus-ring underline underline-offset-2">Read our financial education disclaimer.</Link></p>
+        </section>
       </div>
     </section>
   );
@@ -176,15 +178,17 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
 
 function ResultsUnavailable({ message }: { message: string }) {
   return (
-    <section className="bg-cream py-16 sm:py-20">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-lg border border-navy/10 bg-white p-8 text-center shadow-soft">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-sea">Money Action Plan</p>
-          <h1 className="mt-3 text-3xl font-black text-navy">Your report is not available yet</h1>
+    <section className="bg-cream section-space">
+      <div className="mx-auto max-w-3xl px-5 sm:px-8">
+        <div className="rounded-lg border border-navy/10 bg-white p-8 text-center shadow-sm">
+          <p className="text-sm font-bold uppercase tracking-[0.14em] text-sea">Cashbrite Money Confidence Snapshot</p>
+          <h1 className="editorial-heading mt-3 text-4xl text-navy md:text-5xl">
+            Your report is not available yet
+          </h1>
           <p className="mt-4 text-lg leading-8 text-navy/72">{message}</p>
           <Link
             href="/quiz"
-            className="focus-ring mt-6 inline-flex justify-center rounded-full bg-navy px-5 py-3 font-black text-white"
+            className="focus-ring mt-6 inline-flex justify-center rounded-full bg-navy px-5 py-3 font-semibold text-white"
           >
             Start assessment
           </Link>

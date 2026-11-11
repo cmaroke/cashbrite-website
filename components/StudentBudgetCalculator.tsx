@@ -156,7 +156,7 @@ export function StudentBudgetCalculator() {
         {budgetSections.map((section) => (
           <section key={section.id} className="rounded-lg border border-navy/10 bg-white p-5 shadow-sm sm:p-6">
             <div>
-              <h2 className="text-2xl font-black text-navy">{section.title}</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-navy">{section.title}</h2>
               <p className="mt-2 text-sm font-semibold leading-6 text-navy/62">{section.description}</p>
             </div>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -164,7 +164,7 @@ export function StudentBudgetCalculator() {
                 <label key={field.id} className="grid gap-2 text-sm font-bold text-navy">
                   <span>{field.label}</span>
                   <span className="relative">
-                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-base font-black text-navy/45">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-base font-semibold text-navy/45">
                       £
                     </span>
                     <input
@@ -179,7 +179,7 @@ export function StudentBudgetCalculator() {
                           [field.id]: event.target.value,
                         }))
                       }
-                      className="focus-ring w-full rounded-lg border border-navy/12 bg-cream/55 py-3 pl-9 pr-4 text-base font-bold text-navy outline-none transition placeholder:text-navy/30 focus:border-sea"
+                      className="focus-ring w-full rounded-lg border border-ink/55 bg-cream/55 py-3 pl-9 pr-4 text-base font-bold text-navy outline-none transition placeholder:text-navy/30 focus:border-sea"
                       placeholder="0"
                     />
                   </span>
@@ -190,12 +190,12 @@ export function StudentBudgetCalculator() {
         ))}
       </div>
 
-      <aside className="rounded-lg border border-navy/10 bg-navy p-5 text-white shadow-[0_24px_70px_rgba(7,29,43,0.18)] sm:p-6 lg:sticky lg:top-8">
-        <p className="text-sm font-black uppercase tracking-[0.14em] text-mint">Your monthly budget</p>
-        <div className="mt-5 rounded-lg border border-white/10 bg-white/8 p-4">
-          <div className={`rounded-lg border p-4 ${health.tone}`}>
-            <p className="text-sm font-black uppercase tracking-[0.12em] opacity-75">Budget health</p>
-            <h2 className="mt-2 text-3xl font-black">{health.label}</h2>
+      <aside className="rounded-lg border border-navy/10 bg-navy p-5 text-white shadow-sm sm:p-6 lg:sticky lg:top-8">
+        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint">Your monthly budget</p>
+        <div className="mt-5">
+          <div className={`rounded-md border p-4 ${health.tone}`}>
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] opacity-75">Budget health</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{health.label}</h2>
             <p className="mt-3 text-sm font-semibold leading-6 opacity-80">{health.message}</p>
           </div>
         </div>
@@ -209,21 +209,21 @@ export function StudentBudgetCalculator() {
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 border-b border-white/10 pb-3">
               <dt className="text-sm font-bold text-white/70">{label}</dt>
-              <dd className="text-lg font-black text-white">{formatCurrency(Number(value))}</dd>
+              <dd className="font-display tabular-nums text-lg font-semibold text-white">{formatCurrency(Number(value))}</dd>
             </div>
           ))}
           <div className="flex items-center justify-between gap-4 rounded-lg bg-white p-4 text-navy">
-            <dt className="text-sm font-black">Remaining money</dt>
-            <dd className="text-2xl font-black">{formatCurrency(totals.remaining)}</dd>
+            <dt className="text-sm font-semibold">Remaining money</dt>
+            <dd className="font-display tabular-nums text-2xl font-semibold">{formatCurrency(totals.remaining)}</dd>
           </div>
           <div className="flex items-center justify-between gap-4 rounded-lg bg-mint p-4 text-navy">
-            <dt className="text-sm font-black">Savings rate</dt>
-            <dd className="text-2xl font-black">{formatPercent(totals.savingsRate)}</dd>
+            <dt className="text-sm font-semibold">Savings rate</dt>
+            <dd className="font-display tabular-nums text-2xl font-semibold">{formatPercent(totals.savingsRate)}</dd>
           </div>
         </dl>
 
         <div className="mt-6 rounded-lg border border-mint/25 bg-mint/10 p-4">
-          <h3 className="text-lg font-black text-white">Want to understand your money confidence?</h3>
+          <h3 className="text-lg font-semibold tracking-tight text-white">Want to understand your money confidence?</h3>
           <p className="mt-2 text-sm font-semibold leading-6 text-white/70">
             Your budget is one part of the picture. Take the free Cashbrite quiz to see your score and priority areas.
           </p>

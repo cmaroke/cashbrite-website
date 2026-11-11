@@ -23,11 +23,6 @@ async function createCheckout(assessmentId: string) {
 
   if (!response.ok || !result.checkoutUrl) {
     const error = result.error ?? "Checkout could not be started.";
-    console.error("Cashbrite Checkout request failed", {
-      status: response.status,
-      statusText: response.statusText,
-      error,
-    });
     throw new Error(error);
   }
 
@@ -41,10 +36,12 @@ async function createCheckout(assessmentId: string) {
 
 export function UnlockPlanButton({
   assessmentId,
-  label = "Unlock My £19 Money Ready Plan",
+  label = "Get My £19 Action Plan",
+  showReassurance = true,
 }: {
   assessmentId: string;
   label?: string;
+  showReassurance?: boolean;
 }) {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,7 +56,6 @@ export function UnlockPlanButton({
       window.location.assign(checkoutUrl);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Checkout could not be started. Please try again.";
-      console.error("Cashbrite Checkout could not be opened", error);
       setMessage(message);
       setIsSubmitting(false);
     }
@@ -71,17 +67,17 @@ export function UnlockPlanButton({
         type="button"
         onClick={startCheckout}
         disabled={isSubmitting}
-        className="focus-ring inline-flex min-h-12 w-full items-center justify-center rounded-full bg-mint px-6 py-4 text-center text-base font-black leading-6 text-navy shadow-[0_16px_34px_rgba(185,234,216,0.18)] transition hover:-translate-y-0.5 hover:bg-[#a7dfcd] disabled:cursor-wait disabled:opacity-70 sm:text-lg"
+        className="focus-ring inline-flex min-h-12 w-full items-center justify-center rounded-md bg-mint px-6 py-4 text-center text-base font-semibold leading-6 text-navy shadow-sm transition hover:-translate-y-0.5 hover:bg-lime/85 disabled:cursor-wait disabled:opacity-70 sm:text-lg"
       >
         {isSubmitting ? "Opening secure checkout..." : label}
       </button>
-      <p
+      {message || showReassurance ? <p
         className={`mt-3 min-h-6 text-sm font-semibold leading-6 ${message ? "text-[#a43f47]" : "text-navy/70"}`}
         role={message ? "alert" : undefined}
         aria-live="polite"
       >
         {message || "Secure one-off payment with Stripe. No subscription."}
-      </p>
+      </p> : null}
     </div>
   );
 }

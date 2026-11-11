@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       id,
       resultUrl,
-      message: "Your Cashbrite Money Action Plan has been generated.",
+      message: "Your Cashbrite Money Confidence Snapshot is ready.",
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "The assessment could not be saved.";

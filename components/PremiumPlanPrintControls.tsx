@@ -11,22 +11,22 @@ export function PremiumPlanPrintControls({ budgetTrackerUrl, downloadUrl }: Prem
       <button
         type="button"
         onClick={() => window.print()}
-        className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-mint px-6 py-3 font-black text-navy transition hover:bg-[#a7dfcd]"
+        className="focus-ring inline-flex min-h-12 items-center justify-center rounded-md bg-mint px-6 py-3 font-semibold text-navy transition hover:bg-lime/85"
       >
-        Print or save as PDF
+        Print Action Plan
       </button>
       {downloadUrl ? (
         <a
           href={downloadUrl}
-          className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-navy px-6 py-3 font-black text-white transition hover:bg-[#12354a]"
+          className="focus-ring inline-flex min-h-12 items-center justify-center rounded-md bg-navy px-6 py-3 font-semibold text-white transition hover:bg-ink/90"
         >
-          Download PDF
+          Download Action Plan PDF
         </a>
       ) : (
         <button
           type="button"
           disabled
-          className="inline-flex min-h-12 cursor-not-allowed items-center justify-center rounded-full border border-navy/15 px-6 py-3 font-black text-navy/45"
+          className="inline-flex min-h-12 cursor-not-allowed items-center justify-center rounded-md border border-ink/40 px-6 py-3 font-semibold text-navy/45"
         >
           Download available after purchase
         </button>
@@ -35,7 +35,7 @@ export function PremiumPlanPrintControls({ budgetTrackerUrl, downloadUrl }: Prem
         <a
           href={budgetTrackerUrl}
           download
-          className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full border border-sea/25 bg-white px-6 py-3 font-black text-navy transition hover:border-sea hover:bg-mint/30"
+          className="focus-ring inline-flex min-h-12 items-center justify-center rounded-md border border-sea/25 bg-white px-6 py-3 font-semibold text-navy transition hover:border-sea hover:bg-mint/30"
         >
           Download Budget Tracker
         </a>

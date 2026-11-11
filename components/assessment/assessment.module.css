@@ -1,0 +1,21 @@
+.assessment{color:var(--brand-ink);scroll-margin-top:88px}
+.progress{position:sticky;top:68px;z-index:20;background:var(--brand-cream);padding:12px 0;margin-bottom:20px}
+.questionHeading{font-family:var(--font-manrope),sans-serif;font-size:22px;font-weight:600;line-height:1.35;margin-bottom:16px;outline:none}
+.answers{display:grid;gap:10px}
+.answer{display:flex;align-items:flex-start;gap:14px;min-height:56px;border:1px solid #0F2A3A80;border-radius:6px;padding:14px 16px;background:white;cursor:pointer;font-size:16px;line-height:1.6}
+.answer input{flex-shrink:0;width:20px;height:20px;margin-top:3px;accent-color:var(--brand-ink)}
+.answer:hover{border-color:var(--brand-ink)}
+.answer:has(input:checked){background:#C7F36B40;border-color:var(--brand-ink);box-shadow:inset 3px 0 0 var(--brand-ink)}
+.answer:focus-within{outline:2px solid var(--brand-ink);outline-offset:3px}
+.controls{display:flex;justify-content:space-between;gap:16px;margin-top:24px;padding-top:20px;border-top:1px solid #0F2A3A30}
+.primary,.secondary,.textButton{display:inline-flex;align-items:center;justify-content:center;min-height:48px;font-family:var(--font-inter),sans-serif;font-size:14px;font-weight:500;line-height:1.5;border-radius:6px}
+.primary{background:var(--brand-lime);color:var(--brand-ink);padding:12px 20px;border:1px solid transparent}
+.secondary{background:transparent;border:1px solid #0F2A3A80;color:var(--brand-ink);padding:12px 20px}
+.textButton{padding:8px 4px;color:var(--brand-ink);text-decoration:underline;text-underline-offset:4px;flex-shrink:0}
+.primary:hover{background:#C7F36BD9}.secondary:hover{background:var(--brand-mist)}
+.assessment button:disabled{opacity:.5;cursor:not-allowed}
+.primary:focus-visible,.secondary:focus-visible,.textButton:focus-visible{outline:2px solid var(--brand-ink);outline-offset:4px}
+.reviewGroup summary{list-style:none}.reviewGroup summary::-webkit-details-marker{display:none}
+@media(min-width:701px){.answers{grid-template-columns:repeat(2,minmax(0,1fr))}.answer{min-height:80px;padding:18px}.questionHeading{font-size:24px}}
+@media(min-width:768px){.progress{top:76px}.assessment{scroll-margin-top:96px}}
+@media(max-width:420px){.controls{gap:12px}.controls .primary,.controls .secondary{padding:12px 14px}}

@@ -1,6 +1,7 @@
 import { categoryDescriptions, categoryLabels, type QuizCategory } from "@/data/quizQuestions";
 import type { ActionPlan, PriorityAreaPlan, RegistrationData } from "@/lib/assessmentTypes";
 import { hasSeriousKnowledgeGaps, type QuizScores, type ResultBand } from "@/lib/quizScoring";
+import { selectPriorityCategories } from "@/lib/assessmentPriorities";
 
 const bandSummaries: Record<ResultBand, string> = {
   "Starting Your Money Journey":
@@ -137,9 +138,7 @@ const categoryPlans: Record<QuizCategory, Omit<PriorityAreaPlan, "category" | "t
 };
 
 export function getPriorityCategories(scores: QuizScores) {
-  return (Object.keys(scores.categoryScores) as QuizCategory[])
-    .sort((a, b) => scores.categoryScores[a].percentage - scores.categoryScores[b].percentage)
-    .slice(0, 3);
+  return selectPriorityCategories(scores);
 }
 
 export function generateActionPlan(registration: RegistrationData, scores: QuizScores): ActionPlan {
@@ -147,7 +146,7 @@ export function generateActionPlan(registration: RegistrationData, scores: QuizS
   const priorityCategories = getPriorityCategories(scores);
   const strengthCategories = scores.strengths.length > 0 ? scores.strengths : getTopCategories(scores).slice(0, 3);
   const summary = hasSeriousKnowledgeGaps(scores)
-    ? "Your overall score shows a strong foundation, but your assessment also identified a few important gaps. These areas matter because they can affect real-life money decisions, so your Money Ready Plan focuses on helping you build confidence where it counts most."
+    ? "Your overall score shows a strong foundation, but your assessment also identified a few important gaps. These areas matter because they can affect real-life money decisions. Your free Snapshot highlights these priorities; the optional Cashbrite Personalised Money Action Plan offers further guidance."
     : bandSummaries[scores.band];
 
   return {

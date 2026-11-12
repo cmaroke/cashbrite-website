@@ -4,23 +4,25 @@ import type { RegistrationData } from "@/lib/assessmentTypes";
 import type { ActionPlan } from "@/lib/assessmentTypes";
 import type { QuizScores } from "@/lib/quizScoring";
 
+// Retained legacy template. Active full-report registrations use fullReportDelivery.ts.
 export async function sendActionPlanEmail(params: {
   registration: RegistrationData;
   scores: QuizScores;
   actionPlan: ActionPlan;
   resultUrl: string;
   checkoutRecoveryUrl: string;
+  idempotencyKey?: string;
 }) {
   const resendApiKey = process.env.RESEND_API_KEY;
   const fromEmail = process.env.CONTACT_FROM_EMAIL ?? "Cashbrite <onboarding@resend.dev>";
-  if (!resendApiKey) return;
+  if (!resendApiKey) return "not_configured";
 
   const resend = new Resend(resendApiKey);
   const { registration, scores, actionPlan, resultUrl, checkoutRecoveryUrl } = params;
   const siteUrl = new URL(resultUrl).origin;
   const contactEmail = process.env.CONTACT_TO_EMAIL ?? "cmaroke@me.com";
 
-  await resend.emails.send({
+  const result = await resend.emails.send({
     from: fromEmail,
     to: registration.email,
     subject: "Your Cashbrite Money Confidence Snapshot",
@@ -60,7 +62,9 @@ export async function sendActionPlanEmail(params: {
       `Financial Disclaimer: ${siteUrl}/financial-disclaimer`,
       `Contact: ${contactEmail}`,
     ].join("\n"),
-  });
+  }, params.idempotencyKey ? { idempotencyKey: params.idempotencyKey } : undefined);
+  if (result.error || !result.data?.id) throw new Error("assessment_email_not_accepted");
+  return "accepted";
 }
 
 function buildAssessmentEmailHtml(params: {
@@ -221,16 +225,17 @@ export async function sendInternalAssessmentNotification(params: {
   scores: QuizScores;
   actionPlan: ActionPlan;
   resultUrl: string;
+  idempotencyKey?: string;
 }) {
   const resendApiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.CONTACT_TO_EMAIL;
   const fromEmail = process.env.CONTACT_FROM_EMAIL ?? "Cashbrite <onboarding@resend.dev>";
-  if (!resendApiKey || !toEmail) return;
+  if (!resendApiKey || !toEmail) return "not_configured";
 
   const resend = new Resend(resendApiKey);
   const { registration, scores, actionPlan, resultUrl } = params;
 
-  await resend.emails.send({
+  const result = await resend.emails.send({
     from: fromEmail,
     to: toEmail,
     replyTo: registration.email,
@@ -251,7 +256,9 @@ export async function sendInternalAssessmentNotification(params: {
       "",
       `Results page: ${resultUrl}`,
     ].join("\n"),
-  });
+  }, params.idempotencyKey ? { idempotencyKey: params.idempotencyKey } : undefined);
+  if (result.error || !result.data?.id) throw new Error("assessment_notification_not_accepted");
+  return "accepted";
 }
 
 export async function sendPremiumPurchaseConfirmation(params: {

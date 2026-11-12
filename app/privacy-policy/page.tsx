@@ -17,7 +17,8 @@ const sections = [
   {
     title: "2. Information We Collect",
     content: [
-      "We may collect your name, age, email address and current education stage, such as school, college or sixth form, university or other.",
+      "You can complete the assessment and view your score without entering personal details. Answer IDs stay in this browser tab for up to 24 hours to support recovery and calculate your basic results. They are not sent to our assessment database before you request your full report.",
+      "If you choose Get My Full Report, we collect your name, age and email address, optional referral source and separate report and marketing choices. Your answers are then sent securely to generate your report; we retain your scores, strengths, priorities and Action Plan rather than a separate list of individual answers. Older registrations may also include education stage.",
       "When you complete the Money Readiness Assessment, we may collect your assessment results, Money Readiness Score, category scores, areas for improvement, strengths, risk areas and generated Money Action Plan information.",
       "We may collect marketing preferences, enquiry information submitted through our forms, and website analytics or technical data where applicable.",
     ],
@@ -32,7 +33,7 @@ const sections = [
   {
     title: "4. Legal Basis For Processing",
     content: [
-      "Under UK GDPR, we rely on consent where you agree to receive your free Cashbrite Money Confidence Snapshot by email or choose to receive marketing communications. The optional paid Cashbrite Personalised Money Action Plan is separate from the free assessment report.",
+      "We ask you to agree to the use of your details to create and email the full report you request. Marketing is a separate optional choice and is not required for report access. Assessment, reporting, PDF and companion spreadsheet access do not require payment.",
       "We may rely on legitimate interests to improve Cashbrite services, understand common learning needs and respond to enquiries in a proportionate way.",
       "Where Cashbrite provides services to a school, organisation or customer, we may process information where it is necessary for a contract or steps connected with a contract.",
     ],
@@ -49,6 +50,8 @@ const sections = [
     title: "6. Data Storage And Security",
     content: [
       "Cashbrite uses trusted service providers to run the website, store assessment information and deliver emails. These include Vercel for website hosting, Neon for database services and Resend for email delivery.",
+      "New reports use an unguessable private access link and a secure, HTTP-only browser cookie, lasting up to 30 days, to protect access. We store a hash of the access key, not the reusable key itself, in our database. The email link contains a fragment which is exchanged privately and removed from the address bar. Keep report links confidential. Clearing cookies may require reopening your email link.",
+      "New report requests do not use Stripe. We retain historical transaction and delivery records and continue supporting original purchase access links; Cashbrite does not store full card details.",
       "We take reasonable security measures to protect personal data from unauthorised access, loss, misuse or disclosure. No online service can be guaranteed to be completely secure, but we aim to handle personal data carefully and responsibly.",
     ],
   },
@@ -63,7 +66,7 @@ const sections = [
     title: "8. Children's Privacy",
     content: [
       "The Cashbrite Money Readiness Assessment is designed for young people, including students preparing for life after school.",
-      "Where users are under the relevant age of consent or are completing the assessment through a school or organisation, parental, guardian or school involvement may be appropriate. Schools and adults supporting young people should make sure students understand how their information will be used.",
+      "Report registration accepts ages 13 and over. This is a self-declared age, not identity or age verification. If you are under 18, you can ask a trusted adult to help you understand this notice. Marketing is off unless separately selected. Do not enter bank details or account numbers. Contact us if information has been submitted about a child under 13.",
     ],
   },
   {
@@ -74,7 +77,19 @@ const sections = [
     ],
   },
   {
-    title: "10. Contact Us",
+    id: "analytics",
+    title: "10. Optional Analytics And Your Choice",
+    content: [
+      "Google Analytics 4 and Vercel Web Analytics are optional. Neither is loaded by Cashbrite until you choose Allow analytics. Rejecting analytics does not affect the assessment, results, registration or downloads. This choice is separate from report and marketing choices.",
+      "Google Analytics may use cookies and identifiers to measure public-page visits and browser/device information. Vercel Web Analytics uses a request-derived visitor hash rather than analytics cookies and provides aggregate traffic information. We use these tools to understand public-page use and improve the website, not to provide financial advice or make decisions about you.",
+      "Google Analytics is excluded from assessment, results and private report routes. With analytics opt-in, Vercel may receive fixed journey events such as assessment started, completed, basic results viewed, full report requested, registration completed, report generated and successful download. These events have no custom personal properties; only a clean page path is sent, without query strings or fragments. Sensitive-page views, access-link exchange and API routes are excluded. We do not send names, email addresses, ages, answers, scores or private report keys to analytics providers. Google advertising storage and personalisation are not enabled.",
+      "We use opt-in consent for both tools rather than assuming a cookieless or statistical-purpose exemption applies. Use Analytics preferences in the footer at any time to allow, reject or withdraw analytics. Withdrawing stops future collection by our analytics integration, clears accessible Google Analytics cookies and reloads the page to remove loaded tracking scripts; it does not undo data already sent.",
+      "Your analytics choice and its date are stored on this device for up to 180 days, solely to remember your preference. Expired or unreadable preferences default to analytics being off. If storage is unavailable, the preference may last only for the current page. Clearing browser storage can make the choice appear again.",
+      "Google and Vercel process analytics information as service providers. For questions about retention, international processing or your data rights, contact cmaroke@me.com. Our analytics settings and provider arrangements remain subject to privacy review.",
+    ],
+  },
+  {
+    title: "11. Contact Us",
     content: [
       "For privacy questions, requests or concerns, contact Cashbrite at cmaroke@me.com.",
       "We may need to ask for information to confirm your identity before responding to certain privacy requests.",
@@ -93,13 +108,14 @@ export default function PrivacyPolicyPage() {
             This policy explains how Cashbrite collects, uses and protects personal information from students, parents,
             teachers, schools and other website visitors.
           </p>
-          <p className="mt-4 text-sm font-semibold text-white/62">Last updated: 17 June 2026</p>
+          <p className="mt-4 text-sm font-semibold text-white/62">Last updated: 12 November 2026</p>
         </div>
 
         <div className="mt-8 grid gap-5">
           {sections.map((section) => (
             <article
               key={section.title}
+              id={section.id}
               className="border-b border-ink/20 py-6"
             >
               <h2 className="text-2xl font-semibold tracking-tight text-navy">{section.title}</h2>

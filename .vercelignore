@@ -8,6 +8,9 @@ tmp
 output
 prototypes
 docs
+scripts/qa-provider-preload.mjs
+scripts/free-report-local-preview.mjs
+scripts/check-free-report-browser.mjs
 public/brand/Cashbrite 2.0 Brand Identity Sheet.png
 public/brand/Screenshot 2026-11-03 at 11.02.51.png
 public/brand/a_detailed_brand_identity_board_for_cashbrite_2.png

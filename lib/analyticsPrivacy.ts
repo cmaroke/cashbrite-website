@@ -1,5 +1,5 @@
 export function isSensitivePath(path: string) {
-  return ["/quiz", "/results", "/checkout", "/money-ready-plan", "/premium-plan-preview", "/brand-preview", "/api"].some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
+  return ["/quiz", "/results", "/report", "/downloads", "/checkout", "/money-ready-plan", "/premium-plan-preview", "/brand-preview", "/api"].some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
 }
 export function sanitiseAnalyticsUrl(value: string) {
   try {

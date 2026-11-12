@@ -1,5 +1,8 @@
 -- Apply explicitly after backup/review. Never run from a request handler.
 BEGIN;
+SET LOCAL lock_timeout = '5s';
+SET LOCAL statement_timeout = '60s';
+SET LOCAL idle_in_transaction_session_timeout = '60s';
 LOCK TABLE premium_purchases IN SHARE ROW EXCLUSIVE MODE;
 ALTER TABLE premium_purchases
   ADD COLUMN delivery_status TEXT NOT NULL DEFAULT 'needs_review',

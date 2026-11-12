@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DM_Serif_Display, Inter, Manrope } from "next/font/google";
-import { SiteAnalytics } from "@/components/SiteAnalytics";
+import { PrivacySettingsButton, SiteAnalytics } from "@/components/SiteAnalytics";
 import { Logo } from "@/components/Logo";
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { defaultDescription, JsonLd, siteName, siteUrl } from "@/lib/seo";
@@ -172,6 +172,7 @@ export default function RootLayout({
               <Link href="/financial-disclaimer" className="focus-ring rounded-sm hover:text-navy">
                 Financial Disclaimer
               </Link>
+              <PrivacySettingsButton />
             </div>
           </div>
         </footer>

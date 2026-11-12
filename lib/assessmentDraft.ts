@@ -7,6 +7,7 @@ export type AssessmentPosition = {
 };
 
 export const assessmentDraftKey = "cashbrite:assessment-draft:v1";
+const submissionKeyStorage = "cashbrite:assessment-submission:v1";
 const draftLifetime = 24 * 60 * 60 * 1000;
 
 export function initialAssessmentPosition(): AssessmentPosition {
@@ -24,9 +25,9 @@ export function readAssessmentDraft() {
     const raw = sessionStorage.getItem(assessmentDraftKey);
     if (!raw) return empty;
     let stored;
-    try { stored = JSON.parse(raw); } catch { sessionStorage.removeItem(assessmentDraftKey); return empty; }
+      try { stored = JSON.parse(raw); } catch { clearAssessmentDraft(); return empty; }
     if (!stored || !Number.isFinite(stored.updatedAt) || stored.updatedAt > Date.now() || Date.now() - stored.updatedAt > draftLifetime) {
-      sessionStorage.removeItem(assessmentDraftKey);
+      clearAssessmentDraft();
       return empty;
     }
     const answers: Record<string, string> = {};
@@ -52,4 +53,15 @@ export function saveAssessmentDraft(answers: Record<string, string>, position: A
 
 export function clearAssessmentDraft() {
   try { sessionStorage.removeItem(assessmentDraftKey); } catch { /* Recovery may be unavailable; submission still succeeds. */ }
+  try { sessionStorage.removeItem(submissionKeyStorage); } catch { /* The mounted request still has its key. */ }
+}
+
+export function getAssessmentSubmissionKey() {
+  try {
+    const saved = sessionStorage.getItem(submissionKeyStorage);
+    if (saved && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(saved)) return saved;
+  } catch { /* Fall back to the mounted client's stable ref. */ }
+  const key = crypto.randomUUID();
+  try { sessionStorage.setItem(submissionKeyStorage, key); } catch { /* A reload cannot recover this key when storage is blocked. */ }
+  return key;
 }

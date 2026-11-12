@@ -23,6 +23,7 @@ function load(relativePath) {
   modules.set(filename, loadedModule);
   const resolve = (id) => {
     if (overrides.has(id)) return overrides.get(id);
+    if (id === "server-only") return {};
     if (id === "resend") return { Resend: class {
       emails = { send: async (message) => { deliveries.push(message); return { data: { id: "mock" }, error: null }; } };
     } };
@@ -86,7 +87,7 @@ for (const category of categoryIds) {
 const { validateAssessmentRequest } = load("lib/assessmentValidation.ts");
 assert.equal(validateAssessmentRequest({ registration: demo.registration, selectedAnswers: answers }), null);
 assert.equal(validateAssessmentRequest({ registration: { ...demo.registration, reportConsent: false }, selectedAnswers: answers }),
-  "Please confirm that you agree to receive your free Cashbrite Money Confidence Snapshot by email.");
+  "Please confirm that we may use your details to create and email your full report.");
 
 if (process.argv.includes("--pdf-manifest")) {
   fs.mkdirSync("tmp/pdfs/phase3c1", { recursive: true });
@@ -140,22 +141,33 @@ overrides.set("next/link", { __esModule: true, default: ({ children, ...props })
 overrides.set("@/components/PremiumPlanCtas", {
   UnlockPlanButton: ({ assessmentId: id, label }) => React.createElement("button", { "data-assessment-id": id }, label),
 });
+let snapshotInput;
+overrides.set("@/components/ResultsExperience", { ResultsExperience: props => {
+  snapshotInput = props;
+  return React.createElement("main", null, "Cashbrite Money Confidence Snapshot");
+} });
 const ResultsPage = load("app/results/page.tsx").default;
 const resultsHtml = renderToStaticMarkup(await ResultsPage({ searchParams: Promise.resolve({ id: assessmentId }) }));
 assert(resultsHtml.includes("Cashbrite Money Confidence Snapshot"));
-assert(resultsHtml.includes("Cashbrite Personalised Money Action Plan"));
-assert(resultsHtml.includes(`data-assessment-id="${assessmentId}"`));
-assert(!resultsHtml.includes("Your money strengths"));
+assert.equal(snapshotInput.savedScores.readinessScore, demo.scores.readinessScore);
+assert.equal(snapshotInput.registration, undefined);
+assert.equal(snapshotInput.actionPlan, undefined);
+overrides.set("next/navigation", { redirect: target => { throw Error(`REDIRECT:${target}`); } });
 const RecoveryPage = load("app/checkout/money-ready-plan/page.tsx").default;
-const recoveryHtml = renderToStaticMarkup(await RecoveryPage({ searchParams: Promise.resolve({ assessmentId, source: "email" }) }));
-assert(recoveryHtml.includes(`href="/results?id=${assessmentId}"`));
-assert(recoveryHtml.includes("Continue to Secure Checkout"));
-assert(recoveryHtml.includes(`data-assessment-id="${assessmentId}"`));
-assert.deepEqual(plain(interest.map((event) => event.interestType)), ["checkout_recovery_view", "email_checkout_click"]);
+assert.throws(() => RecoveryPage(), /REDIRECT:\/quiz/);
+assert.equal(interest.length,0);
+overrides.set("next/headers", { cookies: async () => ({ get: () => ({ value: "synthetic" }) }) });
+overrides.set("@/lib/reportAccess", { reportCookieName: "synthetic", getRegisteredReport: async () => demo });
+const ReportPage = load("app/report/page.tsx").default;
+const reportHtml = renderToStaticMarkup(await ReportPage());
+assert(reportHtml.includes("/api/reports/pdf"));
+assert(reportHtml.includes("/api/reports/excel"));
+assert(reportHtml.includes("Cashbrite Personalised Money Action Plan"));
+assert(!reportHtml.includes("Continue to Secure Checkout"));
 
 console.log(JSON.stringify({
   demo: { rawScore: demo.scores.totalScore, max: demo.scores.maxScore, score: demo.scores.readinessScore, band: demo.scores.band },
   categories: demo.scores.categoryScores,
   priorities: premium.priorityAreas.map((area) => area.title),
-  checks: "Canonical scoring, demo answers, explicit tie ordering, consent validation, 15 chapter actions and 12 non-duplicated roadmap tasks across all categories, mocked email/attachment, synthetic results/recovery and assessment ID handover passed. No network calls.",
+  checks: "Canonical scoring, tie ordering, revised consent, 15 chapter actions and 12 distinct roadmap tasks, retained historical templates, identity-free Snapshot props, retired recovery redirect, complete registered report and protected download links passed. No network calls.",
 }, null, 2));

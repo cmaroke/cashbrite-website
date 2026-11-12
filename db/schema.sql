@@ -18,11 +18,15 @@ CREATE TABLE IF NOT EXISTS assessment_results (
   priority_areas JSONB NOT NULL,
   action_plan JSONB NOT NULL,
   action_plan_summary TEXT NOT NULL,
+  report_access_hash TEXT,
+  report_request_hash TEXT,
+  report_email_status TEXT CHECK (report_email_status IN ('pending','sent','failed','needs_review')),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS assessment_results_email_idx ON assessment_results (email);
 CREATE INDEX IF NOT EXISTS assessment_results_completed_at_idx ON assessment_results (completed_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS assessment_report_access_idx ON assessment_results (report_access_hash) WHERE report_access_hash IS NOT NULL;
 
 CREATE TABLE IF NOT EXISTS premium_plan_interest (
   id BIGSERIAL PRIMARY KEY,

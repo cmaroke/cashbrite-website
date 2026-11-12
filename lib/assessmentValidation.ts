@@ -10,6 +10,7 @@ import {
 export type AssessmentRequestBody = {
   registration?: Partial<RegistrationData>;
   selectedAnswers?: Record<string, string>;
+  reportKey?: string;
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -17,7 +18,7 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function validateAssessmentRequest(body: AssessmentRequestBody) {
   const registration = body.registration;
 
-  if (!registration) return "Please complete the registration step before starting the assessment.";
+  if (!registration || typeof registration !== "object" || Array.isArray(registration)) return "Please enter your details to receive your full report.";
 
   const firstName = String(registration.firstName ?? "").trim();
   const lastName = String(registration.lastName ?? "").trim();
@@ -26,19 +27,19 @@ export function validateAssessmentRequest(body: AssessmentRequestBody) {
   const educationStage = String(registration.educationStage ?? "") as EducationStage;
   const referralSource = String(registration.referralSource ?? "") as ReferralSource | "";
 
-  if (!firstName) return "Please enter your first name.";
-  if (!lastName) return "Please enter your last name.";
+  if (!firstName || firstName.length + lastName.length > 200) return "Please enter your full name (up to 200 characters).";
   if (!Number.isInteger(age) || age < 13 || age > 100) return "Please enter a valid age.";
-  if (!emailPattern.test(email)) return "Please enter a valid email address.";
-  if (!educationStages.includes(educationStage)) return "Please choose your current stage.";
+  if (email.length > 254 || !emailPattern.test(email)) return "Please enter a valid email address.";
+  if (educationStage && !educationStages.includes(educationStage)) return "Please choose a valid current stage.";
   if (referralSource && !referralSources.includes(referralSource)) {
     return "Please choose a valid referral source.";
   }
   if (registration.reportConsent !== true) {
-    return "Please confirm that you agree to receive your free Cashbrite Money Confidence Snapshot by email.";
+    return "Please confirm that we may use your details to create and email your full report.";
   }
 
-  const selectedAnswers = body.selectedAnswers ?? {};
+  const selectedAnswers = body.selectedAnswers;
+  if (!selectedAnswers || typeof selectedAnswers !== "object" || Array.isArray(selectedAnswers)) return "Please complete the assessment before requesting your full report.";
   const missingAnswer = quizQuestions.find((question) => !selectedAnswers[question.id]);
   if (missingAnswer) return "Please answer every assessment question before submitting.";
 

@@ -4,8 +4,9 @@ import { useEffect, useLayoutEffect } from "react";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { isSensitivePath, sanitiseAnalyticsUrl } from "@/lib/analyticsPrivacy";
+import { gaMeasurementId, getAnalyticsChoice } from "@/lib/analyticsConsent";
 
-const GA_MEASUREMENT_ID = "G-XSGSX4EXY6";
+const GA_MEASUREMENT_ID = gaMeasurementId;
 
 declare global {
   interface Window {
@@ -18,10 +19,10 @@ function GoogleAnalyticsPageView() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!pathname || isSensitivePath(pathname)) return;
+    if (!pathname || isSensitivePath(pathname) || getAnalyticsChoice() !== "granted") return;
 
     const trackPageView = () => {
-      if (!window.gtag) return false;
+      if (!window.gtag || getAnalyticsChoice() !== "granted" || isSensitivePath(location.pathname)) return false;
 
       window.gtag("event", "page_view", {
         page_path: pathname,
@@ -44,9 +45,10 @@ export function GoogleAnalytics() {
   const pathname = usePathname();
   const sensitive = isSensitivePath(pathname ?? "/");
   useLayoutEffect(() => {
-    (window as unknown as Record<string, unknown>)[`ga-disable-${GA_MEASUREMENT_ID}`] = sensitive;
+    (window as unknown as Record<string, unknown>)[`ga-disable-${GA_MEASUREMENT_ID}`] = sensitive || getAnalyticsChoice() !== "granted";
+    return () => { (window as unknown as Record<string, unknown>)[`ga-disable-${GA_MEASUREMENT_ID}`] = true; };
   }, [sensitive]);
-  if (process.env.NODE_ENV !== "production" || sensitive) return null;
+  if (process.env.NODE_ENV !== "production" || sensitive || getAnalyticsChoice() !== "granted") return null;
 
   return (
     <>
@@ -63,7 +65,8 @@ export function GoogleAnalytics() {
             function gtag(){dataLayer.push(arguments);}
             window.gtag = gtag;
             gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false, page_location: location.origin + location.pathname, page_referrer: '' });
+            gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+            gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false, page_location: location.origin + location.pathname, page_referrer: '' });
           `,
         }}
       />

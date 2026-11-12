@@ -90,7 +90,8 @@ function makeSession(suffix, changes = {}) {
   sessions.set(session.id, session); return session;
 }
 const { POST: webhook } = load("app/api/stripe/webhook/route.ts");
-const { POST: checkout } = load("app/api/stripe/checkout/route.ts");
+// Historical implementation remains covered, but is intentionally not an active route.
+const { POST: checkout } = load("lib/legacy/stripeCheckout.ts");
 const { GET: download } = load("app/api/money-ready-plan/pdf/route.ts");
 const SuccessPage = load("app/money-ready-plan/success/page.tsx").default;
 const storage = load("lib/premiumPurchaseDb.ts");
@@ -113,6 +114,8 @@ try {
   await db.query("INSERT INTO assessment_results VALUES ($1)", [assessmentId]);
   await db.query("INSERT INTO premium_purchases (assessment_id,email,stripe_checkout_session_id,amount,currency,payment_status) VALUES ($1,'legacy@cashbrite.example','cs_test_Legacy',1900,'gbp','paid')", [assessmentId]);
   await db.exec(fs.readFileSync("db/migrations/003_premium_delivery.sql", "utf8"));
+  await db.exec(fs.readFileSync("db/migrations/003_premium_delivery_verify.sql", "utf8"));
+  assert.equal((await db.query("SHOW lock_timeout")).rows[0].lock_timeout, "0", "migration timeouts must be transaction-local");
   makeSession("Legacy");
   assert.equal((await row(sessions.get("cs_test_Legacy"))).delivery_status, "needs_review");
   const beforeLegacy = sends; await deliver(sessions.get("cs_test_Legacy")); assert.equal(sends, beforeLegacy);
@@ -282,6 +285,18 @@ try {
     assert.equal((await download(new Request(`https://cashbrite.example/api/money-ready-plan/pdf${query}`))).status, 403);
   }
   requireSendingClaim = false;
+  // c8dbebf supplied the same product/client reference/line-item shape. No Stripe request occurs.
+  const historical = makeSession("HistoricalShape", { id: "cs_live_SyntheticHistorical" });
+  const beforeHistorical = [sends, creates];
+  const legacyHtml = renderToStaticMarkup(await SuccessPage({ searchParams: Promise.resolve({ session_id: historical.id }) }));
+  assert(legacyHtml.includes("is unlocked"));
+  assert.equal((await download(new Request(`https://cashbrite.example/api/money-ready-plan/pdf?session_id=${historical.id}`))).status, 200);
+  const differentHistoricalPrice = makeSession("DifferentHistoricalPrice", {
+    line_items: { has_more: false, data: [{ quantity: 1, price: { id: "price_other_historical", unit_amount: 1900, currency: "gbp", recurring: null } }] },
+  });
+  assert.equal((await download(new Request(`https://cashbrite.example/api/money-ready-plan/pdf?session_id=${differentHistoricalPrice.id}`))).status, 403);
+  assert.deepEqual([sends, creates], beforeHistorical, "historical access must not charge or resend");
+  passed.push("old Checkout shape and synthetic live-session ID unlock web/PDF without send or payment; different historical price is explicitly rejected");
   for (const accessible of [success, sessions.get("cs_test_Ambiguousthrow")]) {
     for (let i = 0; i < 2; i++) {
       const html = renderToStaticMarkup(await SuccessPage({ searchParams: Promise.resolve({ session_id: accessible.id }) }));

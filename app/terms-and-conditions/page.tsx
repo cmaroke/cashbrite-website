@@ -40,6 +40,8 @@ const sections = [
     content: [
       "The Money Readiness Assessment is designed to provide a general indication of financial knowledge and confidence.",
       "Scores and Money Action Plans are based on the responses provided by users. Results should not be interpreted as a professional assessment of financial capability or future financial outcomes.",
+      "The assessment and basic results can be used without registration. To receive the complete personalised report, PDF and companion Excel budget tracker, provide the required registration details. No payment or subscription is required. Marketing is optional. Keep private report links confidential; email delays do not prevent immediate online access after successful registration.",
+      "Moving to free reporting does not remove access to reports previously purchased or affect your statutory rights relating to those purchases.",
     ],
   },
   {
@@ -53,7 +55,7 @@ const sections = [
     title: "7. Intellectual Property",
     content: [
       "All Cashbrite content, branding, assessments, resources and materials are owned by Cashbrite or used with permission.",
-      "You may not copy, reproduce, distribute, adapt or sell Cashbrite materials without prior written permission.",
+      "You may download, print and complete your report and templates for your own personal learning. You may not resell or redistribute Cashbrite materials without prior written permission.",
     ],
   },
   {
@@ -102,7 +104,7 @@ export default function TermsAndConditionsPage() {
             These terms explain how you may use Cashbrite’s website, assessment, action plans and educational
             resources.
           </p>
-          <p className="mt-4 text-sm font-semibold text-white/62">Last updated: 17 June 2026</p>
+          <p className="mt-4 text-sm font-semibold text-white/62">Last updated: 12 November 2026</p>
         </div>
 
         <div className="mt-8 grid gap-5">

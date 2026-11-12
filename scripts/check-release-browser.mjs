@@ -18,6 +18,9 @@ const browser = await chromium.launch({ headless: true, executablePath: process.
 const results = [];
 async function localPage(viewport, touch = false) {
   const page = await browser.newPage({ viewport, hasTouch: touch, isMobile: touch });
+  await page.addInitScript(() => {
+    if (!localStorage.getItem('cashbrite:analytics-choice:v1')) localStorage.setItem('cashbrite:analytics-choice:v1', JSON.stringify({ version: 1, choice: 'denied', at: Date.now() }));
+  });
   await page.route('**/*', route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
   await page.route('**/_vercel/insights/**', route => route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* analytics disabled in local QA */' }));
   return page;
@@ -104,11 +107,14 @@ try {
   }
   const page = await localPage({ width: 390, height: 844 }, true);
   let submissions = 0, payload;
+  const submissionKeys = [];
   await page.route('**/api/assessments', async route => {
     submissions++; payload = route.request().postDataJSON();
+    submissionKeys.push(route.request().headers()['idempotency-key']);
+    assert.match(submissionKeys.at(-1), /^[a-f0-9-]{36}$/);
     assert.equal(validateAssessmentRequest(payload), null);
     await new Promise(resolve => setTimeout(resolve, 100));
-    await route.fulfill({ status: 500, contentType: 'application/json', body: JSON.stringify({ error: 'Synthetic save failure - no record created.' }) });
+    await route.fulfill({ status: submissions === 1 ? 500 : 200, contentType: 'application/json', body: JSON.stringify(submissions === 1 ? { error: 'Synthetic save failure - no record created.' } : { id: '00000000-0000-5000-8000-000000000001' }) });
   });
   await page.goto(origin + '/quiz', { waitUntil: 'networkidle' });
   await page.getByRole('button', { name: 'Start the 5-minute assessment' }).click();
@@ -155,6 +161,13 @@ try {
   assert.equal(await page.getByLabel('Email address', { exact: true }).inputValue(), '');
   await register(page);
   await page.getByRole('heading', { name: 'Review your answers', exact: true }).waitFor();
+  await page.getByRole('checkbox', { name: 'I have reviewed my answers and am ready to submit my assessment.' }).check();
+  await page.getByRole('button', { name: 'Submit my assessment', exact: true }).evaluate(button => { button.form.requestSubmit(); button.form.requestSubmit(); });
+  await page.waitForURL('**/results?id=00000000-0000-5000-8000-000000000001');
+  assert.equal(submissions, 2, 'One request per explicit attempt, including same-tick duplicate events');
+  assert.equal(submissionKeys[0], submissionKeys[1], 'Retry key survives refresh');
+  assert.equal(await page.evaluate(() => sessionStorage.getItem('cashbrite:assessment-draft:v1')), null);
+  assert.equal(await page.evaluate(() => sessionStorage.getItem('cashbrite:assessment-submission:v1')), null);
   results.push({ page: 'quiz', canonicalQuestions: 30, categories: 10, submissionCalls: submissions, scoreFromActualSubmittedAnswers: scoreQuiz(payload.selectedAnswers).readinessScore, review: 'explicit', draft: '30 IDs recovered; no registration/consent persisted', externalWrites: 0 });
   await page.goto(origin + '/student-budget-calculator', { waitUntil: 'networkidle' });
   await page.locator('input[name="partTimeJob"]').fill('1200');

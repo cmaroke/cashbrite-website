@@ -23,11 +23,12 @@ export async function saveAssessment(params: {
   priorityAreas: QuizCategory[];
   actionPlan: ActionPlan;
   actionPlanSummary: string;
+  access?: { hash: string; requestHash: string };
 }) {
   const sql = getSql();
   await ensureAssessmentTable();
 
-  await sql`
+  const rows = await sql`
     INSERT INTO assessment_results (
       id,
       first_name,
@@ -46,7 +47,10 @@ export async function saveAssessment(params: {
       risk_areas,
       priority_areas,
       action_plan,
-      action_plan_summary
+      action_plan_summary,
+      report_access_hash,
+      report_request_hash,
+      report_email_status
     )
     VALUES (
       ${params.id},
@@ -66,9 +70,26 @@ export async function saveAssessment(params: {
       ${JSON.stringify(params.scores.riskAreas)}::jsonb,
       ${JSON.stringify(params.priorityAreas)}::jsonb,
       ${JSON.stringify(params.actionPlan)}::jsonb,
-      ${params.actionPlanSummary}
+      ${params.actionPlanSummary},
+      ${params.access?.hash ?? null},
+      ${params.access?.requestHash ?? null},
+      ${params.access ? "pending" : null}
     )
+    ON CONFLICT (id) DO NOTHING
+    RETURNING id
   `;
+  return rows.length === 1;
+}
+
+export async function findRegisteredReport(hash: string) {
+  const sql = getSql();
+  const rows = await sql`SELECT id, report_request_hash, report_email_status FROM assessment_results WHERE report_access_hash = ${hash} LIMIT 1`;
+  return rows[0] as { id: string; report_request_hash: string; report_email_status: string } | undefined;
+}
+
+export async function setReportEmailStatus(id: string, status: "sent" | "failed" | "needs_review") {
+  const sql = getSql();
+  await sql`UPDATE assessment_results SET report_email_status = ${status} WHERE id = ${id} AND report_access_hash IS NOT NULL`;
 }
 
 export async function getAssessment(id: string): Promise<SavedAssessment | null> {

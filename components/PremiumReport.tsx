@@ -6,7 +6,7 @@ import { generatePremiumActionPlan, type CreditLearningGuide } from "@/lib/premi
 import type { PremiumPlanAssessment } from "@/lib/premiumPlanDemo";
 import { priorityTieExplanation } from "@/lib/assessmentPriorities";
 
-export function PremiumReport({ assessment, isDemo = false, downloadSessionId }: { assessment: PremiumPlanAssessment; isDemo?: boolean; downloadSessionId?: string }) {
+export function PremiumReport({ assessment, isDemo = false, downloadSessionId, registeredAccess = false }: { assessment: PremiumPlanAssessment; isDemo?: boolean; downloadSessionId?: string; registeredAccess?: boolean }) {
   const plan = generatePremiumActionPlan(assessment.registration, assessment.scores);
   const completedDate = new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
@@ -26,9 +26,10 @@ export function PremiumReport({ assessment, isDemo = false, downloadSessionId }:
           <span />
         )}
         <PremiumPlanPrintControls
-          budgetTrackerUrl={downloadSessionId ? "/downloads/cashbrite-budget-tracker.xlsx" : undefined}
+          registeredAccess={registeredAccess}
+          budgetTrackerUrl={registeredAccess ? "/api/reports/excel" : downloadSessionId ? `/downloads/cashbrite-budget-tracker.xlsx?session_id=${encodeURIComponent(downloadSessionId)}` : undefined}
           downloadUrl={
-            downloadSessionId
+            registeredAccess ? "/api/reports/pdf" : downloadSessionId
               ? `/api/money-ready-plan/pdf?session_id=${encodeURIComponent(downloadSessionId)}`
               : isDemo && process.env.NODE_ENV !== "production"
                 ? "/api/money-ready-plan/pdf?demo=true"

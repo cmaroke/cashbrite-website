@@ -29,7 +29,7 @@ const report = await PDFDocument.load(plan);
 const free = await PDFDocument.load(checklist);
 assert(report.getPageCount() > 10);
 assert.equal(free.getPageCount(), 2);
-const tracker = fs.readFileSync('public/downloads/cashbrite-budget-tracker.xlsx');
+const tracker = fs.readFileSync('assets/downloads/cashbrite-budget-tracker.xlsx');
 assert.equal(tracker.subarray(0,2).toString(), 'PK');
 fs.mkdirSync('output/release-qa', { recursive: true });
 fs.writeFileSync('output/release-qa/paid-plan-synthetic.pdf', plan);

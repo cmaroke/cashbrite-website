@@ -147,7 +147,7 @@ export function MoneyReadinessAssessment({ answers, answerOrder, position, onAns
 
   return <section ref={screen} className={styles.assessment} aria-label="Money Readiness Assessment">
     <div className="mb-4 flex items-start justify-between gap-3 border-b border-ink/20 pb-3">
-      <h1 className="editorial-heading min-w-0 text-2xl sm:text-3xl">Money Readiness Assessment</h1>
+      <h2 className="editorial-heading min-w-0 text-2xl sm:text-3xl">Money Readiness Assessment</h2>
       {view === "question" && <button type="button" className={styles.textButton} onClick={review}>Review answers</button>}
     </div>
     <div className={styles.progress}>

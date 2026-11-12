@@ -145,9 +145,7 @@ export function generateActionPlan(registration: RegistrationData, scores: QuizS
   const firstName = registration.firstName;
   const priorityCategories = getPriorityCategories(scores);
   const strengthCategories = scores.strengths.length > 0 ? scores.strengths : getTopCategories(scores).slice(0, 3);
-  const summary = hasSeriousKnowledgeGaps(scores)
-    ? "Your overall score shows a strong foundation, but your assessment also identified a few important gaps. These areas matter because they can affect real-life money decisions. Your free Snapshot highlights these priorities; the optional Cashbrite Personalised Money Action Plan offers further guidance."
-    : bandSummaries[scores.band];
+  const summary = getAssessmentSummary(scores);
 
   return {
     summary: `${firstName}, your result is ${scores.band}. ${summary}`,
@@ -172,6 +170,12 @@ export function generateActionPlan(registration: RegistrationData, scores: QuizS
     nextStepsMessage:
       "Financial confidence is a skill, not a personality trait. You build it through small checks, better questions and steady habits over time.",
   };
+}
+
+export function getAssessmentSummary(scores: QuizScores) {
+  return hasSeriousKnowledgeGaps(scores)
+    ? "Your overall score shows a strong foundation, but your assessment also identified a few important gaps. These areas matter because they can affect real-life money decisions. Your Snapshot highlights these priorities; your Cashbrite Personalised Money Action Plan offers further guidance."
+    : bandSummaries[scores.band];
 }
 
 export function createActionPlanSummary(actionPlan: ActionPlan) {

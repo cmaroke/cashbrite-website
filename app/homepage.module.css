@@ -12,10 +12,10 @@
 .homepage :global(.school-band p){color:var(--white)}
 @media(max-width:540px){.homepage :global(.budget-caption){font-size:12px;line-height:1.6}}
 /* Shared founder addendum: identical composition in both local concepts. */
-.homepage :global(.founder-section .founder.founder-editorial){grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:70px;align-items:center}
+.homepage :global(.founder-section .founder.founder-editorial){grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:70px;align-items:center}
 .homepage :global(.founder-editorial .founder-identity){display:block;margin:0;min-width:0}
-.homepage :global(.founder-editorial .founder-identity .portrait){width:100%;height:auto;aspect-ratio:4/5;border-radius:3px}
-.homepage :global(.founder-editorial .portrait img){transform:scale(1.2);object-position:50% 24%}
+.homepage :global(.founder-editorial .founder-identity .portrait){width:100%;height:auto;aspect-ratio:1;border-radius:3px}
+.homepage :global(.founder-editorial .portrait img){transform:none;object-fit:contain;object-position:center}
 .homepage :global(.founder-editorial figcaption){display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px}
 .homepage :global(.founder-editorial figcaption .name),.homepage :global(.founder-editorial figcaption .fine){margin:0}
 .homepage :global(.founder-editorial .founder-story>.tag){margin:0 0 20px;font-size:11px;color:#3d604f}
@@ -67,3 +67,10 @@
 @media(max-width:540px){.homepage :global(.a3 .a-hero-grid){gap:25px;padding-top:35px;padding-bottom:32px}.homepage :global(.money-scene){padding:50px 9px 0;margin-top:21px}.homepage :global(.student-note){padding:19px 18px 13px;transform:rotate(-2deg);box-shadow:4px 6px 0 #54806b50,0 12px 20px #00000020}.homepage :global(.margin-question){font-size:23px;right:10px;top:-13px}.homepage :global(.scene-arrow){right:125px;top:-7px;width:100px}.homepage :global(.note-header){gap:7px}.homepage :global(.note-header .tag){font-size:9px}.homepage :global(.note-stamp){font-size:8px}.homepage :global(.student-note h2){font-size:33px}.homepage :global(.incoming strong){font-size:32px}.homepage :global(.incoming>span){font-size:11px}.homepage :global(.expense){padding:10px;min-height:89px}.homepage :global(.rent-slip){min-height:171px;padding-top:20px}.homepage :global(.rent-slip strong){font-size:36px}.homepage :global(.expense span){font-size:10px}.homepage :global(.expense-insight){min-height:83px;font-size:11px}.homepage :global(.remaining .hand){font-size:20px}.homepage :global(.remaining strong){font-size:43px;min-width:122px}.homepage :global(.remaining-arrow){right:25px;bottom:130px;width:65px}.homepage :global(.surprise label){font-size:11px}.homepage :global(.surprise p){min-height:33px}.homepage :global(.scene-caption){font-size:23px;margin-top:24px}.homepage :global(.snapshot-score strong){font-size:88px}}
 @media(max-width:540px){.homepage :global(.margin-question){top:-39px}.homepage :global(.expense span){font-size:11px}.homepage :global(.expense-insight){font-size:12px;min-height:96px}.homepage :global(.surprise p){font-size:11px;min-height:36px}}
 @media(prefers-reduced-motion:reduce){.homepage :global(.expense){transition:none}}
+
+/* Keep the portrait secondary and the final invitation beside its existing CTA. */
+.homepage :global(.closing-action){display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:16px 24px;max-width:540px;min-width:0}
+.homepage :global(.closing-action p){margin:0;flex:1 1 180px;max-width:24ch;font-size:16px}
+.homepage :global(.closing-action .btn){flex-shrink:0}
+@media(max-width:800px){.homepage :global(.founder-section .founder.founder-editorial){grid-template-columns:180px minmax(0,1fr)}.homepage :global(.closing-action){max-width:340px;justify-content:flex-start}}
+@media(max-width:540px){.homepage :global(.founder-section .founder.founder-editorial){grid-template-columns:1fr}.homepage :global(.founder-editorial .founder-identity){display:flex;align-items:center;gap:20px}.homepage :global(.founder-editorial .founder-identity .portrait){width:128px;aspect-ratio:1;flex-shrink:0}.homepage :global(.founder-editorial .portrait img){transform:none;object-position:center}.homepage :global(.founder-editorial figcaption){padding-top:0}.homepage :global(.closing-action){flex-direction:column;align-items:flex-start;max-width:none;margin-top:24px}.homepage :global(.closing-action p){flex:none;max-width:none;font-size:15px}.homepage :global(.closing-action .btn){margin-top:0}}

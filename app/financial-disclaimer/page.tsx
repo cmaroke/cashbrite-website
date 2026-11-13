@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { createSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Financial Education Disclaimer | Cashbrite",
+export const metadata: Metadata = createSeoMetadata({
+  title: "Financial Education Disclaimer",
+  path: "/financial-disclaimer",
   description: "Important information about Cashbrite's educational content and Money Readiness Assessment.",
-};
+});
 
 const sections = [
   {

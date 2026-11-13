@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://cashbrite.co.uk";
+// Public search identity must match the live preferred host, including when
+// operational links use a different NEXT_PUBLIC_SITE_URL in a preview.
+export const siteUrl = "https://www.cashbrite.co.uk";
 export const siteName = "Cashbrite";
 export const defaultDescription =
   "Cashbrite helps UK students and school leavers build money confidence through financial education, practical resources and a free Money Readiness Assessment.";

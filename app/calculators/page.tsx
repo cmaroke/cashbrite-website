@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { StudentBudgetCalculator } from "@/components/StudentBudgetCalculator";
 import { createSeoMetadata, JsonLd, siteUrl } from "@/lib/seo";
 
@@ -63,6 +64,13 @@ export default function CalculatorsPage() {
             Free Student Budget Calculator
           </h2>
           <StudentBudgetCalculator />
+          <p className="mt-5 text-sm leading-7 text-navy/72">
+            Want to focus on your monthly budget? Open the{" "}
+            <Link href="/student-budget-calculator" className="focus-ring rounded-sm font-semibold text-sea underline underline-offset-4">
+              Student Budget Calculator
+            </Link>{" "}
+            on its dedicated page.
+          </p>
         </div>
       </section>
 

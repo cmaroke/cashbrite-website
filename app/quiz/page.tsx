@@ -41,7 +41,10 @@ export default function QuizPage() {
   return <section className="bg-cream py-8 sm:py-10"><div className="mx-auto max-w-workflow px-5 sm:px-8">
     <FunnelEvent name="assessment_started" />
     <div className="mb-6 border-b border-ink/20 pb-6"><p className="text-sm font-semibold uppercase text-sea">Money Readiness Assessment</p><h1 className="editorial-heading mt-3 text-4xl md:text-5xl">Discover your Money Confidence Score</h1><p className="mt-4 max-w-3xl leading-7 text-ink/80">Answer {quizQuestions.length} questions to see your score and starting points. No registration is needed. You can choose to register afterwards for your complete report and Action Plan, without payment.</p><p className="mt-3 text-sm text-ink/70">Around 5 minutes · Educational guidance · No financial advice</p></div>
-    {ready ? <MoneyReadinessAssessment answers={answers} answerOrder={answerOrder} position={position} onNavigate={setPosition} onAnswer={(id, answer) => setAnswers(current => ({ ...current, [id]: answer }))} onSubmit={complete} isSubmitting={submitting} submitError={error} storageAvailable={storageAvailable} /> : <p role="status">Preparing your assessment...</p>}
+    {/* Reserve the initial assessment footprint before the browser restores its draft. */}
+    <div className="min-h-[50rem] min-[701px]:min-h-[40rem]">
+      {ready ? <MoneyReadinessAssessment answers={answers} answerOrder={answerOrder} position={position} onNavigate={setPosition} onAnswer={(id, answer) => setAnswers(current => ({ ...current, [id]: answer }))} onSubmit={complete} isSubmitting={submitting} submitError={error} storageAvailable={storageAvailable} /> : <p role="status">Preparing your assessment...</p>}
+    </div>
   </div></section>;
 }
 

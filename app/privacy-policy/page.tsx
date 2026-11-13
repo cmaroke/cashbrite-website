@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { createSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | Cashbrite",
+export const metadata: Metadata = createSeoMetadata({
+  title: "Privacy Policy",
+  path: "/privacy-policy",
   description: "How Cashbrite collects, uses and protects personal information.",
-};
+});
 
 const sections = [
   {

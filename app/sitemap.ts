@@ -16,11 +16,8 @@ const publicRoutes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   return publicRoutes.map((route) => ({
     url: new URL(route, siteUrl).toString(),
-    lastModified: now,
     changeFrequency: route === "" ? "weekly" : "monthly",
     priority: route === "" ? 1 : route === "/quiz" ? 0.9 : 0.7,
   }));

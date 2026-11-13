@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { createSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Terms & Conditions | Cashbrite",
+export const metadata: Metadata = createSeoMetadata({
+  title: "Terms & Conditions",
+  path: "/terms-and-conditions",
   description: "The terms that apply when using the Cashbrite website and services.",
-};
+});
 
 const sections = [
   {

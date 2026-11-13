@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
       headers: [
         { key: "Cache-Control", value: "private, no-store, max-age=0" },
         { key: "Referrer-Policy", value: "no-referrer" },
-        { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ...(source === "/quiz" ? [] : [{ key: "X-Robots-Tag", value: "noindex, nofollow" }]),
         { key: "X-Content-Type-Options", value: "nosniff" },
       ],
     }));

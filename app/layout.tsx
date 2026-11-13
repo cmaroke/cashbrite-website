@@ -49,14 +49,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/brand/v2/favicon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
-      { url: "/brand/v2/favicon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/v2/favicon-light.svg?v=cashbrite-2", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
+      { url: "/brand/v2/favicon-dark.svg?v=cashbrite-2", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+      { url: "/favicon.ico?v=cashbrite-2", sizes: "any" },
+      { url: "/icon.png?v=cashbrite-2", sizes: "32x32", type: "image/png" },
     ],
-    shortcut: ["/brand/v2/favicon-light.svg"],
+    shortcut: ["/brand/v2/favicon-light.svg?v=cashbrite-2"],
     apple: [
-      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png?v=cashbrite-2", sizes: "180x180", type: "image/png" },
     ],
   },
 };

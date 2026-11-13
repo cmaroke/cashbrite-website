@@ -6,13 +6,13 @@ const PAGE_WIDTH = 595.28;
 const PAGE_HEIGHT = 841.89;
 const MARGIN = 42;
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
-const NAVY = rgb(7 / 255, 29 / 255, 43 / 255);
-const MINT = rgb(185 / 255, 234 / 255, 216 / 255);
-const CREAM = rgb(251 / 255, 247 / 255, 236 / 255);
-const SEA = rgb(47 / 255, 143 / 255, 123 / 255);
+const NAVY = rgb(15 / 255, 42 / 255, 58 / 255);
+const MINT = rgb(199 / 255, 243 / 255, 107 / 255);
+const CREAM = rgb(247 / 255, 244 / 255, 236 / 255);
+const SEA = rgb(84 / 255, 128 / 255, 107 / 255);
 const WHITE = rgb(1, 1, 1);
 const MUTED = rgb(79 / 255, 96 / 255, 105 / 255);
-const BORDER = rgb(222 / 255, 229 / 255, 225 / 255);
+const BORDER = rgb(232 / 255, 234 / 255, 230 / 255);
 
 export async function generateFirstPaycheckChecklistPdf() {
   const document = await PDFDocument.create();
@@ -24,7 +24,7 @@ export async function generateFirstPaycheckChecklistPdf() {
   const [regular, bold, logoBytes] = await Promise.all([
     document.embedFont(StandardFonts.Helvetica),
     document.embedFont(StandardFonts.HelveticaBold),
-    readFile(path.join(process.cwd(), "public", "brand", "cashbrite-logo.png")),
+    readFile(path.join(process.cwd(), "public", "brand", "v2", "wordmark-print.png")),
   ]);
   const logo = await document.embedPng(logoBytes);
   const guide = new FirstPaycheckGuide(document, regular, bold, logo);
@@ -46,7 +46,6 @@ class FirstPaycheckGuide {
   drawPageOne() {
     const page = this.addPage();
     this.drawLogo(page, 42, 786, 132);
-    this.drawSparkle(page, 520, 801, 0.9, SEA);
 
     page.drawRectangle({ x: MARGIN, y: 606, width: CONTENT_WIDTH, height: 156, color: NAVY });
     this.label(page, "FREE MONEY GUIDE", 64, 730, MINT);
@@ -62,7 +61,6 @@ class FirstPaycheckGuide {
       this.regular,
       WHITE,
     );
-    this.drawSparkle(page, 498, 640, 1.45, MINT);
 
     this.quote(
       page,
@@ -104,7 +102,6 @@ class FirstPaycheckGuide {
   drawPageTwo() {
     const page = this.addPage();
     this.drawLogo(page, 42, 786, 116);
-    this.drawSparkle(page, 520, 801, 0.9, SEA);
     this.label(page, "YOUR FIRST PAYCHECK CHECKLIST", 42, 755, SEA);
     this.wrapped(page, "When your paycheck arrives", 42, 724, CONTENT_WIDTH, 25, 30, this.bold, NAVY);
 
@@ -179,7 +176,7 @@ class FirstPaycheckGuide {
     const noteHeight = height - 66;
     const noteY = y + 14;
     page.drawRectangle({ x: noteX, y: noteY, width: noteWidth, height: noteHeight, color: MINT });
-    this.label(page, noteLabel, noteX + 12, noteY + noteHeight - 15, SEA, 7.2);
+    this.label(page, noteLabel, noteX + 12, noteY + noteHeight - 15, NAVY, 7.2);
     this.wrapped(page, note, noteX + 12, noteY + noteHeight - 31, noteWidth - 24, 8.5, 11.5, this.bold, NAVY);
   }
 
@@ -205,12 +202,14 @@ class FirstPaycheckGuide {
 
     page.drawRectangle({ x: MARGIN + 18, y: 72, width: CONTENT_WIDTH - 36, height: 29, color: NAVY });
     this.label(page, "MONEY SMART TIP", MARGIN + 31, 90, MINT, 7);
-    this.text(
+    this.wrapped(
       page,
       "Budgeting isn't about restricting your life. It's about telling your money where to go.",
       MARGIN + 132,
-      82,
+      90,
+      CONTENT_WIDTH - 150,
       8.5,
+      10,
       this.bold,
       WHITE,
     );
@@ -259,7 +258,6 @@ class FirstPaycheckGuide {
     page.drawRectangle({ x: MARGIN + 22, y: y + 8, width: 210, height: 36, color: MINT });
     this.centred(page, "Take the Free Assessment", MARGIN + 127, y + 21, 11, this.bold, NAVY);
     this.text(page, "cashbrite.co.uk", PAGE_WIDTH - MARGIN - 114, y + 21, 11, this.bold, MINT);
-    this.drawSparkle(page, PAGE_WIDTH - MARGIN - 24, y + 24, 0.7, MINT);
   }
 
   private quote(page: PDFPage, copy: string, x: number, y: number, width: number, height: number) {
@@ -275,16 +273,7 @@ class FirstPaycheckGuide {
   }
 
   private drawLogo(page: PDFPage, x: number, y: number, width: number) {
-    page.drawImage(this.logo, { x, y, width, height: width * (620 / 2600) });
-  }
-
-  private drawSparkle(page: PDFPage, x: number, y: number, scale: number, color: ReturnType<typeof rgb>) {
-    page.drawSvgPath("M 10 0 L 12.5 7.5 L 20 10 L 12.5 12.5 L 10 20 L 7.5 12.5 L 0 10 L 7.5 7.5 Z", {
-      x,
-      y,
-      scale,
-      color,
-    });
+    page.drawImage(this.logo, { x, y, width, height: width * this.logo.height / this.logo.width });
   }
 
   private label(page: PDFPage, copy: string, x: number, y: number, color: ReturnType<typeof rgb>, size = 8) {
